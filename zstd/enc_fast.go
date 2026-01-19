@@ -855,14 +855,24 @@ func (e *fastEncoderDict) Reset(d *dict, singleBlock bool) {
 		e.allDirty = false
 		return
 	}
-	for i := range e.tableShardDirty {
+	for i := 0; i < shardCnt; {
 		if !e.tableShardDirty[i] {
+			i++
 			continue
 		}
 
-		//copy(e.table[i*shardSize:(i+1)*shardSize], e.dictTable[i*shardSize:(i+1)*shardSize])
-		*(*[shardSize]tableEntry)(e.table[i*shardSize:]) = *(*[shardSize]tableEntry)(e.dictTable[i*shardSize:])
-		e.tableShardDirty[i] = false
+		// Copy consecutive dirty shard runs in one go to reduce per-shard overhead.
+		start := i
+		for i < shardCnt && e.tableShardDirty[i] {
+			i++
+		}
+		entries := (i - start) * shardSize
+		dst := e.table[start*shardSize : start*shardSize+entries]
+		src := e.dictTable[start*shardSize : start*shardSize+entries]
+		copy(dst, src)
+		for j := start; j < i; j++ {
+			e.tableShardDirty[j] = false
+		}
 	}
 	e.allDirty = false
 }
