@@ -843,7 +843,10 @@ func (e *fastEncoderDict) Reset(d *dict, singleBlock bool) {
 
 	const shardCnt = tableShardCnt
 	const shardSize = tableShardSize
-	if e.allDirty || dirtyShardCnt > shardCnt*4/6 {
+	// Only prefer a full-table copy when almost all shards are dirty.
+	// For typical small-ish blocks with dicts, copying only dirty shards reduces
+	// the total memmove volume and improves EncodeAll throughput.
+	if e.allDirty || dirtyShardCnt > shardCnt*7/8 {
 		//copy(e.table[:], e.dictTable)
 		e.table = *(*[tableSize]tableEntry)(e.dictTable)
 		for i := range e.tableShardDirty {
