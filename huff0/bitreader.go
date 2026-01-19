@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/klauspost/compress/internal/le"
+	"github.com/snissn/compress/internal/le"
 )
 
 // bitReader reads a bitstream in reverse.

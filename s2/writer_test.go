@@ -14,8 +14,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klauspost/compress/internal/snapref"
-	"github.com/klauspost/compress/zip"
+	"github.com/snissn/compress/internal/snapref"
+	"github.com/snissn/compress/zip"
 )
 
 func testOptions(_ testing.TB) map[string][]WriterOption {

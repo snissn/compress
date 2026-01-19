@@ -9,7 +9,7 @@ import (
 	"io"
 	"math"
 
-	"github.com/klauspost/compress/internal/le"
+	"github.com/snissn/compress/internal/le"
 )
 
 const (

@@ -44,11 +44,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/klauspost/compress/gzhttp/writer"
-	"github.com/klauspost/compress/gzhttp/writer/gzkp"
-	"github.com/klauspost/compress/gzhttp/writer/zstdkp"
-	"github.com/klauspost/compress/gzip"
-	"github.com/klauspost/compress/zstd"
+	"github.com/snissn/compress/gzhttp/writer"
+	"github.com/snissn/compress/gzhttp/writer/gzkp"
+	"github.com/snissn/compress/gzhttp/writer/zstdkp"
+	"github.com/snissn/compress/gzip"
+	"github.com/snissn/compress/zstd"
 )
 
 const (
@@ -787,7 +787,7 @@ func SetContentType(b bool) option {
 
 // Implementation changes the implementation of GzipWriter
 //
-// The default implementation is backed by github.com/klauspost/compress
+// The default implementation is backed by github.com/snissn/compress
 // To support RandomJitter, the GzipWriterExt must also be
 // supported by the returned writers.
 func Implementation(writer writer.GzipWriterFactory) option {
@@ -814,7 +814,7 @@ func ZstdCompressionLevel(level int) option {
 }
 
 // ZstdImplementation changes the implementation of ZstdWriter.
-// The default implementation is backed by github.com/klauspost/compress/zstd
+// The default implementation is backed by github.com/snissn/compress/zstd
 func ZstdImplementation(zw writer.ZstdWriterFactory) option {
 	return func(c *config) {
 		c.zstdWriter = zw

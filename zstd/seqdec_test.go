@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klauspost/compress/zip"
+	"github.com/snissn/compress/zip"
 )
 
 func TestSequenceDecsAdjustOffset(t *testing.T) {

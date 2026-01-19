@@ -9,7 +9,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/klauspost/compress/internal/cpuinfo"
+	"github.com/snissn/compress/internal/cpuinfo"
 )
 
 // decompress4x_main_loop_x86 is an x86 assembler implementation

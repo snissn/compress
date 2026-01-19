@@ -5,7 +5,7 @@
 package zstd
 
 import (
-	"github.com/klauspost/compress/huff0"
+	"github.com/snissn/compress/huff0"
 )
 
 // history contains the information transferred between blocks.

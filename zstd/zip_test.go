@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/klauspost/compress/zstd"
+	"github.com/snissn/compress/zstd"
 )
 
 func ExampleZipCompressor() {

@@ -11,8 +11,8 @@ import (
 	"io"
 	"sync"
 
-	"github.com/klauspost/compress/huff0"
-	"github.com/klauspost/compress/zstd/internal/xxhash"
+	"github.com/snissn/compress/huff0"
+	"github.com/snissn/compress/zstd/internal/xxhash"
 )
 
 type blockType uint8

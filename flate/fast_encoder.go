@@ -8,7 +8,7 @@ package flate
 import (
 	"fmt"
 
-	"github.com/klauspost/compress/internal/le"
+	"github.com/snissn/compress/internal/le"
 )
 
 type fastEnc interface {

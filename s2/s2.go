@@ -11,7 +11,7 @@
 // Decoding is compatible with Snappy compressed content,
 // but content compressed with S2 cannot be decompressed by Snappy.
 //
-// For more information on Snappy/S2 differences see README in: https://github.com/klauspost/compress/tree/master/s2
+// For more information on Snappy/S2 differences see README in: https://github.com/snissn/compress/tree/master/s2
 //
 // There are actually two S2 formats: block and stream. They are related,
 // but different: trying to decompress block-compressed data as a S2 stream
@@ -38,7 +38,7 @@ import (
 	"bytes"
 	"hash/crc32"
 
-	"github.com/klauspost/compress/internal/race"
+	"github.com/snissn/compress/internal/race"
 )
 
 /*

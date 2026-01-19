@@ -11,7 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/klauspost/compress/zip"
+	"github.com/snissn/compress/zip"
 )
 
 func TestEncodeTo(t *testing.T) {

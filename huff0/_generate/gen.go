@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"strconv"
 
-	_ "github.com/klauspost/compress"
+	_ "github.com/snissn/compress"
 
 	. "github.com/mmcloughlin/avo/build"
 	"github.com/mmcloughlin/avo/gotypes"
@@ -42,7 +42,7 @@ type decompress4x struct {
 }
 
 func (d decompress4x) generateProcedure(name string) {
-	Package("github.com/klauspost/compress/huff0")
+	Package("github.com/snissn/compress/huff0")
 	TEXT(name, 0, "func(ctx* decompress4xContext)")
 	Doc(name+" is an x86 assembler implementation of Decompress4X when tablelog > 8.decodes a sequence", "")
 	Pragma("noescape")
@@ -153,7 +153,7 @@ func (d decompress4x) decodeTwoValues(id int, br, peekBits, table, buffer, dstEv
 }
 
 func (d decompress4x) generateProcedure4x8bit(name string) {
-	Package("github.com/klauspost/compress/huff0")
+	Package("github.com/snissn/compress/huff0")
 	TEXT(name, 0, "func(ctx* decompress4xContext)")
 	Doc(name+" is an x86 assembler implementation of Decompress4X when tablelog > 8.decodes a sequence", "")
 	Pragma("noescape")
@@ -395,7 +395,7 @@ type decompress1x struct {
 }
 
 func (d decompress1x) generateProcedure(name string) {
-	Package("github.com/klauspost/compress/huff0")
+	Package("github.com/snissn/compress/huff0")
 	TEXT(name, 0, "func(ctx* decompress1xContext)")
 	Doc(name+" is an x86 assembler implementation of Decompress1X", "")
 	Pragma("noescape")

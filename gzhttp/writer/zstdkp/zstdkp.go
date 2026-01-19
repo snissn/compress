@@ -1,12 +1,12 @@
-// Package zstdkp provides zstd compression through github.com/klauspost/compress/zstd.
+// Package zstdkp provides zstd compression through github.com/snissn/compress/zstd.
 package zstdkp
 
 import (
 	"io"
 	"sync"
 
-	"github.com/klauspost/compress/gzhttp/writer"
-	"github.com/klauspost/compress/zstd"
+	"github.com/snissn/compress/gzhttp/writer"
+	"github.com/snissn/compress/zstd"
 )
 
 // zstdWriterPools stores a sync.Pool for each compression level for reuse of

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/klauspost/compress/internal/cpuinfo"
+	"github.com/snissn/compress/internal/cpuinfo"
 )
 
 type decodeSyncAsmContext struct {

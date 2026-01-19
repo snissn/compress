@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/klauspost/compress/internal/le"
+	"github.com/snissn/compress/internal/le"
 )
 
 // decode writes the decoding of src to dst. It assumes that the varint-encoded

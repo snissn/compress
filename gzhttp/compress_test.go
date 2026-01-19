@@ -17,8 +17,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klauspost/compress/gzip"
-	"github.com/klauspost/compress/zstd"
+	"github.com/snissn/compress/gzip"
+	"github.com/snissn/compress/zstd"
 )
 
 var (

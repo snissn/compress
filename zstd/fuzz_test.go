@@ -10,8 +10,8 @@ import (
 	rdebug "runtime/debug"
 	"testing"
 
-	"github.com/klauspost/compress/internal/cpuinfo"
-	"github.com/klauspost/compress/internal/fuzz"
+	"github.com/snissn/compress/internal/cpuinfo"
+	"github.com/snissn/compress/internal/fuzz"
 )
 
 func FuzzDecodeAll(f *testing.F) {

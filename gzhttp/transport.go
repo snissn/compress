@@ -10,8 +10,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/klauspost/compress/gzip"
-	"github.com/klauspost/compress/zstd"
+	"github.com/snissn/compress/gzip"
+	"github.com/snissn/compress/zstd"
 )
 
 // Transport will wrap an HTTP transport with a custom handler
