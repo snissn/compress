@@ -23,10 +23,13 @@ import (
 // Smaller encodes are encouraged to use the EncodeAll function.
 // Use NewWriter to create a new instance.
 type Encoder struct {
-	o        encoderOptions
-	encoders chan encoder
-	state    encoderState
-	init     sync.Once
+	o             encoderOptions
+	encoders      chan encoder
+	cleanEncoders chan encoder
+	dirtyEncoders chan encoder
+	prewarmOnce   sync.Once
+	state         encoderState
+	init          sync.Once
 }
 
 type encoder interface {
@@ -89,6 +92,38 @@ func (e *Encoder) initialize() {
 		enc := e.o.encoder()
 		e.encoders <- enc
 	}
+}
+
+func (e *Encoder) initPrewarm() {
+	e.prewarmOnce.Do(func() {
+		if e.o.concurrent == 0 {
+			e.o.setDefault()
+		}
+		e.cleanEncoders = make(chan encoder, e.o.concurrent)
+		e.dirtyEncoders = make(chan encoder, e.o.concurrent)
+		for i := 0; i < e.o.concurrent; i++ {
+			enc := e.o.encoder()
+			enc.Reset(e.o.dict, false)
+			e.cleanEncoders <- enc
+		}
+		go e.maintainPool()
+	})
+}
+
+func (e *Encoder) maintainPool() {
+	for enc := range e.dirtyEncoders {
+		enc.Reset(e.o.dict, false)
+		e.cleanEncoders <- enc
+	}
+}
+
+// closePrewarm stops the background prewarm pool.
+// It is intended for tests to avoid goroutine leaks.
+func (e *Encoder) closePrewarm() {
+	if e.dirtyEncoders == nil {
+		return
+	}
+	close(e.dirtyEncoders)
 }
 
 // Reset will re-initialize the writer and new writes will encode to the supplied writer
@@ -206,7 +241,7 @@ func (e *Encoder) nextBlock(final bool) error {
 			return nil
 		}
 		if final && len(s.filling) > 0 {
-			s.current = e.encodeAll(s.encoder, s.filling, s.current[:0])
+			s.current = e.encodeAll(s.encoder, s.filling, s.current[:0], true)
 			var n2 int
 			n2, s.err = s.w.Write(s.current)
 			if s.err != nil {
@@ -494,10 +529,23 @@ func (e *Encoder) EncodeAll(src, dst []byte) []byte {
 	defer func() {
 		e.encoders <- enc
 	}()
-	return e.encodeAll(enc, src, dst)
+	return e.encodeAll(enc, src, dst, true)
 }
 
-func (e *Encoder) encodeAll(enc encoder, src, dst []byte) []byte {
+// EncodeAllPrewarmed is an optimized EncodeAll that uses a pre-reset encoder
+// from a background pool. This avoids Reset() cost on the hot path.
+// Use only for independent frames where skipping Reset() on the hot path is safe.
+func (e *Encoder) EncodeAllPrewarmed(src, dst []byte) []byte {
+	e.init.Do(e.initialize)
+	e.initPrewarm()
+	enc := <-e.cleanEncoders
+	defer func() {
+		e.dirtyEncoders <- enc
+	}()
+	return e.encodeAll(enc, src, dst, false)
+}
+
+func (e *Encoder) encodeAll(enc encoder, src, dst []byte, doReset bool) []byte {
 	if len(src) == 0 {
 		if e.o.fullZero {
 			// Add frame header.
@@ -542,7 +590,9 @@ func (e *Encoder) encodeAll(enc encoder, src, dst []byte) []byte {
 
 	// If we can do everything in one block, prefer that.
 	if len(src) <= e.o.blockSize {
-		enc.Reset(e.o.dict, true)
+		if doReset {
+			enc.Reset(e.o.dict, true)
+		}
 		// Slightly faster with no history and everything in one block.
 		if e.o.crc {
 			_, _ = enc.CRC().Write(src)
@@ -568,7 +618,9 @@ func (e *Encoder) encodeAll(enc encoder, src, dst []byte) []byte {
 		dst = blk.output
 		blk.output = oldout
 	} else {
-		enc.Reset(e.o.dict, false)
+		if doReset {
+			enc.Reset(e.o.dict, false)
+		}
 		blk := enc.Block()
 		for len(src) > 0 {
 			todo := src
