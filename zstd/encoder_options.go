@@ -15,6 +15,7 @@ type EOption func(*encoderOptions) error
 // options retains accumulated state of multiple options.
 type encoderOptions struct {
 	concurrent      int
+	prewarm         int
 	level           EncoderLevel
 	single          *bool
 	pad             int
@@ -34,6 +35,7 @@ type encoderOptions struct {
 func (o *encoderOptions) setDefault() {
 	*o = encoderOptions{
 		concurrent:    runtime.GOMAXPROCS(0),
+		prewarm:       0, // 0 => use concurrent
 		crc:           true,
 		single:        nil,
 		blockSize:     maxCompressedBlockSize,
@@ -86,6 +88,24 @@ func WithEncoderConcurrency(n int) EOption {
 			return fmt.Errorf("concurrency must be at least 1")
 		}
 		o.concurrent = n
+		return nil
+	}
+}
+
+// WithEncoderPrewarmConcurrency sets the size of the clean/dirty encoder pool
+// used by EncodeAllPrewarmed.
+//
+// This is intentionally separate from WithEncoderConcurrency, so callers can:
+// - keep standard EncodeAll concurrency small (or unused) to reduce memory, while
+// - still having a larger prewarmed pool to overlap Reset() work for small frames.
+//
+// A value of 0 means "use the WithEncoderConcurrency value".
+func WithEncoderPrewarmConcurrency(n int) EOption {
+	return func(o *encoderOptions) error {
+		if n < 0 {
+			return fmt.Errorf("prewarm concurrency must be >= 0")
+		}
+		o.prewarm = n
 		return nil
 	}
 }
