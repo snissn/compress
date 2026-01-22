@@ -99,20 +99,11 @@ func (e *Encoder) initPrewarm() {
 		if e.o.concurrent == 0 {
 			e.o.setDefault()
 		}
-		n := e.o.prewarm
-		if n == 0 {
-			n = e.o.concurrent
-		}
-		if n <= 0 {
-			n = 1
-		}
-		e.cleanEncoders = make(chan encoder, n)
-		e.dirtyEncoders = make(chan encoder, n)
-		for i := 0; i < n; i++ {
+		e.cleanEncoders = make(chan encoder, e.o.concurrent)
+		e.dirtyEncoders = make(chan encoder, e.o.concurrent)
+		for i := 0; i < e.o.concurrent; i++ {
 			enc := e.o.encoder()
-			// Prewarm is intended for small independent frames.
-			// Match EncodeAll behavior for single-block inputs.
-			enc.Reset(e.o.dict, true)
+			enc.Reset(e.o.dict, false)
 			e.cleanEncoders <- enc
 		}
 		go e.maintainPool()
@@ -121,9 +112,7 @@ func (e *Encoder) initPrewarm() {
 
 func (e *Encoder) maintainPool() {
 	for enc := range e.dirtyEncoders {
-		// Prewarm is intended for small independent frames.
-		// Match EncodeAll behavior for single-block inputs.
-		enc.Reset(e.o.dict, true)
+		enc.Reset(e.o.dict, false)
 		e.cleanEncoders <- enc
 	}
 }
@@ -548,12 +537,6 @@ func (e *Encoder) EncodeAll(src, dst []byte) []byte {
 // Use only for independent frames where skipping Reset() on the hot path is safe.
 func (e *Encoder) EncodeAllPrewarmed(src, dst []byte) []byte {
 	e.init.Do(e.initialize)
-	// EncodeAllPrewarmed is intended for small independent frames. For larger
-	// inputs (multi-block), fall back to the standard path which resets with
-	// the appropriate singleBlock flag.
-	if len(src) > e.o.blockSize {
-		return e.EncodeAll(src, dst)
-	}
 	e.initPrewarm()
 	enc := <-e.cleanEncoders
 	defer func() {
