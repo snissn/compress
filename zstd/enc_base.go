@@ -22,6 +22,12 @@ type fastBase struct {
 	tmp         [8]byte
 	blk         *blockEnc
 	lastDictID  uint32
+	// Whether the beginning of hist currently contains the dictionary content.
+	// This allows Reset(dict, ...) to avoid copying dict.content into history on
+	// every reset for small independent frames.
+	histHasDict bool
+	histDictID  uint32
+	histDictLen int
 	lowMem      bool
 }
 
@@ -71,6 +77,8 @@ func (e *fastBase) addBlock(src []byte) int32 {
 			copy(e.hist[0:e.maxMatchOff], e.hist[offset:])
 			e.cur += offset
 			e.hist = e.hist[:e.maxMatchOff]
+			// The history prefix has been overwritten.
+			e.histHasDict = false
 		}
 	}
 	s := int32(len(e.hist))
@@ -98,6 +106,8 @@ func (e *fastBase) ensureHist(n int) {
 		l = int32(n)
 	}
 	e.hist = make([]byte, 0, l)
+	// New allocation; dictionary prefix is no longer present.
+	e.histHasDict = false
 }
 
 // useBlock will replace the block with the provided one,
@@ -157,15 +167,29 @@ func (e *fastBase) resetBase(d *dict, singleBlock bool) {
 	if e.cur < e.bufferReset {
 		e.cur += e.maxMatchOff + int32(len(e.hist))
 	}
-	e.hist = e.hist[:0]
-	if d != nil {
-		// Set offsets (currently not used)
-		for i, off := range d.offsets {
-			e.blk.recentOffsets[i] = uint32(off)
-			e.blk.prevRecentOffsets[i] = e.blk.recentOffsets[i]
-		}
-		// Transfer litenc.
-		e.blk.dictLitEnc = d.litEnc
-		e.hist = append(e.hist, d.content...)
+	if d == nil {
+		e.hist = e.hist[:0]
+		e.histHasDict = false
+		return
 	}
+
+	// Set offsets (currently not used)
+	for i, off := range d.offsets {
+		e.blk.recentOffsets[i] = uint32(off)
+		e.blk.prevRecentOffsets[i] = e.blk.recentOffsets[i]
+	}
+	// Transfer litenc.
+	e.blk.dictLitEnc = d.litEnc
+
+	dictLen := len(d.content)
+	if e.histHasDict && e.histDictID == d.id && e.histDictLen == dictLen {
+		// Reuse previously copied dictionary content.
+		e.hist = e.hist[:dictLen]
+		return
+	}
+	e.hist = e.hist[:dictLen]
+	copy(e.hist, d.content)
+	e.histHasDict = true
+	e.histDictID = d.id
+	e.histDictLen = dictLen
 }
