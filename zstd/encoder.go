@@ -497,6 +497,21 @@ func (e *Encoder) EncodeAll(src, dst []byte) []byte {
 	return e.encodeAll(enc, src, dst)
 }
 
+// EncodeAllParts will encode the concatenation of all src parts and append it
+// to dst, without requiring that the input bytes are stored contiguously.
+//
+// Unlike EncodeAll, this may emit more (smaller) blocks when the input is
+// provided as many small parts, which can impact ratio and throughput. For a
+// single part, callers should prefer EncodeAll.
+func (e *Encoder) EncodeAllParts(src [][]byte, dst []byte) []byte {
+	e.init.Do(e.initialize)
+	enc := <-e.encoders
+	defer func() {
+		e.encoders <- enc
+	}()
+	return e.encodeAllParts(enc, src, dst)
+}
+
 func (e *Encoder) encodeAll(enc encoder, src, dst []byte) []byte {
 	if len(src) == 0 {
 		if e.o.fullZero {
@@ -592,6 +607,133 @@ func (e *Encoder) encodeAll(enc encoder, src, dst []byte) []byte {
 			blk.reset(nil)
 		}
 	}
+	if e.o.crc {
+		dst = enc.AppendCRC(dst)
+	}
+	// Add padding with content from crypto/rand.Reader
+	if e.o.pad > 0 {
+		add := calcSkippableFrame(int64(len(dst)), int64(e.o.pad))
+		var err error
+		dst, err = skippableFrame(dst, add, rand.Reader)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return dst
+}
+
+func (e *Encoder) encodeAllParts(enc encoder, src [][]byte, dst []byte) []byte {
+	if len(src) == 0 {
+		if e.o.fullZero {
+			// Add frame header.
+			fh := frameHeader{
+				ContentSize:   0,
+				WindowSize:    MinWindowSize,
+				SingleSegment: true,
+				// Adding a checksum would be a waste of space.
+				Checksum: false,
+				DictID:   0,
+			}
+			dst = fh.appendTo(dst)
+
+			// Write raw block as last one only.
+			var blk blockHeader
+			blk.setSize(0)
+			blk.setType(blockTypeRaw)
+			blk.setLast(true)
+			dst = blk.appendTo(dst)
+		}
+		return dst
+	}
+
+	total := 0
+	for i := range src {
+		total += len(src[i])
+		if total < 0 {
+			panic("zstd: EncodeAllParts input overflow")
+		}
+	}
+	if total == 0 {
+		// Treat as empty input.
+		if e.o.fullZero {
+			// Add frame header.
+			fh := frameHeader{
+				ContentSize:   0,
+				WindowSize:    MinWindowSize,
+				SingleSegment: true,
+				// Adding a checksum would be a waste of space.
+				Checksum: false,
+				DictID:   0,
+			}
+			dst = fh.appendTo(dst)
+
+			// Write raw block as last one only.
+			var blk blockHeader
+			blk.setSize(0)
+			blk.setType(blockTypeRaw)
+			blk.setLast(true)
+			dst = blk.appendTo(dst)
+		}
+		return dst
+	}
+
+	// Use single segments when above minimum window and below window size.
+	single := total <= e.o.windowSize && total > MinWindowSize
+	if e.o.single != nil {
+		single = *e.o.single
+	}
+	fh := frameHeader{
+		ContentSize:   uint64(total),
+		WindowSize:    uint32(enc.WindowSize(int64(total))),
+		SingleSegment: single,
+		Checksum:      e.o.crc,
+		DictID:        e.o.dict.ID(),
+	}
+
+	// If less than 1MB, allocate a buffer up front.
+	if len(dst) == 0 && cap(dst) == 0 && total < 1<<20 && !e.o.lowMem {
+		dst = make([]byte, 0, total)
+	}
+	dst = fh.appendTo(dst)
+
+	enc.Reset(e.o.dict, false)
+	blk := enc.Block()
+
+	// Track whether we are at the final (non-empty) block so we can mark it
+	// as the last block in the frame.
+	lastPart := -1
+	for i := len(src) - 1; i >= 0; i-- {
+		if len(src[i]) != 0 {
+			lastPart = i
+			break
+		}
+	}
+
+	for partIndex := 0; partIndex < len(src); partIndex++ {
+		part := src[partIndex]
+		for len(part) > 0 {
+			todo := part
+			if len(todo) > e.o.blockSize {
+				todo = todo[:e.o.blockSize]
+			}
+			part = part[len(todo):]
+			if e.o.crc {
+				_, _ = enc.CRC().Write(todo)
+			}
+			blk.pushOffsets()
+			enc.Encode(blk, todo)
+			if partIndex == lastPart && len(part) == 0 {
+				blk.last = true
+			}
+			err := blk.encode(todo, e.o.noEntropy, !e.o.allLitEntropy)
+			if err != nil {
+				panic(err)
+			}
+			dst = append(dst, blk.output...)
+			blk.reset(nil)
+		}
+	}
+
 	if e.o.crc {
 		dst = enc.AppendCRC(dst)
 	}
