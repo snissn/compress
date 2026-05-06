@@ -187,6 +187,10 @@ type BuildDictOptions struct {
 
 	// DebugOut will write stats and other details here if set.
 	DebugOut io.Writer
+
+	// Workspace optionally reuses encoder scratch across repeated dictionary
+	// builds. It is not safe for concurrent use.
+	Workspace *BuildDictWorkspace
 }
 
 func BuildDict(o BuildDictOptions) ([]byte, error) {
@@ -239,7 +243,11 @@ func BuildDict(o BuildDictOptions) ([]byte, error) {
 			dict:       &d,
 			lowMem:     false,
 		}
-		enc = eOpts.encoder()
+		if o.Workspace != nil {
+			enc = o.Workspace.encoderFor(eOpts, hist)
+		} else {
+			enc = eOpts.encoder()
+		}
 	} else {
 		o.Level = SpeedBestCompression
 		enc = encoder(&bestFastEncoder{fastBase: fastBase{maxMatchOff: int32(maxMatchLen), bufferReset: math.MaxInt32 - int32(maxMatchLen*2), lowMem: false}})
