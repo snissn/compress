@@ -591,7 +591,9 @@ func (b *boundedDecoder) step(output []byte) (written int, done bool, err error)
 					b.hist.recentOffsets = b.dictOffsets
 				}
 			}
-			b.hash.Reset()
+			if b.header.HasCheckSum {
+				b.hash.Reset()
+			}
 			b.phase = 7
 		case 7:
 			ok, e := b.needInput(3, false)
@@ -1115,15 +1117,24 @@ func (b *boundedDecoder) emit(dst, src []byte) (int, error) {
 			return 0, e
 		}
 	}
+	effects, perByte, checksumState := uint64(1), uint64(2), uint64(0)
+	if b.output == BoundedSpans {
+		effects, perByte = 2, 4 // history and span copies, each read and write
+	}
+	if b.header.HasCheckSum {
+		effects++
+		checksumState = 128 // original checksum carry buffer and state
+		if b.output == BoundedRaw {
+			perByte = 4
+		} else {
+			perByte = 5
+		}
+	}
 	_, avail := b.work.Available()
-	if avail <= 128 {
+	if avail <= checksumState {
 		return 0, nil
 	}
-	effects, perByte := uint64(2), uint64(4) // copy plus original checksum
-	if b.output == BoundedSpans {
-		effects, perByte = 3, 5
-	} // history copy, span copy, checksum scan
-	n := min(len(src), 4096, int(min((avail-128)/perByte, uint64(4096))))
+	n := min(len(src), 4096, int(min((avail-checksumState)/perByte, uint64(4096))))
 	if b.output == BoundedSpans {
 		n = min(n, len(dst), historySegmentBytes-b.segments.tail.used)
 	}
@@ -1139,19 +1150,23 @@ func (b *boundedDecoder) emit(dst, src []byte) (int, error) {
 	if b.output == BoundedRaw && n > cap(b.raw)-len(b.raw) {
 		return 0, ErrDecoderSizeExceeded
 	}
-	// Original checksum's bounded carry buffer and state plus the actual copy,
-	// checksum scan and (segmented mode) history copy are admitted together.
-	if !b.charge(effects, uint64(n)*perByte+128) {
+	// Admit actual copies and, only for checksummed frames, the original
+	// checksum scan and carry state before any output or hash effect.
+	if !b.charge(effects, uint64(n)*perByte+checksumState) {
 		return 0, nil
 	}
 	if b.output == BoundedRaw {
 		start := len(b.raw)
 		b.raw = b.raw[:start+n]
 		copy(b.raw[start:], src[:n])
-		b.hash.Write(b.raw[start:])
+		if b.header.HasCheckSum {
+			b.hash.Write(b.raw[start:])
+		}
 	} else {
 		b.segments.appendAdmitted(src[:n], dst[:n])
-		b.hash.Write(dst[:n])
+		if b.header.HasCheckSum {
+			b.hash.Write(dst[:n])
+		}
 	}
 	b.position += uint64(n)
 	return n, nil

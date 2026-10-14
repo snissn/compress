@@ -24,8 +24,11 @@ indivisible; a block or table is never priced as one record. Huffman output
 literals each debit their actual table probe. Table builders and backward
 history lookup preserve their exact suspended entry/node. Partial copies and
 expansion survive refusal; consumed work is not replayed on the next call.
-Input/output/checksum chunks are at most 4096 bytes. Cold predefined tables are
-built through the same phased original table builder, without a global warmup.
+Input/output/checksum chunks are at most 4096 bytes. Frames without a content
+checksum perform and charge only their actual output/history copies; they do not
+initialize or update checksum state. Checksummed frames retain their original
+scan/carry admission and final integrity check. Cold predefined tables are built
+through the same phased original table builder, without a global warmup.
 
 Decoder-owned allocations use the existing conservative gomap COW allocation
 policy, implemented in `internal/decoderwork.AllocationCharge`. Each allocation

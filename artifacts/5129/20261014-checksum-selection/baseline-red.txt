@@ -1,0 +1,29 @@
+=== RUN   TestBoundedChecksumSelection
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:95: no-checksum frame consumed checksum work or failed copy-only admission: position=0 R=0 B=0
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:95: no-checksum frame consumed checksum work or failed copy-only admission: position=0 R=0 B=0
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:95: no-checksum frame consumed checksum work or failed copy-only admission: position=0 R=0 B=0
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:95: no-checksum frame consumed checksum work or failed copy-only admission: position=0 R=0 B=0
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:132: copy-only admission: crc=true mode=0 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:132: copy-only admission: crc=true mode=0 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:132: copy-only admission: crc=true mode=1 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:132: copy-only admission: crc=true mode=1 fed=true; decoded=9
+--- FAIL: TestBoundedChecksumSelection (0.00s)
+    --- FAIL: TestBoundedChecksumSelection/crc=false/mode=0/fed=false (0.00s)
+    --- FAIL: TestBoundedChecksumSelection/crc=false/mode=0/fed=true (0.00s)
+    --- FAIL: TestBoundedChecksumSelection/crc=false/mode=1/fed=false (0.00s)
+    --- FAIL: TestBoundedChecksumSelection/crc=false/mode=1/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=true (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.001s
+FAIL

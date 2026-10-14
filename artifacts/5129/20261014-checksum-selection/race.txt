@@ -1,0 +1,126 @@
+=== RUN   TestBoundedChecksumSelection
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=0 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=0 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=1 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=1 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=0 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=0 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=1 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=1 fed=true; decoded=9
+--- PASS: TestBoundedChecksumSelection (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=0/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=0/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=1/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=1/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=true (0.00s)
+=== RUN   TestBoundedOriginalFramingFailures
+=== RUN   TestBoundedOriginalFramingFailures/truncate
+=== RUN   TestBoundedOriginalFramingFailures/truncate#01
+=== RUN   TestBoundedOriginalFramingFailures/truncate#02
+=== RUN   TestBoundedOriginalFramingFailures/truncate#03
+=== RUN   TestBoundedOriginalFramingFailures/truncate#04
+=== RUN   TestBoundedOriginalFramingFailures/truncate#05
+=== RUN   TestBoundedOriginalFramingFailures/truncate#06
+--- PASS: TestBoundedOriginalFramingFailures (0.01s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#01 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#02 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#03 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#04 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#05 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#06 (0.00s)
+=== RUN   TestBoundedRLEExpansionPause
+--- PASS: TestBoundedRLEExpansionPause (0.00s)
+=== RUN   TestBoundedConcatenatedCompressedHistory
+=== RUN   TestBoundedConcatenatedCompressedHistory/raw
+=== RUN   TestBoundedConcatenatedCompressedHistory/spans
+--- PASS: TestBoundedConcatenatedCompressedHistory (0.01s)
+    --- PASS: TestBoundedConcatenatedCompressedHistory/raw (0.00s)
+    --- PASS: TestBoundedConcatenatedCompressedHistory/spans (0.00s)
+=== RUN   TestBoundedOriginalProducerDifferential
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1910 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2038 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1910 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2038 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=61 R=1921 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=64 R=2054 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=61 R=1923 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=64 R=2056 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=65 R=2049 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=82 R=2274 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=67 R=2088 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=82 R=2314 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=195 R=6198 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=436 R=11608 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=260 R=8164 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=496 R=13725 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=33469 R=1070903 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=35840 R=1145847 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=33573 R=1072983 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=35921 R=1148089 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=398 R=12688 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=997 R=24082 peak=4080128 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=560 R=17552 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=1134 R=29221 peak=4080128 fixed=58472
+--- PASS: TestBoundedOriginalProducerDifferential (0.84s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0 (0.15s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1 (0.16s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0 (0.15s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1 (0.16s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1 (0.02s)
+PASS
+ok  	github.com/snissn/compress/zstd	1.899s

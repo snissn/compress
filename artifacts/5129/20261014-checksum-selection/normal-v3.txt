@@ -1,0 +1,750 @@
+=== RUN   TestBoundedColdConstructorAllocationWitness
+    decoder_bounded_allocation_test.go:16: fresh-process witness
+--- SKIP: TestBoundedColdConstructorAllocationWitness (0.00s)
+=== RUN   TestBoundedMalformedErrorAllocations
+=== RUN   TestBoundedMalformedErrorAllocations/dictionary-zero-id
+    decoder_bounded_allocation_test.go:86: returned="dictionaries cannot have ID 0" allocations=0 R=1 B=600; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/header-truncated
+    decoder_bounded_allocation_test.go:86: returned="unexpected EOF" allocations=0 R=2 B=148; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/reserved-block
+    decoder_bounded_allocation_test.go:86: returned="invalid input: reserved block type encountered" allocations=0 R=1 B=3; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/literal-truncated
+    decoder_bounded_allocation_test.go:86: returned="block too small" allocations=0 R=8 B=8; static package error has no per-operation capacity refund
+--- PASS: TestBoundedMalformedErrorAllocations (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/dictionary-zero-id (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/header-truncated (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/reserved-block (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/literal-truncated (0.00s)
+=== RUN   TestBoundedNecessaryHistoryN2N
+    decoder_bounded_allocation_test.go:140: N=1048576 stored=395174 calls=17969 R=574296 B=11828098 peakConservative=1526272 observedDecoderAllocated=1520928 observedDecoderAllocations=37; original immutable input/oracle/spans excluded; linked history lookup probes included
+    decoder_bounded_allocation_test.go:140: N=2097152 stored=790173 calls=35850 R=1145812 B=23410958 peakConservative=2836992 observedDecoderAllocated=2831648 observedDecoderAllocations=69; original immutable input/oracle/spans excluded; linked history lookup probes included
+--- PASS: TestBoundedNecessaryHistoryN2N (0.02s)
+=== RUN   TestBoundedChecksumSelection
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=0 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=0 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=1 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=false/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=false mode=1 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=0 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=0/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=0 fed=true; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=false
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=1 fed=false; decoded=9
+=== RUN   TestBoundedChecksumSelection/crc=true/mode=1/fed=true
+    decoder_bounded_checksum_selection_test.go:136: copy-only admission: crc=true mode=1 fed=true; decoded=9
+--- PASS: TestBoundedChecksumSelection (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=0/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=0/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=1/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=false/mode=1/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=0/fed=true (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=false (0.00s)
+    --- PASS: TestBoundedChecksumSelection/crc=true/mode=1/fed=true (0.00s)
+=== RUN   TestBoundedDictionarySelectionDefinition
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+--- PASS: TestBoundedDictionarySelectionDefinition (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-after-reset (0.00s)
+=== RUN   TestBoundedEmptyDictionaryColdRefusal
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdicttrue
+--- PASS: TestBoundedEmptyDictionaryColdRefusal (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdicttrue (0.00s)
+=== RUN   TestBoundedOriginalRawDictionaryZeroID
+--- PASS: TestBoundedOriginalRawDictionaryZeroID (0.00s)
+=== RUN   TestBoundedRawDictionaryMustMatchFrameID
+--- PASS: TestBoundedRawDictionaryMustMatchFrameID (0.00s)
+=== RUN   TestBoundedFourStreamPartitions
+=== RUN   TestBoundedFourStreamPartitions/reported-length1
+=== RUN   TestBoundedFourStreamPartitions/reported-length1/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/reported-length1/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/reported-length1/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/reported-length1/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length2
+=== RUN   TestBoundedFourStreamPartitions/length2/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length2/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length2/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length2/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length5
+=== RUN   TestBoundedFourStreamPartitions/length5/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length5/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length5/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length5/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length3-empty-fourth
+=== RUN   TestBoundedFourStreamPartitions/length3-empty-fourth/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length3-empty-fourth/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length3-empty-fourth/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length3-empty-fourth/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4
+=== RUN   TestBoundedFourStreamPartitions/length4/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length6-empty-fourth
+=== RUN   TestBoundedFourStreamPartitions/length6-empty-fourth/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length6-empty-fourth/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length6-empty-fourth/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length6-empty-fourth/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length7
+=== RUN   TestBoundedFourStreamPartitions/length7/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length7/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length7/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length7/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length8
+=== RUN   TestBoundedFourStreamPartitions/length8/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length8/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length8/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length8/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length9-empty-fourth
+=== RUN   TestBoundedFourStreamPartitions/length9-empty-fourth/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length9-empty-fourth/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length9-empty-fourth/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length9-empty-fourth/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-overrun
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode1/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-underrun
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode0/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode0/fedtrue
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode1/fedfalse
+=== RUN   TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode1/fedtrue
+--- PASS: TestBoundedFourStreamPartitions (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/reported-length1 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/reported-length1/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/reported-length1/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/reported-length1/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/reported-length1/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length2 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length2/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length2/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length2/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length2/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length5 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length5/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length5/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length5/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length5/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length3-empty-fourth (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length3-empty-fourth/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length3-empty-fourth/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length3-empty-fourth/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length3-empty-fourth/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length4 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length6-empty-fourth (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length6-empty-fourth/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length6-empty-fourth/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length6-empty-fourth/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length6-empty-fourth/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length7 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length7/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length7/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length7/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length7/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length8 (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length8/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length8/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length8/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length8/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length9-empty-fourth (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length9-empty-fourth/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length9-empty-fourth/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length9-empty-fourth/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length9-empty-fourth/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-overrun (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-overrun/mode1/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-underrun (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedFourStreamPartitions/length4-first-stream-underrun/mode1/fedtrue (0.00s)
+=== RUN   TestBoundedFourStreamCancelBeforeValidation
+=== RUN   TestBoundedFourStreamCancelBeforeValidation/mode0/fedfalse
+=== RUN   TestBoundedFourStreamCancelBeforeValidation/mode0/fedtrue
+=== RUN   TestBoundedFourStreamCancelBeforeValidation/mode1/fedfalse
+=== RUN   TestBoundedFourStreamCancelBeforeValidation/mode1/fedtrue
+--- PASS: TestBoundedFourStreamCancelBeforeValidation (0.00s)
+    --- PASS: TestBoundedFourStreamCancelBeforeValidation/mode0/fedfalse (0.00s)
+    --- PASS: TestBoundedFourStreamCancelBeforeValidation/mode0/fedtrue (0.00s)
+    --- PASS: TestBoundedFourStreamCancelBeforeValidation/mode1/fedfalse (0.00s)
+    --- PASS: TestBoundedFourStreamCancelBeforeValidation/mode1/fedtrue (0.00s)
+=== RUN   TestBoundedOriginalBlockInput
+=== RUN   TestBoundedOriginalBlockInput/tiny-split-header
+    decoder_bounded_input_test.go:97: decoded=11 stored=24 inputCapacity=131090 chunk=1
+=== RUN   TestBoundedOriginalBlockInput/rich-compressed-blocks
+    decoder_bounded_input_test.go:97: decoded=2101248 stored=791739 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/stored-input-over-two-MiB
+    decoder_bounded_input_test.go:97: decoded=2300000 stored=2300121 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/RLE
+    decoder_bounded_input_test.go:97: decoded=150000 stored=43 inputCapacity=131090 chunk=17
+--- PASS: TestBoundedOriginalBlockInput (0.02s)
+    --- PASS: TestBoundedOriginalBlockInput/tiny-split-header (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/rich-compressed-blocks (0.01s)
+    --- PASS: TestBoundedOriginalBlockInput/stored-input-over-two-MiB (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/RLE (0.00s)
+=== RUN   TestBoundedStreamRefusalResetAndCancel
+--- PASS: TestBoundedStreamRefusalResetAndCancel (0.00s)
+=== RUN   TestBoundedSkippableUint32Length
+--- PASS: TestBoundedSkippableUint32Length (0.00s)
+=== RUN   TestBoundedResetSameOwner
+--- PASS: TestBoundedResetSameOwner (0.00s)
+=== RUN   TestBoundedAdmissionAndOutputBinding
+--- PASS: TestBoundedAdmissionAndOutputBinding (0.00s)
+=== RUN   TestBoundedOriginalFramingFailures
+=== RUN   TestBoundedOriginalFramingFailures/truncate
+=== RUN   TestBoundedOriginalFramingFailures/truncate#01
+=== RUN   TestBoundedOriginalFramingFailures/truncate#02
+=== RUN   TestBoundedOriginalFramingFailures/truncate#03
+=== RUN   TestBoundedOriginalFramingFailures/truncate#04
+=== RUN   TestBoundedOriginalFramingFailures/truncate#05
+=== RUN   TestBoundedOriginalFramingFailures/truncate#06
+--- PASS: TestBoundedOriginalFramingFailures (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#01 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#02 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#03 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#04 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#05 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#06 (0.00s)
+=== RUN   TestBoundedRLEExpansionPause
+--- PASS: TestBoundedRLEExpansionPause (0.00s)
+=== RUN   TestBoundedConcatenatedCompressedHistory
+=== RUN   TestBoundedConcatenatedCompressedHistory/raw
+=== RUN   TestBoundedConcatenatedCompressedHistory/spans
+--- PASS: TestBoundedConcatenatedCompressedHistory (0.00s)
+    --- PASS: TestBoundedConcatenatedCompressedHistory/raw (0.00s)
+    --- PASS: TestBoundedConcatenatedCompressedHistory/spans (0.00s)
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedfalse
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedtrue
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedfalse
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedtrue
+--- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedfalse (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedtrue (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedfalse (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedtrue (0.00s)
+=== RUN   TestBoundedCancelSecondCompressedFrame
+=== RUN   TestBoundedCancelSecondCompressedFrame/mode0/fedfalse
+=== RUN   TestBoundedCancelSecondCompressedFrame/mode0/fedtrue
+=== RUN   TestBoundedCancelSecondCompressedFrame/mode1/fedfalse
+=== RUN   TestBoundedCancelSecondCompressedFrame/mode1/fedtrue
+--- PASS: TestBoundedCancelSecondCompressedFrame (0.00s)
+    --- PASS: TestBoundedCancelSecondCompressedFrame/mode0/fedfalse (0.00s)
+    --- PASS: TestBoundedCancelSecondCompressedFrame/mode0/fedtrue (0.00s)
+    --- PASS: TestBoundedCancelSecondCompressedFrame/mode1/fedfalse (0.00s)
+    --- PASS: TestBoundedCancelSecondCompressedFrame/mode1/fedtrue (0.00s)
+=== RUN   TestBoundedOriginalProducerAllocationControl
+    decoder_bounded_ordinary_control_test.go:90: one explicit fresh-process fixture
+--- SKIP: TestBoundedOriginalProducerAllocationControl (0.00s)
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1910 B=156680 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=593 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=61 B=1143 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=258 B=1220 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=5 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=1641 B=2088832 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=64 B=3777 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=15 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=1131008 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=294 mode=0 calls=187 R=4298 B=3418432 peakConservativeAdmission=1270272 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2038 B=160776 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=593 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=91 B=2103 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=305 B=2244 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=13 B=41280 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=4034 B=5486664 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=34 B=1344 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=96 B=4801 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=294 mode=1 calls=476 R=6956 B=5817352 peakConservativeAdmission=1532416 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1910 B=156680 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=591 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=8 B=8 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=1 B=1 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=3 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=1 B=89 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=52 B=216 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=4 B=154 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=528 B=52886 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=1 B=2048 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=4 B=466 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=115200 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=26520 stored=104 mode=0 calls=84 R=2528 B=328607 peakConservativeAdmission=254464 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2038 B=160776 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=591 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=8 B=8 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=1 B=1 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=3 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=1 B=89 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=54 B=280 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=9 B=41268 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=1128 B=114412 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=1 B=2048 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=1 B=40 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=6 B=530 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=26520 stored=104 mode=1 calls=105 R=3267 B=402807 peakConservativeAdmission=262656 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2038 B=160776 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=593 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=193 B=4483 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=264 B=264 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=10 R=2 B=139856 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=11 R=33 B=9768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=33 B=99 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=33 B=33 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=522 B=4039 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=33 B=2937 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=14002 B=74992 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=2153 B=6865936 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=4860 B=4248616 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=33 B=67584 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=71 B=2792 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=582 B=2383323 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=100 R=384 B=12049 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=110 R=1121247 B=9598504 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=12 B=256 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=2101248 stored=791735 mode=1 calls=36138 R=1146510 B=23659658 peakConservativeAdmission=3033600 callerReadOperations=258; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1910 B=156680 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=1 R=4258 B=50592 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=6 B=594 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=61 B=1143 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=258 B=1220 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=5 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=1641 B=2088832 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=64 B=3778 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=15 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=1131008 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=295 mode=0 calls=323 R=8557 B=3469026 peakConservativeAdmission=1299584 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2038 B=160776 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=1 R=4544 B=59744 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=6 B=594 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=91 B=2103 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=305 B=2244 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=13 B=41280 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=4034 B=5486664 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=34 B=1344 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=96 B=4802 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=295 mode=1 calls=619 R=11501 B=5877098 peakConservativeAdmission=1561728 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+--- PASS: TestBoundedActualGomapProducerFrames (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+=== RUN   TestBoundedOriginalProducerDifferential
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1910 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2038 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1910 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2038 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=61 R=1921 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=64 R=2054 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=61 R=1923 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=64 R=2056 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=65 R=2049 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=82 R=2274 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=67 R=2088 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=82 R=2314 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=195 R=6198 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=436 R=11608 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=260 R=8164 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=496 R=13725 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=33469 R=1070903 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=35840 R=1145847 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=33573 R=1072983 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=35921 R=1148089 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=398 R=12688 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=997 R=24082 peak=4080128 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=560 R=17552 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=1134 R=29221 peak=4080128 fixed=58472
+--- PASS: TestBoundedOriginalProducerDifferential (0.04s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1 (0.00s)
+=== RUN   TestBoundedExistingDictionaryCorpus
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007612.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/dictplain.zst
+--- PASS: TestBoundedExistingDictionaryCorpus (0.03s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007612.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/dictplain.zst (0.00s)
+=== RUN   TestBoundedPauseAndCancel
+=== RUN   TestBoundedPauseAndCancel/0
+=== RUN   TestBoundedPauseAndCancel/1
+=== RUN   TestBoundedPauseAndCancel/60
+=== RUN   TestBoundedPauseAndCancel/63
+=== RUN   TestBoundedPauseAndCancel/100
+=== RUN   TestBoundedPauseAndCancel/1000
+=== RUN   TestBoundedPauseAndCancel/2000
+--- PASS: TestBoundedPauseAndCancel (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/0 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/1 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/60 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/63 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/100 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/1000 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/2000 (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.145s
