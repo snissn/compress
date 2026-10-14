@@ -1,0 +1,42 @@
+{
+  "head": "3b25800b7d75ccafd0984621f17e1c9a1e2693f9",
+  "base": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "source": [
+    {
+      "path": "fse/decompress.go",
+      "size": 5659,
+      "sha256": "dd5aa8c0a15afa4454dafe13b287fba845f3b7b381e35152a9f08079084d75dc",
+      "upstream_sha256": "f30d291722fa174e3961a272f054a19e52c6101a9bf52464e19c12a997bfb088"
+    },
+    {
+      "path": "huff0/decompress.go",
+      "size": 26168,
+      "sha256": "f99257f2c65ccc6a7f38c7b6638651c783de3db65537be305949f2e87b60852a",
+      "upstream_sha256": "2252d5f37da24ca8cdc7cc82a61594cd608c36f7269a728c2085fe19ce3b586d"
+    },
+    {
+      "path": "zstd/fse_decoder.go",
+      "size": 5730,
+      "sha256": "f2364013852497041e36e163fb47d435545f15145a0d99e822cc61c89a54f39d",
+      "upstream_sha256": "005f20afa6bd1c58091acd7a7ea5c9500610d4a41bf7846e4ba9c59a5326be58"
+    },
+    {
+      "path": "zstd/fse_decoder_generic.go",
+      "size": 594,
+      "sha256": "e55c4e5ca302cbb22ab224ceec5c76e033d01e3d55be079f9b1c4c32cc895ab7",
+      "upstream_sha256": "3345ee073bd946deef317e9a78818e1144e71d17e5e954c504e200e1934af7d4"
+    },
+    {
+      "path": "zstd/decodeheader.go",
+      "size": 4581,
+      "sha256": "e460f7dacec413c5c0e4d1bb633c893e060ee4b818d3ec7b9ae3f2dbf9e6faf7",
+      "upstream_sha256": "18a618ead4628fb685e7da85c37af5e65517ed2d17c1c5029a352610f4929a06"
+    }
+  ],
+  "go_version": "go version go1.26.4 linux/amd64",
+  "utc": "2026-10-14T10:54:37.058133+00:00",
+  "host": "Linux mikers-MS-7E71 7.0.0-30-generic #30-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 31 18:22:54 UTC 2026 x86_64 GNU/Linux",
+  "cpu": "\t: AMD Ryzen 7 9700X 8-Core Processor",
+  "load": "0.31 0.34 0.26 1/1207 3789858",
+  "measurement_scope": "Focused fixed-count existing component benchmarks on shared host, not quiet final Dgraph M0 evidence. Setup/compression excluded by existing harness ResetTimer."
+}

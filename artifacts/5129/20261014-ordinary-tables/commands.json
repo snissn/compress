@@ -1,0 +1,262 @@
+[
+  {
+    "label": "before-fse",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./fse",
+      "-run",
+      "^$",
+      "-bench",
+      "^BenchmarkDecompress$/(gettysburg|normcount2|endzerobits)$",
+      "-benchtime=10000x",
+      "-count=7",
+      "-benchmem"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.5737307071685791
+  },
+  {
+    "label": "before-huff",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./huff0",
+      "-run",
+      "^$",
+      "-bench",
+      "^BenchmarkDecompress1XTable$/(crash2|endnonzero|case1)$",
+      "-benchtime=10000x",
+      "-count=7",
+      "-benchmem"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.27511143684387207
+  },
+  {
+    "label": "after-fse",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./fse",
+      "-run",
+      "^$",
+      "-bench",
+      "^BenchmarkDecompress$/(gettysburg|normcount2|endzerobits)$",
+      "-benchtime=10000x",
+      "-count=7",
+      "-benchmem"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.4267749786376953
+  },
+  {
+    "label": "after-huff",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./huff0",
+      "-run",
+      "^$",
+      "-bench",
+      "^BenchmarkDecompress1XTable$/(crash2|endnonzero|case1)$",
+      "-benchtime=10000x",
+      "-count=7",
+      "-benchmem"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.41541600227355957
+  },
+  {
+    "label": "ordinary-fse-huff-normal",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./fse",
+      "./huff0",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.39548420906066895
+  },
+  {
+    "label": "bounded-normal",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./internal/decoderwork",
+      "./fse",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "Test(Bounded|TableState|LiteralState|NCount|DecoderWork)",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 1.1541306972503662
+  },
+  {
+    "label": "bounded-race",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-race",
+      "-tags",
+      "nounsafe",
+      "-p",
+      "2",
+      "./internal/decoderwork",
+      "./fse",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "Test(Bounded|TableState|LiteralState|NCount|DecoderWork)",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 6.314442157745361
+  },
+  {
+    "label": "generic-safe-386",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-tags",
+      "noasm,nounsafe",
+      "-p",
+      "2",
+      "./internal/decoderwork",
+      "./fse",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "Test(Bounded|TableState|LiteralState|NCount|DecoderWork|Decompress)",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "0",
+      "GOARCH": "386"
+    },
+    "exit_code": 0,
+    "seconds": 1.3919196128845215
+  },
+  {
+    "label": "vet",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "-p",
+      "2",
+      "./internal/decoderwork",
+      "./fse",
+      "./huff0",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 0.16250228881835938
+  },
+  {
+    "label": "final-header-bounded-normal",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^(TestHeader_Decode|TestBounded)",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "CGO_ENABLED": "1"
+    },
+    "exit_code": 0,
+    "seconds": 1.15647554397583
+  }
+]

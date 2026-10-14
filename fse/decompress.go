@@ -1,8 +1,8 @@
 package fse
 
 import (
+	"errors"
 	"fmt"
-	"github.com/snissn/compress/internal/decoderwork"
 )
 
 const (
@@ -40,14 +40,123 @@ func Decompress(b []byte, s *Scratch) ([]byte, error) {
 
 // readNCount will read the symbol distribution so decoding tables can be constructed.
 func (s *Scratch) readNCount() error {
-	var p decoderwork.NCount
-	p.Begin(s.br.unread(), s.norm[:], maxSymbolValue+1)
-	_, used, err := p.Step(nil, tablelogAbsoluteMax)
-	if err != nil {
-		return err
+	var (
+		charnum   uint16
+		previous0 bool
+		b         = &s.br
+	)
+	iend := b.remain()
+	if iend < 4 {
+		return errors.New("input too small")
 	}
-	s.actualTableLog, s.symbolLen = p.TableLog, p.Symbols
-	s.br.advance(uint(used))
+	bitStream := b.Uint32()
+	nbBits := uint((bitStream & 0xF) + minTablelog) // extract tableLog
+	if nbBits > tablelogAbsoluteMax {
+		return errors.New("tableLog too large")
+	}
+	bitStream >>= 4
+	bitCount := uint(4)
+
+	s.actualTableLog = uint8(nbBits)
+	remaining := int32((1 << nbBits) + 1)
+	threshold := int32(1 << nbBits)
+	gotTotal := int32(0)
+	nbBits++
+
+	for remaining > 1 {
+		if previous0 {
+			n0 := charnum
+			for (bitStream & 0xFFFF) == 0xFFFF {
+				n0 += 24
+				if b.off < iend-5 {
+					b.advance(2)
+					bitStream = b.Uint32() >> bitCount
+				} else {
+					bitStream >>= 16
+					bitCount += 16
+				}
+			}
+			for (bitStream & 3) == 3 {
+				n0 += 3
+				bitStream >>= 2
+				bitCount += 2
+			}
+			n0 += uint16(bitStream & 3)
+			bitCount += 2
+			if n0 > maxSymbolValue {
+				return errors.New("maxSymbolValue too small")
+			}
+			for charnum < n0 {
+				s.norm[charnum&0xff] = 0
+				charnum++
+			}
+
+			if b.off <= iend-7 || b.off+int(bitCount>>3) <= iend-4 {
+				b.advance(bitCount >> 3)
+				bitCount &= 7
+				bitStream = b.Uint32() >> bitCount
+			} else {
+				bitStream >>= 2
+			}
+		}
+
+		max := (2*(threshold) - 1) - (remaining)
+		var count int32
+
+		if (int32(bitStream) & (threshold - 1)) < max {
+			count = int32(bitStream) & (threshold - 1)
+			bitCount += nbBits - 1
+		} else {
+			count = int32(bitStream) & (2*threshold - 1)
+			if count >= threshold {
+				count -= max
+			}
+			bitCount += nbBits
+		}
+
+		count-- // extra accuracy
+		if count < 0 {
+			// -1 means +1
+			remaining += count
+			gotTotal -= count
+		} else {
+			remaining -= count
+			gotTotal += count
+		}
+		s.norm[charnum&0xff] = int16(count)
+		charnum++
+		previous0 = count == 0
+		for remaining < threshold {
+			nbBits--
+			threshold >>= 1
+		}
+		if b.off <= iend-7 || b.off+int(bitCount>>3) <= iend-4 {
+			b.advance(bitCount >> 3)
+			bitCount &= 7
+		} else {
+			bitCount -= (uint)(8 * (len(b.b) - 4 - b.off))
+			b.off = len(b.b) - 4
+		}
+		bitStream = b.Uint32() >> (bitCount & 31)
+	}
+	s.symbolLen = charnum
+
+	if s.symbolLen <= 1 {
+		return fmt.Errorf("symbolLen (%d) too small", s.symbolLen)
+	}
+	if s.symbolLen > maxSymbolValue+1 {
+		return fmt.Errorf("symbolLen (%d) too big", s.symbolLen)
+	}
+	if remaining != 1 {
+		return fmt.Errorf("corruption detected (remaining %d != 1)", remaining)
+	}
+	if bitCount > 32 {
+		return fmt.Errorf("corruption detected (bitCount %d > 32)", bitCount)
+	}
+	if gotTotal != 1<<s.actualTableLog {
+		return fmt.Errorf("corruption detected (total %d != %d)", gotTotal, 1<<s.actualTableLog)
+	}
+	b.advance((bitCount + 7) >> 3)
 	return nil
 }
 
@@ -81,15 +190,70 @@ func (s *Scratch) allocDtable() {
 
 // buildDtable will build the decoding table.
 func (s *Scratch) buildDtable() error {
+	tableSize := uint32(1 << s.actualTableLog)
+	highThreshold := tableSize - 1
 	s.allocDtable()
-	var p decoderwork.Table
-	p.Begin(s.norm[:], s.ct.stateTable, int(s.symbolLen), s.actualTableLog, 1, 1, 3)
-	_, err := p.Step(nil,
-		func(i int, v uint8) { s.decTable[i].symbol = v },
-		func(i int) uint8 { return s.decTable[i].symbol },
-		func(i int, n uint8, v uint16) { s.decTable[i].nbBits = n; s.decTable[i].newState = v })
-	s.zeroBits = p.ZeroBits
-	return err
+	symbolNext := s.ct.stateTable[:256]
+
+	// Init, lay down lowprob symbols
+	s.zeroBits = false
+	{
+		largeLimit := int16(1 << (s.actualTableLog - 1))
+		for i, v := range s.norm[:s.symbolLen] {
+			if v == -1 {
+				s.decTable[highThreshold].symbol = uint8(i)
+				highThreshold--
+				symbolNext[i] = 1
+			} else {
+				if v >= largeLimit {
+					s.zeroBits = true
+				}
+				symbolNext[i] = uint16(v)
+			}
+		}
+	}
+	// Spread symbols
+	{
+		tableMask := tableSize - 1
+		step := tableStep(tableSize)
+		position := uint32(0)
+		for ss, v := range s.norm[:s.symbolLen] {
+			for i := 0; i < int(v); i++ {
+				s.decTable[position].symbol = uint8(ss)
+				position = (position + step) & tableMask
+				for position > highThreshold {
+					// lowprob area
+					position = (position + step) & tableMask
+				}
+			}
+		}
+		if position != 0 {
+			// position must reach all cells once, otherwise normalizedCounter is incorrect
+			return errors.New("corrupted input (position != 0)")
+		}
+	}
+
+	// Build Decoding table
+	{
+		tableSize := uint16(1 << s.actualTableLog)
+		for u, v := range s.decTable {
+			symbol := v.symbol
+			nextState := symbolNext[symbol]
+			symbolNext[symbol] = nextState + 1
+			nBits := s.actualTableLog - byte(highBits(uint32(nextState)))
+			s.decTable[u].nbBits = nBits
+			newState := (nextState << nBits) - tableSize
+			if newState >= tableSize {
+				return fmt.Errorf("newState (%d) outside table size (%d)", newState, tableSize)
+			}
+			if newState == uint16(u) && nBits == 0 {
+				// Seems weird that this is possible with nbits > 0.
+				return fmt.Errorf("newState (%d) == oldState (%d) and no bits", newState, u)
+			}
+			s.decTable[u].newState = newState
+		}
+	}
+	return nil
 }
 
 // decompress will decompress the bitstream.

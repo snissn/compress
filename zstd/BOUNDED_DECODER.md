@@ -7,6 +7,14 @@ spread, Huffman table construction, and scalar sequence decoder. Ordinary
 retain their contracts. No ordinary whole-decode fallback runs in a bounded
 step, and no worker, file owner, dictionary registry, or output cache is added.
 
+Ordinary FSE normalization/table construction, Huffman `ReadTable`, public frame
+header parsing, and scalar sequence decoding keep their direct optimized loops.
+Only explicitly caller-budgeted operations enter the suspended state machines;
+ordinary calls do not pay per-symbol continuation dispatch or callback overhead.
+The bounded states preserve the same format grammar and reuse the original
+bitreaders, tables, scratch, and scalar sequence primitives. Differential corpus
+and produced-frame checks protect the two entry routes.
+
 ## Work and admission
 
 Supply one `DecoderWork` belonging to the enclosing operation. `Reserve(R, B)`

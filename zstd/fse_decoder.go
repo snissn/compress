@@ -6,8 +6,8 @@ package zstd
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
-	"github.com/snissn/compress/internal/decoderwork"
 	"io"
 )
 
@@ -50,14 +50,136 @@ func tableStep(tableSize uint32) uint32 {
 
 // readNCount will read the symbol distribution so decoding tables can be constructed.
 func (s *fseDecoder) readNCount(b *byteReader, maxSymbol uint16) error {
-	var p decoderwork.NCount
-	p.Begin(b.unread(), s.norm[:], maxSymbol)
-	_, used, err := p.Step(nil, tablelogAbsoluteMax)
-	if err != nil {
-		return err
+	var (
+		charnum   uint16
+		previous0 bool
+	)
+	if b.remain() < 4 {
+		return errors.New("input too small")
 	}
-	s.actualTableLog, s.symbolLen = p.TableLog, p.Symbols
-	b.advance(uint(used))
+	bitStream := b.Uint32NC()
+	nbBits := uint((bitStream & 0xF) + minTablelog) // extract tableLog
+	if nbBits > tablelogAbsoluteMax {
+		println("Invalid tablelog:", nbBits)
+		return errors.New("tableLog too large")
+	}
+	bitStream >>= 4
+	bitCount := uint(4)
+
+	s.actualTableLog = uint8(nbBits)
+	remaining := int32((1 << nbBits) + 1)
+	threshold := int32(1 << nbBits)
+	gotTotal := int32(0)
+	nbBits++
+
+	for remaining > 1 && charnum <= maxSymbol {
+		if previous0 {
+			//println("prev0")
+			n0 := charnum
+			for (bitStream & 0xFFFF) == 0xFFFF {
+				//println("24 x 0")
+				n0 += 24
+				if r := b.remain(); r > 5 {
+					b.advance(2)
+					// The check above should make sure we can read 32 bits
+					bitStream = b.Uint32NC() >> bitCount
+				} else {
+					// end of bit stream
+					bitStream >>= 16
+					bitCount += 16
+				}
+			}
+			//printf("bitstream: %d, 0b%b", bitStream&3, bitStream)
+			for (bitStream & 3) == 3 {
+				n0 += 3
+				bitStream >>= 2
+				bitCount += 2
+			}
+			n0 += uint16(bitStream & 3)
+			bitCount += 2
+
+			if n0 > maxSymbolValue {
+				return errors.New("maxSymbolValue too small")
+			}
+			//println("inserting ", n0-charnum, "zeroes from idx", charnum, "ending before", n0)
+			for charnum < n0 {
+				s.norm[uint8(charnum)] = 0
+				charnum++
+			}
+
+			if r := b.remain(); r >= 7 || r-int(bitCount>>3) >= 4 {
+				b.advance(bitCount >> 3)
+				bitCount &= 7
+				// The check above should make sure we can read 32 bits
+				bitStream = b.Uint32NC() >> bitCount
+			} else {
+				bitStream >>= 2
+			}
+		}
+
+		max := (2*threshold - 1) - remaining
+		var count int32
+
+		if int32(bitStream)&(threshold-1) < max {
+			count = int32(bitStream) & (threshold - 1)
+			if debugAsserts && nbBits < 1 {
+				panic("nbBits underflow")
+			}
+			bitCount += nbBits - 1
+		} else {
+			count = int32(bitStream) & (2*threshold - 1)
+			if count >= threshold {
+				count -= max
+			}
+			bitCount += nbBits
+		}
+
+		// extra accuracy
+		count--
+		if count < 0 {
+			// -1 means +1
+			remaining += count
+			gotTotal -= count
+		} else {
+			remaining -= count
+			gotTotal += count
+		}
+		s.norm[charnum&0xff] = int16(count)
+		charnum++
+		previous0 = count == 0
+		for remaining < threshold {
+			nbBits--
+			threshold >>= 1
+		}
+
+		if r := b.remain(); r >= 7 || r-int(bitCount>>3) >= 4 {
+			b.advance(bitCount >> 3)
+			bitCount &= 7
+			// The check above should make sure we can read 32 bits
+			bitStream = b.Uint32NC() >> (bitCount & 31)
+		} else {
+			bitCount -= (uint)(8 * (len(b.b) - 4 - b.off))
+			b.off = len(b.b) - 4
+			bitStream = b.Uint32() >> (bitCount & 31)
+		}
+	}
+	s.symbolLen = charnum
+	if s.symbolLen <= 1 {
+		return fmt.Errorf("symbolLen (%d) too small", s.symbolLen)
+	}
+	if s.symbolLen > maxSymbolValue+1 {
+		return fmt.Errorf("symbolLen (%d) too big", s.symbolLen)
+	}
+	if remaining != 1 {
+		return fmt.Errorf("corruption detected (remaining %d != 1)", remaining)
+	}
+	if bitCount > 32 {
+		return fmt.Errorf("corruption detected (bitCount %d > 32)", bitCount)
+	}
+	if gotTotal != 1<<s.actualTableLog {
+		return fmt.Errorf("corruption detected (total %d != %d)", gotTotal, 1<<s.actualTableLog)
+	}
+	b.advance((bitCount + 7) >> 3)
 	return s.buildDtable()
 }
 
