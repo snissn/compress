@@ -1,0 +1,54 @@
+=== RUN   TestBoundedClosedControlOrdinaryInterface
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/Read
+panic: test timed out after 5s
+	running tests:
+		TestBoundedClosedControlOrdinaryInterface (5s)
+		TestBoundedClosedControlOrdinaryInterface/unbegun/Read (5s)
+
+goroutine 20 [running]:
+testing.(*M).startAlarm.func1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2802 +0x354
+created by time.goFunc
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/time/sleep.go:215 +0x2d
+
+goroutine 1 [chan receive]:
+testing.(*T).Run(0x211cf1dfe008, {0x73f71e?, 0x0?}, 0x747840)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2109 +0x4e5
+testing.runTests.func1(0x211cf1dfe008)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2585 +0x3e
+testing.tRunner(0x211cf1dfe008, 0x211cf1de9be0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea
+testing.runTests({0x7375e9, 0x1a}, {0x73a2ad, 0x1f}, 0x211cf1d921e0, {0x9941e0, 0x6c, 0x6c}, {0xc2abf2ff2e4d58b2, 0x12a08af39, ...})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2583 +0x505
+testing.(*M).Run(0x211cf1d906e0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2443 +0x6ac
+github.com/snissn/compress/zstd.TestMain(0x211cf1d906e0)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/zstd_test.go:28 +0x6f
+main.main()
+	_testmain.go:352 +0xa5
+
+goroutine 18 [chan receive]:
+testing.(*T).Run(0x211cf1dfe248, {0x211cf1d84740?, 0x51d4e0?}, 0x211cf1d95170)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2109 +0x4e5
+github.com/snissn/compress/zstd.TestBoundedClosedControlOrdinaryInterface(0x211cf1dfe248)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_closed_control_test.go:28 +0x2ef
+testing.tRunner(0x211cf1dfe248, 0x747840)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea
+created by testing.(*T).Run in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x4c5
+
+goroutine 19 [chan receive (nil chan)]:
+github.com/snissn/compress/zstd.(*Decoder).nextBlock(0x211cf1e12120, 0xa5?)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder.go:442 +0x137
+github.com/snissn/compress/zstd.(*Decoder).Read(0x211cf1e12120, {0x211cf1d8de47?, 0x74cf68?, 0x989a20?})
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder.go:149 +0x151
+github.com/snissn/compress/zstd.TestBoundedClosedControlOrdinaryInterface.func2(0x211cf1dfe488?)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_closed_control_test.go:18 +0x25
+github.com/snissn/compress/zstd.TestBoundedClosedControlOrdinaryInterface.func9(0x211cf1dfe488)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_closed_control_test.go:40 +0x1cb
+testing.tRunner(0x211cf1dfe488, 0x211cf1d95170)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea
+created by testing.(*T).Run in goroutine 18
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x4c5
+FAIL	github.com/snissn/compress/zstd	5.008s
+FAIL

@@ -1,0 +1,31 @@
+=== RUN   TestBoundedClosedControlOrdinaryInterface
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/ReadEmpty
+    decoder_bounded_closed_control_test.go:41: closed bounded contract: got <nil> want decoder used after Close
+--- FAIL: TestBoundedClosedControlOrdinaryInterface (0.00s)
+    --- FAIL: TestBoundedClosedControlOrdinaryInterface/unbegun/ReadEmpty (0.00s)
+=== RUN   TestBoundedPublicModeCrossingClose
+=== RUN   TestBoundedPublicModeCrossingClose/ordinary_active
+    decoder_bounded_closed_control_test.go:206: ordinary false completion true <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/unbegun
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/begun_raw
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/begun_spans
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/reset_paused
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/close_refused
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+=== RUN   TestBoundedPublicModeCrossingClose/close_paused
+    decoder_bounded_closed_control_test.go:259: bounded wrapper false completion <nil>
+--- FAIL: TestBoundedPublicModeCrossingClose (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/ordinary_active (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/unbegun (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/begun_raw (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/begun_spans (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/reset_paused (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/close_refused (0.00s)
+    --- FAIL: TestBoundedPublicModeCrossingClose/close_paused (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.003s
+FAIL

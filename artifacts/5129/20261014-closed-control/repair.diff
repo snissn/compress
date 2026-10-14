@@ -1,0 +1,37 @@
+diff --git a/zstd/decoder.go b/zstd/decoder.go
+index 29486a9..9e73ff6 100644
+--- a/zstd/decoder.go
++++ b/zstd/decoder.go
+@@ -633,6 +633,9 @@ func (c closeWrapper) Read(p []byte) (n int, err error) {
+ 
+ // Close closes the decoder.
+ func (c closeWrapper) Close() error {
++	if c.d.bounded != nil {
++		return ErrBoundedMode
++	}
+ 	c.d.Close()
+ 	return nil
+ }
+diff --git a/zstd/decoder_bounded.go b/zstd/decoder_bounded.go
+index 345938f..907f77d 100644
+--- a/zstd/decoder_bounded.go
++++ b/zstd/decoder_bounded.go
+@@ -1254,6 +1254,9 @@ func (b *boundedDecoder) canBind(owner any, mode BoundedOutput, dict BorrowedDic
+ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+ 	b := d.bounded
+ 	if b == nil {
++		if d.current.err != ErrDecoderClosed {
++			return false, ErrBoundedMode
++		}
+ 		return true, nil
+ 	}
+ 	// Close may promote a paused reset, but no later reset may downgrade it.
+@@ -1355,6 +1358,8 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+ 				return true, nil
+ 			}
+ 			w := b.work
++			// The surviving exported control must stay terminal after detachment.
++			d.current.err = ErrDecoderClosed
+ 			b.work = nil
+ 			d.bounded = nil
+ 			b = nil

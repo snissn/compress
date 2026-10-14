@@ -1254,6 +1254,9 @@ func (b *boundedDecoder) canBind(owner any, mode BoundedOutput, dict BorrowedDic
 func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 	b := d.bounded
 	if b == nil {
+		if d.current.err != ErrDecoderClosed {
+			return false, ErrBoundedMode
+		}
 		return true, nil
 	}
 	// Close may promote a paused reset, but no later reset may downgrade it.
@@ -1355,6 +1358,8 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 				return true, nil
 			}
 			w := b.work
+			// The surviving exported control must stay terminal after detachment.
+			d.current.err = ErrDecoderClosed
 			b.work = nil
 			d.bounded = nil
 			b = nil

@@ -633,6 +633,9 @@ func (c closeWrapper) Read(p []byte) (n int, err error) {
 
 // Close closes the decoder.
 func (c closeWrapper) Close() error {
+	if c.d.bounded != nil {
+		return ErrBoundedMode
+	}
 	c.d.Close()
 	return nil
 }

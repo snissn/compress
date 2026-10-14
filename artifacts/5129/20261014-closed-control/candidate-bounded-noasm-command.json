@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+    "test",
+    "-tags=noasm",
+    "-p",
+    "2",
+    "./zstd",
+    "-run",
+    "Bounded",
+    "-count=1",
+    "-timeout=90s"
+  ],
+  "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+  "environment": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local",
+    "CGO_ENABLED": "1"
+  },
+  "override": {},
+  "started_utc": "2026-10-14T10:16:41Z"
+}

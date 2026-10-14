@@ -1,0 +1,28 @@
+{
+ "head": "4ebd093fe4607798a69d9f6d6252d2f022ed5470",
+ "test_sha256": "0132573001b6eb4fc5632c25e40dd8f0fe3c7fdc37f61ff7136a2fc3b5973795",
+ "command": [
+  "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+  "test",
+  "-overlay",
+  "/home/mikers/benchmarks/mvcc-4871-repair-20261013/evidence/compress-5129/closed-control-20261014/baseline-overlay.json",
+  "-p",
+  "2",
+  "./zstd",
+  "-count",
+  "1",
+  "-v",
+  "-run",
+  "^TestBoundedClosedControlOrdinaryInterface/unbegun/ReadEmpty$|^TestBoundedPublicModeCrossingClose$",
+  "-timeout",
+  "15s"
+ ],
+ "environment": {
+  "GOWORK": "off",
+  "GOMAXPROCS": "2",
+  "GOPROXY": "off",
+  "GOSUMDB": "off",
+  "GOTOOLCHAIN": "local",
+  "CGO_ENABLED": "1"
+ }
+}

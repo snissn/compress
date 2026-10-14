@@ -1,0 +1,29 @@
+{
+ "source": {
+  "zstd/decoder.go": "1a33ba3df4141aba681ac579b37caad78305d713280fd128bfa2b495c931e61a",
+  "zstd/decoder_bounded.go": "f3367ce2d83ea1257addfa43c4ad47f478b0c7d7a70e4ed419a4813d36b64a8c",
+  "zstd/decoder_bounded_closed_control_test.go": "0132573001b6eb4fc5632c25e40dd8f0fe3c7fdc37f61ff7136a2fc3b5973795"
+ },
+ "command": [
+  "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+  "test",
+  "-p",
+  "2",
+  "./zstd",
+  "-run",
+  "^TestBoundedClosedControl|^TestBoundedPublicModeCrossingClose",
+  "-count",
+  "1",
+  "-timeout",
+  "30s",
+  "-v"
+ ],
+ "environment": {
+  "GOWORK": "off",
+  "GOMAXPROCS": "2",
+  "GOPROXY": "off",
+  "GOSUMDB": "off",
+  "GOTOOLCHAIN": "local",
+  "CGO_ENABLED": "1"
+ }
+}
