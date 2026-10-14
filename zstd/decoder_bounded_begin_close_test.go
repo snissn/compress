@@ -80,6 +80,7 @@ func TestBoundedBeginStreamRejectsPausedClose(t *testing.T) {
 				if w.retained != BoundedControlSize() {
 					t.Errorf("CloseStep stranded capacity: retained=%d want=%d", w.retained, BoundedControlSize())
 				}
+				d = nil // Drop the containing final control before refunding its admission.
 				w.Release(BoundedControlSize())
 				if w.retained != 0 {
 					t.Fatal("original owner retirement", w.retained)

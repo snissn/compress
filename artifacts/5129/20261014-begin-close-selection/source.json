@@ -9,7 +9,7 @@
   },
   "test": {
     "path": "zstd/decoder_bounded_begin_close_test.go",
-    "sha256": "5349a3907a5dd726efc79cc8b496cf232094ee965dd314b3d8247454987e24c4"
+    "sha256": "ad5d7badd01058d732d05f101ea92aaf930f0925bee8619405006ad810a2300e"
   },
   "retained_prior_members": [
     {
@@ -474,5 +474,7 @@
     }
   ],
   "validation": "Final original-c33 overlay all4 cases RED with actual pre-rejection allocation; phase6 retains139264B afterClose. Final same test/allbounded normal, focused race and386 safe GREEN; rejected public BeginStream performs0R/0B/0 retained delta and actual Close plus final control release returnszero. Initial harness failures retained. Ordinary/full/producer prior evidence byte applicability preserved; current latest-head CI required separately.",
-  "performance_relevance": "Possibly relevant lifecycle validation only. Zero-effects regression directly measures improved rejected-call allocation/work; valid stream/parser/hot paths byte unchanged. No new throughput improvement claim."
+  "performance_relevance": "Possibly relevant lifecycle validation only. Zero-effects regression directly measures improved rejected-call allocation/work; valid stream/parser/hot paths byte unchanged. No new throughput improvement claim.",
+  "previous_test_sha256": "5349a3907a5dd726efc79cc8b496cf232094ee965dd314b3d8247454987e24c4",
+  "final_control_review_repair": "Same final-control lifetime as original helper: drop final Decoder pointer before refund. Latest final-source overlay RED and final normal/race/386 GREEN bound in commands-final-control.json; previous raw retained historical."
 }

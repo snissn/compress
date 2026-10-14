@@ -1,19 +1,34 @@
 {
   "members": [
     {
+      "path": "artifacts/5129/20261014-begin-close-selection/386-final-control.txt",
+      "sha256": "71cf96811bbefde73fbefcd038507ebf130fdc827f4c300092c55a1ffb514a00",
+      "bytes": 1451
+    },
+    {
       "path": "artifacts/5129/20261014-begin-close-selection/386.txt",
       "sha256": "71cf96811bbefde73fbefcd038507ebf130fdc827f4c300092c55a1ffb514a00",
       "bytes": 1451
     },
     {
       "path": "artifacts/5129/20261014-begin-close-selection/README.md",
-      "sha256": "90a5c4cbb6b98b5a3ba63198ccaa6a04333d2fdcae9ffe09034a2e5350f2cb28",
-      "bytes": 1354
+      "sha256": "e1e6bfd1948be1dce2e6b1f9a52a81ca692a2166ddc6759a35f32817f7fb8772",
+      "bytes": 1769
     },
     {
       "path": "artifacts/5129/20261014-begin-close-selection/baseline-command.json",
       "sha256": "5ee041df87d9a64964802d5bf4a8a76e6badcd2f1236543d1fcfde0154e3e3cb",
       "bytes": 708
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-control-overlay-cleanup.json",
+      "sha256": "a7ee07f977d96ddc82ee7ce3ad9e5a1a8b5857a405bf0f4528cb66d1fcfe76e9",
+      "bytes": 578
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-control-red.txt",
+      "sha256": "8666dd689e8bfe94e0a7e04b7bb2b03772a6c58698fe113630392c2f3fd7dd29",
+      "bytes": 1726
     },
     {
       "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-red.txt",
@@ -36,6 +51,11 @@
       "bytes": 1058
     },
     {
+      "path": "artifacts/5129/20261014-begin-close-selection/commands-final-control.json",
+      "sha256": "49b6cc36f6a88bcea9f894e5de3e03eb675b5eef4985215f70217da377977db5",
+      "bytes": 2550
+    },
+    {
       "path": "artifacts/5129/20261014-begin-close-selection/commands.json",
       "sha256": "5a56f581b2faa6ad28d2edc384c781929d477a882d07b9e0a76fb44c870b0b85",
       "bytes": 2652
@@ -46,6 +66,11 @@
       "bytes": 388
     },
     {
+      "path": "artifacts/5129/20261014-begin-close-selection/normal-final-control.txt",
+      "sha256": "27a4cbae3b3a463dd20fbad914bf46ee28d0de0230c9fc7872efc51a6a589c94",
+      "bytes": 69751
+    },
+    {
       "path": "artifacts/5129/20261014-begin-close-selection/normal-v2.txt",
       "sha256": "0ce68ecaf3217027a84344612710d6225dcd38808926d2cc143c6795d74d13aa",
       "bytes": 69751
@@ -54,6 +79,11 @@
       "path": "artifacts/5129/20261014-begin-close-selection/normal.txt",
       "sha256": "7b0a0dc59b7a5d4d1e2b90df56a97d1cd31d60acc37117d869e93e89ca985333",
       "bytes": 69920
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/race-final-control.txt",
+      "sha256": "40c221eef03950024016ad9755d2791629291b356d2f5f9b5661ae8a10bf5d0a",
+      "bytes": 3553
     },
     {
       "path": "artifacts/5129/20261014-begin-close-selection/race.txt",
@@ -67,8 +97,8 @@
     },
     {
       "path": "artifacts/5129/20261014-begin-close-selection/source.json",
-      "sha256": "83c9cf676ee6a8c071d8a934978dd13cca6858dca871c40caa8ab52f34fe0bee",
-      "bytes": 19474
+      "sha256": "ec365c9488b601b0e4a47a5e3477dc860665526d472ab5034759d806594858c2",
+      "bytes": 19830
     }
   ]
 }
