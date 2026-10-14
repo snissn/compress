@@ -49,8 +49,8 @@
     },
     {
       "path": "artifacts/5129/20261014-checksum-selection/commands.json",
-      "bytes": 2383,
-      "sha256": "a5c45405c2eead5da0a36a13a9d5dc6e1ff0909c842ee29f7fd49f462589456e"
+      "bytes": 2399,
+      "sha256": "a68ee16b52594c870f4e45f843d1525635d77dc6a1c1e26e83545ef25c7bce4b"
     },
     {
       "path": "artifacts/5129/20261014-checksum-selection/normal-v2.exit",
