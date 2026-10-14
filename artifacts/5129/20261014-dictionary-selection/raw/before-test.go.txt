@@ -1,0 +1,95 @@
+package zstd
+
+import (
+	"bytes"
+	"errors"
+	"fmt"
+	"os"
+	"testing"
+)
+
+func TestBoundedDictionarySelectionDefinition(t *testing.T) {
+	// A public raw-block frame carrying dictionary ID 73. The block does not
+	// reference dictionary history; frame selection itself must require it.
+	frame := []byte{0x28, 0xb5, 0x2f, 0xfd, 0x21, 73, 4, 0x21, 0, 0, 't', 'e', 's', 't'}
+	withoutID := append([]byte{0x28, 0xb5, 0x2f, 0xfd, 0x20}, frame[6:]...)
+	definition, err := os.ReadFile("testdata/bounded-gomap/leaf255-dictionary.dict")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases := []struct {
+		name  string
+		frame []byte
+		dict  BorrowedDictionary
+		opts  []DOption
+	}{
+		{"binary", frame, BorrowedDictionary{ID: 73, Data: definition, Owner: &definition}, []DOption{WithDecoderDicts(definition)}},
+		{"binary-id-only-nil", frame, BorrowedDictionary{ID: 73}, nil},
+		{"binary-id-only-empty", frame, BorrowedDictionary{ID: 73, Data: []byte{}}, nil},
+		{"raw-empty-nil", frame, BorrowedDictionary{ID: 73, Raw: true}, []DOption{WithDecoderDictRaw(73, nil)}},
+		{"raw-empty-slice", frame, BorrowedDictionary{ID: 73, Raw: true, Data: []byte{}}, []DOption{WithDecoderDictRaw(73, []byte{})}},
+		{"raw-mismatch", frame, BorrowedDictionary{ID: 72, Raw: true}, []DOption{WithDecoderDictRaw(72, nil)}},
+		{"binary-mismatch", frame, BorrowedDictionary{ID: 72, Data: definition, Owner: &definition}, nil},
+		{"absent", frame, BorrowedDictionary{}, nil},
+		{"no-id-absent", withoutID, BorrowedDictionary{}, nil},
+		{"no-id-binary-id-only", withoutID, BorrowedDictionary{ID: 73}, nil},
+		{"no-id-raw-empty", withoutID, BorrowedDictionary{Raw: true}, []DOption{WithDecoderDictRaw(0, nil)}},
+		{"no-id-raw-different-id", withoutID, BorrowedDictionary{ID: 73, Raw: true}, []DOption{WithDecoderDictRaw(73, nil)}},
+		{"binary-id-only-after-reset", frame, BorrowedDictionary{ID: 73}, nil},
+	}
+	for _, mode := range []BoundedOutput{BoundedRaw, BoundedSpans} {
+		for _, fed := range []bool{false, true} {
+			t.Run(fmt.Sprintf("mode%d/fed%v", mode, fed), func(t *testing.T) {
+				w := &boundedTestWork{limit: 32 << 20}
+				w.quantum()
+				d, ok, e := NewBoundedReader(w)
+				if !ok || e != nil {
+					t.Fatal(ok, e)
+				}
+				defer closeBoundedForTest(t, &d, w)
+				for i, c := range cases {
+					t.Run(c.name, func(t *testing.T) {
+						ordinary, e := NewReader(nil, append([]DOption{WithDecoderConcurrency(1)}, c.opts...)...)
+						if e != nil {
+							t.Fatal(e)
+						}
+						want, oracleErr := ordinary.DecodeAll(c.frame, nil)
+						ordinary.Close()
+						if oracleErr != nil && !errors.Is(oracleErr, ErrUnknownDictionary) {
+							t.Fatal("unexpected ordinary error", oracleErr)
+						}
+						if i != 0 {
+							// Refused cleanup must preserve capacity and the SAME operands.
+							w.quantum()
+							w.refuse = true
+							retained, r, b := w.retained, w.r, w.b
+							var ok bool
+							if fed {
+								ok, e = d.ResetStreamStep(&c.frame, mode, nil, c.dict)
+							} else {
+								ok, e = d.ResetStep(c.frame, &c.frame, mode, nil, c.dict)
+							}
+							w.refuse = false
+							if ok || e != nil || w.retained != retained || w.r != r || w.b != b {
+								t.Fatal("refused reset changed custody or work", ok, e)
+							}
+						}
+						got, boundedErr := multiFrameOutcome(t, d, w, c.frame, c.dict, mode, fed, i != 0)
+						t.Logf("ordinary error=%v output=%q; bounded error=%v output=%q", oracleErr, want, boundedErr, got)
+						if !errors.Is(boundedErr, oracleErr) || (oracleErr == nil && !bytes.Equal(got, want)) || (oracleErr != nil && len(got) != 0) {
+							t.Errorf("dictionary selection diverged from ordinary oracle")
+						}
+					})
+				}
+				w.quantum()
+				w.refuse = true
+				retained, r, b := w.retained, w.r, w.b
+				ok, e = d.CloseStep()
+				w.refuse = false
+				if ok || e != nil || w.retained != retained || w.r != r || w.b != b {
+					t.Fatal("refused close changed custody or work", ok, e)
+				}
+			})
+		}
+	}
+}

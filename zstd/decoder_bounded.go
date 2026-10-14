@@ -575,7 +575,10 @@ func (b *boundedDecoder) step(output []byte) (written int, done bool, err error)
 			b.hist.huffTree = nil
 			b.hist.decoders = sequenceDecs{br: &b.bits}
 			if b.header.DictionaryID != 0 || (b.dictionary.ID == 0 && len(b.dictionary.Data) != 0) {
-				if b.header.DictionaryID != b.dictionary.ID {
+				// A binary ID alone is not a definition. Nonempty binary Data
+				// has been completely validated by dictionaryStep before this phase;
+				// explicit empty raw dictionaries retain WithDecoderDictRaw semantics.
+				if b.header.DictionaryID != b.dictionary.ID || (!b.dictionary.Raw && len(b.dictionary.Data) == 0) {
 					return written, false, ErrUnknownDictionary
 				}
 				b.hist.decoders.dict = b.dictContent

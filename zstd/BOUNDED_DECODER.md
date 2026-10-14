@@ -101,7 +101,10 @@ bounded operation, and do not qualify native integrated resource limits.
 its existing owner. Binary definitions are validated in suspended original
 Huffman/FSE/offset phases. No eager ordinary `WithDecoderDicts` copy is hidden
 in construction. Raw dictionary ID zero preserves ordinary dictionary-zero
-selection; a different supplied ID cannot satisfy an unselected dictionary.
+selection; explicitly empty raw definitions remain valid. A nonzero binary ID
+without complete definition bytes returns `ErrUnknownDictionary`; an ID alone
+cannot install binary Huffman/FSE tables or offsets. A different supplied ID
+cannot satisfy an unselected dictionary.
 The original ordinary APIs continue to copy definitions as before.
 
 Every input, dictionary, Raw, file, and definition owner remains admitted while

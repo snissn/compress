@@ -1,0 +1,293 @@
+[
+  {
+    "stage": "before",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^TestBoundedDictionarySelectionDefinition$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 0.8918237686157227
+  },
+  {
+    "stage": "normal",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedOriginalDictionaryCorpus|TestBoundedActualGomapProducerFrames/leaf255-dictionary)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.927241325378418
+  },
+  {
+    "stage": "normal-corpus",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.16583919525146484
+  },
+  {
+    "stage": "actual-dictionary-producer",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^TestBoundedActualGomapProducerFrames$/^leaf255-dictionary$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.1003873348236084
+  },
+  {
+    "stage": "race",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-race",
+      "-tags=nounsafe",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 3.0826430320739746
+  },
+  {
+    "stage": "386",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "0",
+      "GOARCH": "386"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-tags=noasm,nounsafe",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.9733908176422119
+  },
+  {
+    "stage": "vet",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "-p",
+      "2",
+      "./zstd"
+    ],
+    "exit": 0,
+    "seconds": 0.1262192726135254
+  },
+  {
+    "stage": "final-normal",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.9282474517822266
+  },
+  {
+    "stage": "final-race",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-race",
+      "-tags=nounsafe",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 3.1040451526641846
+  },
+  {
+    "stage": "final-386",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "0",
+      "GOARCH": "386"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-tags=noasm,nounsafe",
+      "./zstd",
+      "-run",
+      "^(TestBoundedDictionarySelectionDefinition|TestBoundedEmptyDictionaryColdRefusal|TestBoundedOriginalRawDictionaryZeroID|TestBoundedRawDictionaryMustMatchFrameID|TestBoundedConcatenatedDictionaryAndFrameIndependence|TestBoundedExistingDictionaryCorpus)$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.9782769680023193
+  },
+  {
+    "stage": "final-vet",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "GOTOOLCHAIN": "local",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "CGO_ENABLED": "1"
+    },
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "-p",
+      "2",
+      "./zstd"
+    ],
+    "exit": 0,
+    "seconds": 0.1316823959350586
+  },
+  {
+    "stage": "source-whitespace-check",
+    "cwd": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129",
+    "env": {},
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "zstd/decoder_bounded.go",
+      "zstd/decoder_bounded_dictionary_selection_test.go",
+      "zstd/BOUNDED_DECODER.md"
+    ],
+    "exit": 0
+  }
+]
