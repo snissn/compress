@@ -1,0 +1,113 @@
+diff --git a/zstd/decoder_bounded.go b/zstd/decoder_bounded.go
+index 4c53b7f..345938f 100644
+--- a/zstd/decoder_bounded.go
++++ b/zstd/decoder_bounded.go
+@@ -76,7 +76,7 @@ type boundedDecoder struct {
+ 	blockStart, skipRemaining                                                                   uint64
+ 	blockType                                                                                   blockType
+ 	blockSize, rawRemaining, litSize, mode, matchRemaining, matchOffset                         int
+-	four, last, begun, ready, failed, closing                                                   bool
++	four, last, begun, ready, failed, closing, closeRelease                                     bool
+ 	rle                                                                                         byte
+ 	allocatedLiteral                                                                            uint64
+ 	err                                                                                         error
+@@ -113,10 +113,7 @@ func NewBoundedReader(w DecoderWork) (d *Decoder, ready bool, err error) {
+ // complete. A decoder is single-owner and has no background work.
+ func (d *Decoder) Begin(input []byte, owner any, mode BoundedOutput, raw []byte, dict BorrowedDictionary) (bool, error) {
+ 	b := d.bounded
+-	if b == nil || b.begun || b.closing {
+-		return false, ErrBoundedMode
+-	}
+-	if owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
++	if !b.canBind(owner, mode, dict) || b.begun || b.closing {
+ 		return false, ErrBoundedMode
+ 	}
+ 	if !b.work.Reserve(3, 128) {
+@@ -152,7 +149,7 @@ func (d *Decoder) Begin(input []byte, owner any, mode BoundedOutput, raw []byte,
+ // maximum original block plus a maximum header is admitted before allocation.
+ func (d *Decoder) BeginStream(owner any, mode BoundedOutput, raw []byte, dict BorrowedDictionary) (bool, error) {
+ 	b := d.bounded
+-	if b == nil || b.begun || b.closing || owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
++	if !b.canBind(owner, mode, dict) || b.begun || b.closing {
+ 		return false, ErrBoundedMode
+ 	}
+ 	if b.inputBuffer == nil {
+@@ -181,7 +178,7 @@ func (d *Decoder) BeginStream(owner any, mode BoundedOutput, raw []byte, dict Bo
+ // owner prices its actual file read and containing input span before supplying
+ // it; no input span is borrowed after FeedInput returns.
+ func (d *Decoder) InputRequest() (bytes int, needed bool) {
+-	if d.bounded == nil {
++	if d.bounded == nil || d.bounded.closing {
+ 		return 0, false
+ 	}
+ 	b := d.bounded
+@@ -274,7 +271,7 @@ func (d *Decoder) Step(output []byte) (written int, done bool, err error) {
+ }
+ func (d *Decoder) RawResult() ([]byte, error) {
+ 	b := d.bounded
+-	if b == nil || !b.ready || b.output != BoundedRaw {
++	if b == nil || !b.ready || b.closing || b.output != BoundedRaw {
+ 		return nil, ErrBoundedMode
+ 	}
+ 	return b.raw, nil
+@@ -1199,7 +1196,8 @@ func (b *boundedDecoder) emitRLE(dst []byte, count int, v byte) (int, error) {
+ }
+ 
+ // CloseStep is also cancellation. It can pause after any failure or decode
+-// phase. Actual borrowed owners are kept until every dependent alias is cleared;
++// phase. Once it starts, Begin and Reset cannot replace terminal close intent.
++// Actual borrowed owners are kept until every dependent alias is cleared;
+ // Release applies only to this decoder's admitted storage, never physical files.
+ func (d *Decoder) CloseStep() (bool, error) { return d.clearBounded(true) }
+ 
+@@ -1216,9 +1214,10 @@ func BoundedControlSize() uint64 {
+ // continuation, preserving already-constructed format tables. The caller must
+ // keep new arguments immutable/admitted while retrying; old owner retirement
+ // is allowed only after true. Fixed control/continuation is never readmitted.
++// Reset may resume its own pause, but rejects a started CloseStep before effects.
+ func (d *Decoder) ResetStep(input []byte, owner any, mode BoundedOutput, raw []byte, dict BorrowedDictionary) (bool, error) {
+ 	b := d.bounded
+-	if b == nil || owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
++	if !b.canBind(owner, mode, dict) {
+ 		return false, ErrBoundedMode
+ 	}
+ 	if !b.resetReady {
+@@ -1234,7 +1233,7 @@ func (d *Decoder) ResetStep(input []byte, owner any, mode BoundedOutput, raw []b
+ // the SAME fixed continuation/predefined tables with a new immutable owner.
+ func (d *Decoder) ResetStreamStep(owner any, mode BoundedOutput, raw []byte, dict BorrowedDictionary) (bool, error) {
+ 	b := d.bounded
+-	if b == nil || owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
++	if !b.canBind(owner, mode, dict) {
+ 		return false, ErrBoundedMode
+ 	}
+ 	if !b.resetReady {
+@@ -1246,11 +1245,20 @@ func (d *Decoder) ResetStreamStep(owner any, mode BoundedOutput, raw []byte, dic
+ 	return d.BeginStream(owner, mode, raw, dict)
+ }
+ 
++// One admission rule for every new input/dictionary binding. Closing is also
++// set by a resumable reset; only latched terminal close excludes reset retries.
++func (b *boundedDecoder) canBind(owner any, mode BoundedOutput, dict BorrowedDictionary) bool {
++	return b != nil && !b.closeRelease && owner != nil && mode <= BoundedSpans && (len(dict.Data) == 0 || dict.Owner != nil)
++}
++
+ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+ 	b := d.bounded
+ 	if b == nil {
+ 		return true, nil
+ 	}
++	// Close may promote a paused reset, but no later reset may downgrade it.
++	// Latch intent before an admission refusal and consume it at completion.
++	b.closeRelease = b.closeRelease || releaseCore
+ 	b.closing = true
+ 	for {
+ 		switch b.closePhase {
+@@ -1326,7 +1334,7 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+ 			if !b.charge(1, 1024) {
+ 				return false, nil
+ 			}
+-			if !releaseCore {
++			if !b.closeRelease {
+ 				b.err = nil
+ 				b.failed = false
+ 				b.closing = false

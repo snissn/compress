@@ -1,0 +1,74 @@
+[
+  {
+    "name": "race",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-race",
+      "-tags=nounsafe",
+      "./zstd",
+      "-run",
+      "^TestBounded(TerminalCloseRejectsBindings|ClosePromotesPausedReset|ClosingQueries|ResetSameOwner|StreamRefusalResetAndCancel|BeginStreamRejectsPausedClose|PauseAndCancel|ChecksumSelection)$",
+      "-count=1",
+      "-v"
+    ],
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "seconds": 2.526963518001139,
+    "exit": 0
+  },
+  {
+    "name": "386",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "-tags=noasm,nounsafe",
+      "./zstd",
+      "-run",
+      "^TestBounded(TerminalCloseRejectsBindings|ClosePromotesPausedReset|ClosingQueries|ResetSameOwner|StreamRefusalResetAndCancel|BeginStreamRejectsPausedClose|PauseAndCancel)$",
+      "-count=1",
+      "-v"
+    ],
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "0",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOARCH": "386"
+    },
+    "seconds": 0.9133895616978407,
+    "exit": 0
+  },
+  {
+    "name": "vet",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "-p",
+      "2",
+      "./zstd"
+    ],
+    "env": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "seconds": 0.13674718281254172,
+    "exit": 0
+  }
+]

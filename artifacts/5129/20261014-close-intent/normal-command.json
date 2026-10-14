@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+    "test",
+    "-p",
+    "2",
+    "./zstd",
+    "-run",
+    "^TestBounded",
+    "-count=1",
+    "-v"
+  ],
+  "env": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "CGO_ENABLED": "1",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "seconds": 1.0137339858338237,
+  "exit": 0,
+  "test_sha256": "66bf8221589b863aaae4334e98ca40bc6c6a97536971d65e1b55962a74be3467",
+  "production_sha256": "c8c1165d135371c5f844b98977b6a597ff81005fd9a66ed0a177b76137a645cb"
+}
