@@ -1,0 +1,369 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/zstd/decoder_bounded.go	2026-10-13 19:23:52.356854026 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded.go	2026-10-13 19:58:23.766610727 -1000
+@@ -73,7 +73,7 @@
+ 	output                                                                                      BoundedOutput
+ 	raw                                                                                         []byte
+ 	frameStart, position                                                                        uint64
+-	blockStart                                                                                  uint64
++	blockStart, skipRemaining                                                                   uint64
+ 	blockType                                                                                   blockType
+ 	blockSize, rawRemaining, litSize, mode, matchRemaining, matchOffset                         int
+ 	four, last, begun, ready, failed, closing                                                   bool
+@@ -96,7 +96,7 @@
+ 	if w == nil {
+ 		return nil, false, ErrBoundedMode
+ 	}
+-	size := uint64(unsafe.Sizeof(Decoder{})) + uint64(unsafe.Sizeof(boundedDecoder{}))
++	size := decoderwork.AllocationCharge(uint64(unsafe.Sizeof(Decoder{}))) + decoderwork.AllocationCharge(uint64(unsafe.Sizeof(boundedDecoder{})))
+ 	if !w.Reserve(1, size) {
+ 		return nil, false, nil
+ 	}
+@@ -156,14 +156,15 @@
+ 		return false, ErrBoundedMode
+ 	}
+ 	if b.inputBuffer == nil {
+-		size := uint64(maxCompressedBlockSize + 18)
++		requested := maxCompressedBlockSize + 18
++		size := decoderwork.AllocationCharge(uint64(requested))
+ 		if !b.charge(1, size) {
+ 			return false, nil
+ 		}
+ 		if !b.work.Retain(size) {
+ 			return false, ErrWorkRefused
+ 		}
+-		b.inputBuffer = make([]byte, int(size))
++		b.inputBuffer = make([]byte, requested)
+ 		b.allocatedInput = size
+ 	}
+ 	ok, e := d.Begin(nil, owner, mode, raw, dict)
+@@ -347,7 +348,7 @@
+ 			continue
+ 		}
+ 		if b.tablePhase == 0 {
+-			if !b.charge(1, 0) {
++			if !b.charge(1, uint64(unsafe.Sizeof(sequenceTableState{}))) {
+ 				return false, nil
+ 			}
+ 			b.predef[i].actualTableLog = predefinedLogs[i]
+@@ -360,6 +361,9 @@
+ 		if e != nil || !ok {
+ 			return false, e
+ 		}
++		if !b.charge(1, uint64(unsafe.Sizeof(sequenceTableState{}))) {
++			return false, nil
++		}
+ 		b.table.Clear()
+ 		b.tablePhase = 0
+ 		b.coldEntry = 0
+@@ -377,7 +381,7 @@
+ 				b.dictPhase = 8
+ 				continue
+ 			}
+-			if !b.charge(1, 8) {
++			if !b.charge(1, 8+uint64(unsafe.Sizeof(huff0.TableState{}))) {
+ 				return false, nil
+ 			}
+ 			b.dictInput = b.dictionary.Data
+@@ -394,7 +398,7 @@
+ 			}
+ 			id := binary.LittleEndian.Uint32(b.dictInput[4:8])
+ 			if id == 0 {
+-				return false, errStep9f3e1de7e3
++				return false, errStepDictionaryZeroID
+ 			}
+ 			if id != b.dictionary.ID {
+ 				return false, ErrUnknownDictionary
+@@ -405,7 +409,7 @@
+ 		case 1:
+ 			ok, in, e := b.dictHuffTable.Step(b.work)
+ 			if e != nil {
+-				return false, errStepe69e0fce00
++				return false, errStepDictionaryLiteralTable
+ 			}
+ 			if !ok {
+ 				return false, nil
+@@ -422,7 +426,7 @@
+ 			}
+ 			i := order[b.dictTable]
+ 			if b.tablePhase == 0 {
+-				if !b.charge(1, 0) {
++				if !b.charge(1, uint64(unsafe.Sizeof(sequenceTableState{}))) {
+ 					return false, nil
+ 				}
+ 				b.table.Begin(&b.dictTables[i], b.dictInput, uint16(maxTableSymbol[i]), b.base[i][:int(maxTableSymbol[i])+1])
+@@ -432,6 +436,9 @@
+ 			if e != nil || !ok {
+ 				return false, e
+ 			}
++			if !b.charge(1, uint64(unsafe.Sizeof(sequenceTableState{}))+24) {
++				return false, nil
++			}
+ 			b.dictInput = b.dictInput[n:]
+ 			b.table.Clear()
+ 			b.tablePhase = 0
+@@ -446,7 +453,7 @@
+ 			offset := int(binary.LittleEndian.Uint32(b.dictInput))
+ 			b.dictInput = b.dictInput[4:]
+ 			if offset <= 0 {
+-				return false, errStepb8ce7a765c
++				return false, errStepDictionaryOffset
+ 			}
+ 			b.dictOffsets[b.dictPhase-3] = offset
+ 			b.dictPhase++
+@@ -456,7 +463,7 @@
+ 			}
+ 			for _, offset := range b.dictOffsets {
+ 				if offset > len(b.dictInput) {
+-					return false, errStep3595036531
++					return false, errStepDictionaryOffsetRange
+ 				}
+ 			}
+ 			b.dictContent = b.dictInput
+@@ -503,10 +510,13 @@
+ 			if e != nil || !ok {
+ 				return written, false, e
+ 			}
++			if !b.charge(1, uint64(unsafe.Sizeof(HeaderState{}))+24) {
++				return written, false, nil
++			}
+ 			b.in = in
+ 			b.headerState.Clear()
+ 			if b.header.Skippable {
+-				b.rawRemaining = int(b.header.SkippableSize)
++				b.skipRemaining = uint64(b.header.SkippableSize)
+ 				b.phase = 4
+ 				continue
+ 			}
+@@ -516,18 +526,18 @@
+ 			}
+ 			b.phase = 6
+ 		case 4:
+-			if b.rawRemaining == 0 {
++			if b.skipRemaining == 0 {
+ 				b.phase = 2
+ 				continue
+ 			}
+ 			if b.streaming && len(b.in) == 0 {
+-				ok, e := b.needInput(min(b.rawRemaining, 4096), false)
++				ok, e := b.needInput(int(min(b.skipRemaining, 4096)), false)
+ 				if e != nil || !ok {
+ 					return written, false, e
+ 				}
+ 			}
+ 			_, avail := b.work.Available()
+-			n := min(b.rawRemaining, 4096, int(min(avail, 4096)))
++			n := int(min(b.skipRemaining, 4096, avail))
+ 			if b.streaming {
+ 				n = min(n, len(b.in))
+ 			}
+@@ -538,7 +548,7 @@
+ 				return written, false, io.ErrUnexpectedEOF
+ 			}
+ 			b.in = b.in[n:]
+-			b.rawRemaining -= n
++			b.skipRemaining -= uint64(n)
+ 		case 5:
+ 			if !b.charge(1, 512) {
+ 				return written, false, nil
+@@ -564,7 +574,7 @@
+ 			b.hist.recentOffsets = [3]int{1, 4, 8}
+ 			b.hist.huffTree = nil
+ 			b.hist.decoders = sequenceDecs{br: &b.bits}
+-			if b.header.DictionaryID != 0 {
++			if b.header.DictionaryID != 0 || (b.dictionary.ID == 0 && len(b.dictionary.Data) != 0) {
+ 				if b.header.DictionaryID != b.dictionary.ID {
+ 					return written, false, ErrUnknownDictionary
+ 				}
+@@ -680,21 +690,22 @@
+ 					b.phase = 10
+ 				} else {
+ 					if b.hist.huffTree == nil {
+-						return written, false, errStep62e35eede7
++						return written, false, errStepTreelessWithoutHistory
+ 					}
+ 					b.phase = 11
+ 				}
+ 			}
+ 		case 9, 10, 11:
+ 			if b.block.literalBuf == nil {
+-				size := uint64(maxCompressedBlockSize + compressedBlockOverAlloc)
++				requested := maxCompressedBlockSize + compressedBlockOverAlloc
++				size := decoderwork.AllocationCharge(uint64(requested))
+ 				if !b.charge(1, size) {
+ 					return written, false, nil
+ 				}
+ 				if !b.work.Retain(size) {
+ 					return written, false, ErrWorkRefused
+ 				}
+-				b.block.literalBuf = make([]byte, int(size))
++				b.block.literalBuf = make([]byte, requested)
+ 				b.allocatedLiteral = size
+ 			}
+ 			if b.phase == 9 {
+@@ -786,7 +797,7 @@
+ 			b.mode = int(b.seqInput[0])
+ 			b.seqInput = b.seqInput[1:]
+ 			if b.mode&3 != 0 {
+-				return written, false, errStepa56c576769
++				return written, false, errStepReservedSequenceBits
+ 			}
+ 			b.tableIndex = 0
+ 			b.tablePhase = 0
+@@ -810,7 +821,7 @@
+ 					continue
+ 				case compModeRepeat:
+ 					if s.fse == nil {
+-						return written, false, errStep8ab91daecc
++						return written, false, errStepUndefinedSequenceDecoder
+ 					}
+ 					b.tableIndex++
+ 					continue
+@@ -843,6 +854,9 @@
+ 			if e != nil || !ok {
+ 				return written, false, e
+ 			}
++			if !b.charge(1, uint64(unsafe.Sizeof(sequenceTableState{}))+32) {
++				return written, false, nil
++			}
+ 			b.seqInput = b.seqInput[n:]
+ 			s.fse = &b.active[i]
+ 			b.table.Clear()
+@@ -889,13 +903,13 @@
+ 		case 161:
+ 			ll, ml, mo := b.seq.literals, b.seq.match, b.seq.offset
+ 			if ll > len(b.literals) {
+-				return written, false, errStep2963ef2ed7
++				return written, false, errStepLiteralCount
+ 			}
+ 			if ml > maxMatchLen {
+-				return written, false, errStepd30d8c9af3
++				return written, false, errStepMatchLength
+ 			}
+ 			if mo == 0 && ml > 0 {
+-				return written, false, errStepf48374cdac
++				return written, false, errStepZeroMatchOffset
+ 			}
+ 			if b.position-b.blockStart+uint64(ll+ml) > uint64(min(b.hist.windowSize, maxCompressedBlockSize)) {
+ 				return written, false, ErrUnexpectedBlockSize
+@@ -934,14 +948,14 @@
+ 			if len(b.pending) == 0 {
+ 				available := b.position - b.frameStart
+ 				if uint64(b.matchOffset) > available || b.matchOffset > b.hist.windowSize {
+-					dictPos := int64(len(b.dictContent)) - (int64(b.matchOffset) - int64(available))
+-					if dictPos < 0 || dictPos >= int64(len(b.dictContent)) {
+-						return written, false, errStepe941ad8094
++					dictPos := int64(len(b.hist.decoders.dict)) - (int64(b.matchOffset) - int64(available))
++					if dictPos < 0 || dictPos >= int64(len(b.hist.decoders.dict)) {
++						return written, false, errStepMatchHistoryRange
+ 					}
+ 					if !b.charge(1, 0) {
+ 						return written, false, nil
+ 					}
+-					b.pending = b.dictContent[int(dictPos):]
++					b.pending = b.hist.decoders.dict[int(dictPos):]
+ 				} else if b.output == BoundedRaw {
+ 					if !b.charge(1, 0) {
+ 						return written, false, nil
+@@ -1059,7 +1073,7 @@
+ 			if e != nil || !ok {
+ 				return written, false, e
+ 			}
+-			if !b.charge(1, 4) {
++			if !b.charge(1, 4+uint64(unsafe.Sizeof(xxhash.Digest{}))) {
+ 				return written, false, nil
+ 			}
+ 			if len(b.in) < 4 {
+@@ -1100,13 +1114,20 @@
+ 	if avail <= 128 {
+ 		return 0, nil
+ 	}
+-	n := min(len(src), 4096, int(min((avail-128)/4, uint64(4096))))
++	effects, perByte := uint64(2), uint64(4) // copy plus original checksum
++	if b.output == BoundedSpans {
++		effects, perByte = 3, 5
++	} // history copy, span copy, checksum scan
++	n := min(len(src), 4096, int(min((avail-128)/perByte, uint64(4096))))
+ 	if b.output == BoundedSpans {
+ 		n = min(n, len(dst), historySegmentBytes-b.segments.tail.used)
+ 	}
+ 	if n == 0 {
+ 		return 0, nil
+ 	}
++	if b.position-b.frameStart+uint64(n) > 64<<30 {
++		return 0, ErrDecoderSizeExceeded
++	}
+ 	if b.header.HasFCS && b.position-b.frameStart+uint64(n) > b.header.FrameContentSize {
+ 		return 0, ErrFrameSizeExceeded
+ 	}
+@@ -1115,7 +1136,7 @@
+ 	}
+ 	// Original checksum's bounded carry buffer and state plus the actual copy,
+ 	// checksum scan and (segmented mode) history copy are admitted together.
+-	if !b.charge(2, uint64(n)*4+128) {
++	if !b.charge(effects, uint64(n)*perByte+128) {
+ 		return 0, nil
+ 	}
+ 	if b.output == BoundedRaw {
+@@ -1162,11 +1183,14 @@
+ // Release applies only to this decoder's admitted storage, never physical files.
+ func (d *Decoder) CloseStep() (bool, error) { return d.clearBounded(true) }
+ 
+-// BoundedControlSize is the fixed returned Decoder object. CloseStep detaches
++// BoundedControlSize is the conservative allocation admission of the fixed
++// returned Decoder object, distinct from its addressable size. CloseStep detaches
+ // its owned continuation but cannot retire a caller-reachable closed Decoder.
+ // The enclosing SAME owner releases these admitted bytes only after dropping
+ // its final control pointer; this is not physical file/root retirement.
+-func BoundedControlSize() uint64 { return uint64(unsafe.Sizeof(Decoder{})) }
++func BoundedControlSize() uint64 {
++	return decoderwork.AllocationCharge(uint64(unsafe.Sizeof(Decoder{})))
++}
+ 
+ // ResetStep clears previous input/dictionary aliases and backings in the SAME
+ // continuation, preserving already-constructed format tables. The caller must
+@@ -1211,7 +1235,8 @@
+ 	for {
+ 		switch b.closePhase {
+ 		case 0:
+-			if !b.charge(1, 1024) {
++			clearBytes := uint64(unsafe.Sizeof(huff0.LiteralState{})) + uint64(unsafe.Sizeof(sequenceState{})) + uint64(unsafe.Sizeof(sequenceTableState{})) + uint64(unsafe.Sizeof(historyLookup{})) + uint64(unsafe.Sizeof(HeaderState{})) + uint64(unsafe.Sizeof(bitReader{})) + uint64(unsafe.Sizeof(sequenceDecs{})) + 128
++			if !b.charge(1, clearBytes) {
+ 				return false, nil
+ 			}
+ 			b.pending = nil
+@@ -1305,7 +1330,7 @@
+ 			b.work = nil
+ 			d.bounded = nil
+ 			b = nil
+-			w.Release(uint64(unsafe.Sizeof(boundedDecoder{})))
++			w.Release(decoderwork.AllocationCharge(uint64(unsafe.Sizeof(boundedDecoder{}))))
+ 			return true, nil
+ 		}
+ 	}
+@@ -1313,15 +1338,15 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStep9f3e1de7e3 = errors.New("dictionaries cannot have ID 0")
+-	errStepe69e0fce00 = errors.New("loading literal table: invalid definition")
+-	errStepb8ce7a765c = errors.New("invalid offset in dictionary")
+-	errStep3595036531 = errors.New("initial offset bigger than dictionary content size invalid, offsets: invalid")
+-	errStep62e35eede7 = errors.New("literal block was treeless, but no history was defined")
+-	errStepa56c576769 = errors.New("corrupt block: reserved bits not zero")
+-	errStep8ab91daecc = errors.New("sequence decoder not defined")
+-	errStep2963ef2ed7 = errors.New("unexpected literal count, want invalid bytes, but only invalid is available")
+-	errStepd30d8c9af3 = errors.New("match len (invalid) bigger than max allowed length")
+-	errStepf48374cdac = errors.New("zero matchoff and matchlen (invalid) > 0")
+-	errStepe941ad8094 = errors.New("match offset (invalid) bigger than current history (invalid)")
++	errStepDictionaryZeroID         = errors.New("dictionaries cannot have ID 0")
++	errStepDictionaryLiteralTable   = errors.New("loading literal table: invalid definition")
++	errStepDictionaryOffset         = errors.New("invalid offset in dictionary")
++	errStepDictionaryOffsetRange    = errors.New("initial offset exceeds dictionary content size")
++	errStepTreelessWithoutHistory   = errors.New("literal block was treeless, but no history was defined")
++	errStepReservedSequenceBits     = errors.New("corrupt block: reserved bits not zero")
++	errStepUndefinedSequenceDecoder = errors.New("sequence decoder not defined")
++	errStepLiteralCount             = errors.New("literal count exceeds available literals")
++	errStepMatchLength              = errors.New("match length exceeds maximum block length")
++	errStepZeroMatchOffset          = errors.New("zero offset for nonempty match")
++	errStepMatchHistoryRange        = errors.New("match offset exceeds current history")
+ )

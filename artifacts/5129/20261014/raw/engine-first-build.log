@@ -1,0 +1,6 @@
+ok  	github.com/snissn/compress/fse	0.001s
+# github.com/snissn/compress/zstd [github.com/snissn/compress/zstd.test]
+zstd/decoder_bounded.go:570:18: assignment mismatch: 3 variables but b.literal.Step returns 2 values
+ok  	github.com/snissn/compress/huff0	0.021s
+FAIL	github.com/snissn/compress/zstd [build failed]
+FAIL

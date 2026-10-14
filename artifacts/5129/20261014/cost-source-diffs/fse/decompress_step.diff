@@ -1,0 +1,91 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/fse/decompress_step.go	2026-10-13 19:23:52.356316061 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/fse/decompress_step.go	2026-10-13 20:01:12.147088687 -1000
+@@ -6,6 +6,7 @@
+ 	"errors"
+ 	"fmt"
+ 	"github.com/snissn/compress/internal/decoderwork"
++	"unsafe"
+ )
+ 
+ // DecompressState suspends the original FSE decoder. The enclosing decoder
+@@ -57,11 +58,14 @@
+ 			size := 1 << s.actualTableLog
+ 			if cap(s.decTable) < size {
+ 				bytes := uint64(size) * 4
++				if w != nil {
++					bytes = decoderwork.AllocationCharge(bytes)
++				}
+ 				if !decoderwork.Charge(w, 1, bytes) {
+ 					return false, nil, nil
+ 				}
+ 				if w != nil && !w.Retain(bytes) {
+-					return false, nil, errStepa9c3cef218
++					return false, nil, errStepTableRetention
+ 				}
+ 				old := s.decTable
+ 				s.decTable = make([]decSymbol, size)
+@@ -76,14 +80,21 @@
+ 			p.phase = 2
+ 		case 2:
+ 			if cap(s.ct.stateTable) < 256 {
+-				if !decoderwork.Charge(w, 1, 512) {
++				bytes := uint64(512)
++				if w != nil {
++					bytes = decoderwork.AllocationCharge(bytes)
++				}
++				if !decoderwork.Charge(w, 1, bytes) {
+ 					return false, nil, nil
+ 				}
+-				if w != nil && !w.Retain(512) {
+-					return false, nil, errStepa1dcfdcb5b
++				if w != nil && !w.Retain(bytes) {
++					return false, nil, errStepStateRetention
+ 				}
+ 				s.ct.stateTable = make([]uint16, 256)
+-				p.ownedNext = 512
++				p.ownedNext = bytes
++			}
++			if !decoderwork.Charge(w, 1, uint64(unsafe.Sizeof(decoderwork.Table{}))) {
++				return false, nil, nil
+ 			}
+ 			s.ct.stateTable = s.ct.stateTable[:256]
+ 			p.table.Begin(s.norm[:], s.ct.stateTable, int(s.symbolLen), s.actualTableLog, 1, 1, 3)
+@@ -128,7 +139,7 @@
+ 					if w == nil {
+ 						return false, nil, fmt.Errorf("output size > destination capacity")
+ 					}
+-					return false, nil, errStepb47b375dd1
++					return false, nil, errStepOutputCapacity
+ 				}
+ 				p.dst = append(p.dst, first.final(), second.final())
+ 				p.phase = 8
+@@ -138,7 +149,7 @@
+ 				if w == nil {
+ 					return false, nil, fmt.Errorf("output size > destination capacity")
+ 				}
+-				return false, nil, errStepb47b375dd1
++				return false, nil, errStepOutputCapacity
+ 			}
+ 			if p.phase == 6 {
+ 				s.bits.fill()
+@@ -184,7 +195,8 @@
+ 	for {
+ 		switch p.closePhase {
+ 		case 0:
+-			if !decoderwork.Charge(w, 1, 64) {
++			clearBytes := uint64(unsafe.Sizeof(decoderwork.NCount{})) + uint64(unsafe.Sizeof(decoderwork.Table{})) + 2*uint64(unsafe.Sizeof(decoder{})) + uint64(unsafe.Sizeof(byteReader{})) + uint64(unsafe.Sizeof(bitReader{})) + 40
++			if !decoderwork.Charge(w, 1, clearBytes) {
+ 				return false, nil
+ 			}
+ 			p.count.Clear()
+@@ -231,7 +243,7 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStepa9c3cef218 = errors.New("fse: table retention refused")
+-	errStepa1dcfdcb5b = errors.New("fse: state retention refused")
+-	errStepb47b375dd1 = errors.New("output size > destination capacity")
++	errStepTableRetention = errors.New("fse: table retention refused")
++	errStepStateRetention = errors.New("fse: state retention refused")
++	errStepOutputCapacity = errors.New("output size > destination capacity")
+ )

@@ -1,0 +1,19 @@
+=== RUN   TestBoundedColdConstructorAllocationWitness
+    decoder_bounded_allocation_test.go:31: requestedContaining=58464 Decoder=264 continuation=58200 allocatorAllocatedDelta=65824 allocationCount=2 R=1 B=58464; fixed Decoder remains caller reachable after CloseStep
+--- PASS: TestBoundedColdConstructorAllocationWitness (0.00s)
+=== RUN   TestBoundedMalformedErrorAllocations
+=== RUN   TestBoundedMalformedErrorAllocations/dictionary-zero-id
+    decoder_bounded_allocation_test.go:79: returned="dictionaries cannot have ID 0" allocations=0 R=1 B=8; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/header-truncated
+    decoder_bounded_allocation_test.go:79: returned="unexpected EOF" allocations=0 R=2 B=148; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/reserved-block
+    decoder_bounded_allocation_test.go:79: returned="invalid input: reserved block type encountered" allocations=0 R=1 B=3; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/literal-truncated
+    decoder_bounded_allocation_test.go:79: returned="block too small" allocations=0 R=8 B=8; static package error has no per-operation capacity refund
+--- PASS: TestBoundedMalformedErrorAllocations (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/dictionary-zero-id (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/header-truncated (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/reserved-block (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/literal-truncated (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.002s

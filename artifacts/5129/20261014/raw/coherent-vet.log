@@ -1,0 +1,2 @@
+zstd/decoder_bounded_allocation_test.go:69:13: assignment copies lock value to saved: github.com/snissn/compress/zstd.boundedDecoder contains github.com/snissn/compress/huff0.Scratch contains sync.Pool contains sync.noCopy
+zstd/decoder_bounded_allocation_test.go:72:10: assignment copies lock value to *b: github.com/snissn/compress/zstd.boundedDecoder contains github.com/snissn/compress/huff0.Scratch contains sync.Pool contains sync.noCopy

@@ -1,0 +1,4 @@
+ok  	github.com/snissn/compress/internal/decoderwork	0.001s
+ok  	github.com/snissn/compress/fse	0.025s
+ok  	github.com/snissn/compress/huff0	0.328s
+ok  	github.com/snissn/compress/zstd	84.031s

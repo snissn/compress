@@ -1,0 +1,27 @@
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.017s
+FAIL

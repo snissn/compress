@@ -1,0 +1,38 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/zstd/bitreader.go	2026-10-13 19:23:52.356637854 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/bitreader.go	2026-10-13 19:50:39.956574622 -1000
+@@ -27,13 +27,13 @@
+ // init initializes and resets the bit reader.
+ func (b *bitReader) init(in []byte) error {
+ 	if len(in) < 1 {
+-		return errBitb91cee0cb1
++		return errBitStreamTooShort
+ 	}
+ 	b.in = in
+ 	// The highest bit of the last byte indicates where to start
+ 	v := in[len(in)-1]
+ 	if v == 0 {
+-		return errBitc266253874
++		return errBitEndMarkerMissing
+ 	}
+ 	b.cursor = len(in)
+ 	b.bitsRead = 64
+@@ -128,7 +128,7 @@
+ 		if w == nil {
+ 			return fmt.Errorf("%d extra bits on block, should be 0", b.remain())
+ 		}
+-		return errBit0edb1193d2
++		return errBitExtraBlockBits
+ 	}
+ 	if b.bitsRead > 64 {
+ 		return io.ErrUnexpectedEOF
+@@ -141,7 +141,7 @@
+ }
+ 
+ var (
+-	errBitb91cee0cb1 = errors.New("corrupt stream: too short")
+-	errBitc266253874 = errors.New("corrupt stream, did not find end of stream")
+-	errBit0edb1193d2 = errors.New("unexpected extra bits on block, should be 0")
++	errBitStreamTooShort   = errors.New("corrupt stream: too short")
++	errBitEndMarkerMissing = errors.New("corrupt stream, did not find end of stream")
++	errBitExtraBlockBits   = errors.New("unexpected extra bits on block, should be 0")
+ )

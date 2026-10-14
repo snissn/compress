@@ -1,0 +1,4 @@
+# github.com/snissn/compress/zstd [github.com/snissn/compress/zstd.test]
+zstd/decoder_bounded_producer_test.go:91:45: undefined: got
+FAIL	github.com/snissn/compress/zstd [build failed]
+FAIL

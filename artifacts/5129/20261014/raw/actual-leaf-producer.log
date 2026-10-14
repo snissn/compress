@@ -1,0 +1,6 @@
+=== RUN   TestNativeZSTDActualLeafFixtureExport
+    native_zstd_leaf_fixture_export_test.go:64: valuelog: COW read capacity unavailable
+--- FAIL: TestNativeZSTDActualLeafFixtureExport (0.00s)
+FAIL
+FAIL	github.com/snissn/gomap/TreeDB/internal/valuelog	0.002s
+FAIL

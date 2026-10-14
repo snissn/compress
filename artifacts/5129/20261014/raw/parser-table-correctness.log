@@ -1,0 +1,9 @@
+?   	github.com/snissn/compress/internal/decoderwork	[no test files]
+--- FAIL: TestDecompress (0.00s)
+    --- FAIL: TestDecompress/hang2 (0.00s)
+        fse_test.go:117: want error "newState (0) == oldState (0) and no bits", got "newState (0) == oldState and no bits" (*errors.errorString)
+FAIL
+FAIL	github.com/snissn/compress/fse	0.001s
+ok  	github.com/snissn/compress/huff0	0.020s
+ok  	github.com/snissn/compress/zstd	0.155s
+FAIL

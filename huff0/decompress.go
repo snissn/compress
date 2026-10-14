@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"sync"
-
-	"github.com/snissn/compress/fse"
 )
 
 type dTable struct {
@@ -31,141 +29,10 @@ func ReadTable(in []byte, s *Scratch) (s2 *Scratch, remain []byte, err error) {
 	if err != nil {
 		return s, nil, err
 	}
-	if len(in) <= 1 {
-		return s, nil, errors.New("input too small for table")
-	}
-	iSize := in[0]
-	in = in[1:]
-	if iSize >= 128 {
-		// Uncompressed
-		oSize := iSize - 127
-		iSize = (oSize + 1) / 2
-		if int(iSize) > len(in) {
-			return s, nil, errors.New("input too small for table")
-		}
-		for n := uint8(0); n < oSize; n += 2 {
-			v := in[n/2]
-			s.huffWeight[n] = v >> 4
-			s.huffWeight[n+1] = v & 15
-		}
-		s.symbolLen = uint16(oSize)
-		in = in[iSize:]
-	} else {
-		if len(in) < int(iSize) {
-			return s, nil, fmt.Errorf("input too small for table, want %d bytes, have %d", iSize, len(in))
-		}
-		// FSE compressed weights
-		s.fse.DecompressLimit = 255
-		hw := s.huffWeight[:]
-		s.fse.Out = hw
-		b, err := fse.Decompress(in[:iSize], s.fse)
-		s.fse.Out = nil
-		if err != nil {
-			return s, nil, fmt.Errorf("fse decompress returned: %w", err)
-		}
-		if len(b) > 255 {
-			return s, nil, errors.New("corrupt input: output table too large")
-		}
-		s.symbolLen = uint16(len(b))
-		in = in[iSize:]
-	}
-
-	// collect weight stats
-	var rankStats [16]uint32
-	weightTotal := uint32(0)
-	for _, v := range s.huffWeight[:s.symbolLen] {
-		if v > tableLogMax {
-			return s, nil, errors.New("corrupt input: weight too large")
-		}
-		v2 := v & 15
-		rankStats[v2]++
-		// (1 << (v2-1)) is slower since the compiler cannot prove that v2 isn't 0.
-		weightTotal += (1 << v2) >> 1
-	}
-	if weightTotal == 0 {
-		return s, nil, errors.New("corrupt input: weights zero")
-	}
-
-	// get last non-null symbol weight (implied, total must be 2^n)
-	{
-		tableLog := highBit32(weightTotal) + 1
-		if tableLog > tableLogMax {
-			return s, nil, errors.New("corrupt input: tableLog too big")
-		}
-		s.actualTableLog = uint8(tableLog)
-		// determine last weight
-		{
-			total := uint32(1) << tableLog
-			rest := total - weightTotal
-			verif := uint32(1) << highBit32(rest)
-			lastWeight := highBit32(rest) + 1
-			if verif != rest {
-				// last value must be a clean power of 2
-				return s, nil, errors.New("corrupt input: last value not power of two")
-			}
-			s.huffWeight[s.symbolLen] = uint8(lastWeight)
-			s.symbolLen++
-			rankStats[lastWeight]++
-		}
-	}
-
-	if (rankStats[1] < 2) || (rankStats[1]&1 != 0) {
-		// by construction : at least 2 elts of rank 1, must be even
-		return s, nil, errors.New("corrupt input: min elt size, even check failed ")
-	}
-
-	// TODO: Choose between single/double symbol decoding
-
-	// Calculate starting value for each rank
-	{
-		var nextRankStart uint32
-		for n := uint8(1); n < s.actualTableLog+1; n++ {
-			current := nextRankStart
-			nextRankStart += rankStats[n] << (n - 1)
-			rankStats[n] = current
-		}
-	}
-
-	// fill DTable (always full size)
-	tSize := 1 << tableLogMax
-	if len(s.dt.single) != tSize {
-		s.dt.single = make([]dEntrySingle, tSize)
-	}
-	cTable := s.prevTable
-	if cap(cTable) < maxSymbolValue+1 {
-		cTable = make([]cTableEntry, 0, maxSymbolValue+1)
-	}
-	cTable = cTable[:maxSymbolValue+1]
-	s.prevTable = cTable[:s.symbolLen]
-	s.prevTableLog = s.actualTableLog
-
-	for n, w := range s.huffWeight[:s.symbolLen] {
-		if w == 0 {
-			cTable[n] = cTableEntry{
-				val:   0,
-				nBits: 0,
-			}
-			continue
-		}
-		length := (uint32(1) << w) >> 1
-		d := dEntrySingle{
-			entry: uint16(s.actualTableLog+1-w) | (uint16(n) << 8),
-		}
-
-		rank := &rankStats[w]
-		cTable[n] = cTableEntry{
-			val:   uint16(*rank >> (w - 1)),
-			nBits: uint8(d.entry),
-		}
-
-		single := s.dt.single[*rank : *rank+length]
-		for i := range single {
-			single[i] = d
-		}
-		*rank += length
-	}
-
-	return s, in, nil
+	var p TableState
+	p.Begin(in, s)
+	_, remain, err = p.Step(nil)
+	return s, remain, err
 }
 
 // Decompress1X will decompress a 1X encoded stream.

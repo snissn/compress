@@ -1,0 +1,18 @@
+=== RUN   TestBoundedOriginalBlockInput
+=== RUN   TestBoundedOriginalBlockInput/tiny-split-header
+    decoder_bounded_input_test.go:97: decoded=11 stored=24 inputCapacity=131090 chunk=1
+=== RUN   TestBoundedOriginalBlockInput/rich-compressed-blocks
+    decoder_bounded_input_test.go:97: decoded=2101248 stored=791739 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/stored-input-over-two-MiB
+    decoder_bounded_input_test.go:97: decoded=2300000 stored=2300121 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/RLE
+    decoder_bounded_input_test.go:97: decoded=150000 stored=43 inputCapacity=131090 chunk=17
+--- PASS: TestBoundedOriginalBlockInput (0.02s)
+    --- PASS: TestBoundedOriginalBlockInput/tiny-split-header (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/rich-compressed-blocks (0.01s)
+    --- PASS: TestBoundedOriginalBlockInput/stored-input-over-two-MiB (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/RLE (0.00s)
+=== RUN   TestBoundedStreamRefusalResetAndCancel
+--- PASS: TestBoundedStreamRefusalResetAndCancel (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.022s

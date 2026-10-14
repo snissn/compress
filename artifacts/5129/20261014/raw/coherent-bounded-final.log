@@ -1,0 +1,17 @@
+=== RUN   TestAllocationChargeEnclosingAllocations
+--- PASS: TestAllocationChargeEnclosingAllocations (0.00s)
+PASS
+ok  	github.com/snissn/compress/internal/decoderwork	0.001s
+testing: warning: no tests to run
+PASS
+ok  	github.com/snissn/compress/fse	0.001s [no tests to run]
+# github.com/snissn/compress/zstd [github.com/snissn/compress/zstd.test]
+zstd/decoder_bounded_lifecycle_test.go:20:56: core.huff.prevTable undefined (cannot refer to unexported field prevTable)
+zstd/decoder_bounded_lifecycle_test.go:20:90: core.dictHuff.prevTable undefined (cannot refer to unexported field prevTable)
+zstd/decoder_bounded_lifecycle_test.go:20:120: core.huff.dt undefined (cannot refer to unexported field dt)
+zstd/decoder_bounded_lifecycle_test.go:20:154: core.dictHuff.dt undefined (cannot refer to unexported field dt)
+testing: warning: no tests to run
+PASS
+ok  	github.com/snissn/compress/huff0	0.004s [no tests to run]
+FAIL	github.com/snissn/compress/zstd [build failed]
+FAIL

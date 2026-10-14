@@ -1,0 +1,41 @@
+=== RUN   TestAllocationChargeEnclosingAllocations
+--- PASS: TestAllocationChargeEnclosingAllocations (0.00s)
+PASS
+ok  	github.com/snissn/compress/internal/decoderwork	0.001s
+testing: warning: no tests to run
+PASS
+ok  	github.com/snissn/compress/fse	0.001s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/snissn/compress/huff0	0.004s [no tests to run]
+=== RUN   TestBoundedNecessaryHistoryN2N
+    decoder_bounded_allocation_test.go:136: N=1048576 stored=395174 calls=17925 R=573097 B=10773938 peakConservative=1526272 observedDecoderAllocated=1520944 observedDecoderAllocations=38; original immutable input/oracle/spans excluded; linked history lookup probes included
+    decoder_bounded_allocation_test.go:136: N=2097152 stored=790173 calls=35762 R=1143428 B=21305406 peakConservative=2836992 observedDecoderAllocated=2831680 observedDecoderAllocations=70; original immutable input/oracle/spans excluded; linked history lookup probes included
+--- PASS: TestBoundedNecessaryHistoryN2N (0.02s)
+=== RUN   TestBoundedSkippableUint32Length
+--- PASS: TestBoundedSkippableUint32Length (0.00s)
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=294 mode=0 calls=225 R=5231 B=5625096 peakConservativeAdmission=1270272 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=294 mode=1 calls=476 R=6952 B=5935056 peakConservativeAdmission=1532416 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:199: raw=26520 stored=104 mode=0 calls=93 R=2792 B=413719 peakConservativeAdmission=254464 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:199: raw=26520 stored=104 mode=1 calls=105 R=3263 B=434879 peakConservativeAdmission=262656 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:199: raw=2101248 stored=791735 mode=1 calls=36131 R=1146359 B=23922634 peakConservativeAdmission=3033600 callerReadOperations=258; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=295 mode=0 calls=361 R=9486 B=5672090 peakConservativeAdmission=1299584 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=295 mode=1 calls=618 R=11491 B=5991138 peakConservativeAdmission=1561728 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+--- PASS: TestBoundedActualGomapProducerFrames (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.032s

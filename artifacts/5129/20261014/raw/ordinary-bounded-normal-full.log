@@ -1,0 +1,7 @@
+ok  	github.com/snissn/compress/fse	0.023s
+ok  	github.com/snissn/compress/huff0	0.336s
+--- FAIL: TestBuildDictWorkspaceMatchesBuildDict (0.00s)
+    dict_workspace_test.go:152: BuildDict workspace output differs: got 180 bytes, want 180 bytes
+FAIL
+FAIL	github.com/snissn/compress/zstd	83.991s
+FAIL

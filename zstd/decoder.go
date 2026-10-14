@@ -20,7 +20,8 @@ import (
 // A decoder can safely be re-used even if the previous stream failed.
 // To release the resources, you must call the Close() function on a decoder.
 type Decoder struct {
-	o decoderOptions
+	bounded *boundedDecoder
+	o       decoderOptions
 
 	// Unreferenced decoders, ready for use.
 	decoders chan *blockDec
@@ -126,6 +127,9 @@ func NewReader(r io.Reader, opts ...DOption) (*Decoder, error) {
 // Returns the number of bytes read and any error that occurred.
 // When the stream is done, io.EOF will be returned.
 func (d *Decoder) Read(p []byte) (int, error) {
+	if d.bounded != nil {
+		return 0, ErrBoundedMode
+	}
 	var n int
 	for {
 		if len(d.current.b) > 0 {
@@ -169,6 +173,9 @@ func (d *Decoder) Read(p []byte) (int, error) {
 // After being called with a nil reader, no other operations than Reset or DecodeAll or Close
 // should be used.
 func (d *Decoder) Reset(r io.Reader) error {
+	if d.bounded != nil {
+		return ErrBoundedMode
+	}
 	if d.current.err == ErrDecoderClosed {
 		return d.current.err
 	}
@@ -275,6 +282,9 @@ func (d *Decoder) drainOutput() {
 // The return value n is the number of bytes written.
 // Any error encountered during the write is also returned.
 func (d *Decoder) WriteTo(w io.Writer) (int64, error) {
+	if d.bounded != nil {
+		return 0, ErrBoundedMode
+	}
 	var n int64
 	for {
 		if len(d.current.b) > 0 {
@@ -307,6 +317,9 @@ func (d *Decoder) WriteTo(w io.Writer) (int64, error) {
 // DecodeAll can be used concurrently.
 // The Decoder concurrency limits will be respected.
 func (d *Decoder) DecodeAll(input, dst []byte) ([]byte, error) {
+	if d.bounded != nil {
+		return dst, ErrBoundedMode
+	}
 	if d.decoders == nil {
 		return dst, ErrDecoderClosed
 	}
@@ -569,6 +582,9 @@ func (d *Decoder) stashDecoder() {
 // Close will release all resources.
 // It is NOT possible to reuse the decoder after this.
 func (d *Decoder) Close() {
+	if d.bounded != nil {
+		return
+	} // Bounded owners must drive CloseStep.
 	if d.current.err == ErrDecoderClosed {
 		return
 	}

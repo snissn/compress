@@ -1,0 +1,29 @@
+ok  	github.com/snissn/compress/fse	0.001s
+ok  	github.com/snissn/compress/huff0	0.021s
+--- FAIL: TestDecoderRegression (0.04s)
+    --- FAIL: TestDecoderRegression/Match-19b2c9810d5d0d10ef06d11223c129378d9ecdc7 (0.00s)
+        decoder_test.go:789: Received: 10439 unexpected literal count, want 16697 bytes, but only 447 is available
+        decoder_test.go:799: Reader Reader received: 10439 output bigger than max block size (3328)
+        decoder_test.go:802: unexpected literal count, want 16697 bytes, but only 447 is available != output bigger than max block size (3328)
+--- FAIL: TestDecoderMultiFrame (0.04s)
+    --- FAIL: TestDecoderMultiFrame/html_x_4.zst (0.00s)
+        decoder_test.go:947: 15 extra bits on block, should be 0
+--- FAIL: TestDecoderMultiFrameReset (0.05s)
+    --- FAIL: TestDecoderMultiFrameReset/html_x_4.zst (0.00s)
+        decoder_test.go:1001: 15 extra bits on block, should be 0
+--- FAIL: TestDecoder_SmallDict (0.01s)
+    --- FAIL: TestDecoder_SmallDict/decodeall-d1/z007609.zst (0.00s)
+        dict_test.go:40: unexpected EOF
+    --- FAIL: TestDecoder_SmallDict/decodeall-d1/z007612.zst (0.00s)
+        dict_test.go:40: match offset (32727) bigger than current history (914)
+    --- FAIL: TestDecoder_SmallDict/decodeall-d2/z007604.zst (0.00s)
+        dict_test.go:40: match offset (22897) bigger than current history (695)
+    --- FAIL: TestDecoder_SmallDict/decodeall-d3/z007604.zst (0.00s)
+        dict_test.go:40: match offset (22897) bigger than current history (695)
+    --- FAIL: TestDecoder_SmallDict/decodeall-dictplain.zst (0.00s)
+        dict_test.go:40: output bigger than max block size (20000)
+--- FAIL: TestDecoderRawDict (0.00s)
+    dict_test.go:629: unexpected EOF
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.153s
+FAIL

@@ -1,0 +1,25 @@
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=294 mode=0 calls=225 R=5231 B=5597050 peakContaining=1242226 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=294 mode=1 calls=476 R=6952 B=5649986 peakContaining=1247346 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:195: raw=26520 stored=104 mode=0 calls=93 R=2792 B=383521 peakContaining=224266 callerReadOperations=2; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:195: raw=26520 stored=104 mode=1 calls=105 R=3263 B=402769 peakContaining=230546 callerReadOperations=2; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:195: raw=2101248 stored=791735 mode=1 calls=36131 R=1146359 B=23354988 peakContaining=2465954 callerReadOperations=258; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=295 mode=0 calls=361 R=9486 B=5638676 peakContaining=1258036 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=295 mode=1 calls=618 R=11491 B=5700700 peakContaining=1263156 callerReadOperations=32; oracle allocation excluded
+--- PASS: TestBoundedActualGomapProducerFrames (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.014s

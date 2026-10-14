@@ -70,6 +70,15 @@ func fillBase(dst []baseOffset, base uint32, bits ...uint8) {
 	}
 }
 
+// Immutable format distributions shared by cold and ordinary construction.
+var predefinedNorm = [3][53]int16{
+	{4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 1, 1, 1, 1, 1, -1, -1, -1, -1},
+	{1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1},
+	{1, 4, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1},
+}
+var predefinedLengths = [3]int{36, 29, 53}
+var predefinedLogs = [3]uint8{6, 5, 6}
+
 var predef sync.Once
 
 func initPredefined() {
@@ -114,25 +123,17 @@ func initPredefined() {
 			case tableLiteralLengths:
 				// https://github.com/facebook/zstd/blob/ededcfca57366461021c922720878c81a5854a0a/lib/decompress/zstd_decompress_block.c#L243
 				f.actualTableLog = 6
-				copy(f.norm[:], []int16{4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1,
-					2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 1, 1, 1, 1, 1,
-					-1, -1, -1, -1})
+				copy(f.norm[:], predefinedNorm[i][:])
 				f.symbolLen = 36
 			case tableOffsets:
 				// https://github.com/facebook/zstd/blob/ededcfca57366461021c922720878c81a5854a0a/lib/decompress/zstd_decompress_block.c#L281
 				f.actualTableLog = 5
-				copy(f.norm[:], []int16{
-					1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1})
+				copy(f.norm[:], predefinedNorm[i][:])
 				f.symbolLen = 29
 			case tableMatchLengths:
 				//https://github.com/facebook/zstd/blob/ededcfca57366461021c922720878c81a5854a0a/lib/decompress/zstd_decompress_block.c#L304
 				f.actualTableLog = 6
-				copy(f.norm[:], []int16{
-					1, 4, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1,
-					-1, -1, -1, -1, -1})
+				copy(f.norm[:], predefinedNorm[i][:])
 				f.symbolLen = 53
 			}
 			if err := f.buildDtable(); err != nil {

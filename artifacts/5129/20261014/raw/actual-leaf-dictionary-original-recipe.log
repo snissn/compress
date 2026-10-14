@@ -1,0 +1,7 @@
+=== RUN   TestNativeZSTDActualLeafFixtureExport
+    native_zstd_leaf_fixture_export_test.go:163: leaf255-compact-false actual K=255 raw=1044480 stored=294 header={SingleSegment:true WindowSize:0 DictionaryID:0 HasFCS:true FrameContentSize:1044480 Skippable:false SkippableID:0 SkippableSize:0 HeaderSize:9 FirstBlock:{OK:true Last:false Compressed:true DecompressedSize:0 CompressedSize:87} HasCheckSum:false} fixture=/tmp/TestNativeZSTDActualLeafFixtureExport2738245282/001/leaf_vlog/value-l255-000001.log
+    native_zstd_leaf_fixture_export_test.go:163: leaf255-compact-true actual K=255 raw=26520 stored=104 header={SingleSegment:true WindowSize:0 DictionaryID:0 HasFCS:true FrameContentSize:26520 Skippable:false SkippableID:0 SkippableSize:0 HeaderSize:7 FirstBlock:{OK:true Last:true Compressed:true DecompressedSize:0 CompressedSize:94} HasCheckSum:false} fixture=/tmp/TestNativeZSTDActualLeafFixtureExport2738245282/002/leaf_vlog/value-l255-000001.log
+    native_zstd_leaf_fixture_export_test.go:163: leaf255-dictionary actual K=255 raw=1044480 stored=295 header={SingleSegment:true WindowSize:0 DictionaryID:73 HasFCS:true FrameContentSize:1044480 Skippable:false SkippableID:0 SkippableSize:0 HeaderSize:10 FirstBlock:{OK:true Last:false Compressed:true DecompressedSize:0 CompressedSize:87} HasCheckSum:false} fixture=/tmp/TestNativeZSTDActualLeafFixtureExport2738245282/003/leaf_vlog/value-l255-000001.log
+--- PASS: TestNativeZSTDActualLeafFixtureExport (0.01s)
+PASS
+ok  	github.com/snissn/gomap/TreeDB/internal/valuelog	0.012s

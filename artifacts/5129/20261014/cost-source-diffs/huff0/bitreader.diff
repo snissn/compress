@@ -1,0 +1,65 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/huff0/bitreader.go	2026-10-13 19:23:52.356365232 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/huff0/bitreader.go	2026-10-13 19:50:39.956574622 -1000
+@@ -27,14 +27,14 @@
+ // init initializes and resets the bit reader.
+ func (b *bitReaderBytes) init(in []byte) error {
+ 	if len(in) < 1 {
+-		return errBitb91cee0cb1
++		return errBitStreamTooShort
+ 	}
+ 	b.in = in
+ 	b.off = uint(len(in))
+ 	// The highest bit of the last byte indicates where to start
+ 	v := in[len(in)-1]
+ 	if v == 0 {
+-		return errBitc266253874
++		return errBitEndMarkerMissing
+ 	}
+ 	b.bitsRead = 64
+ 	b.value = 0
+@@ -120,7 +120,7 @@
+ 		if w == nil {
+ 			return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+ 		}
+-		return errBit0aff194f6f
++		return errBitExtraStreamBits
+ 	}
+ 	if b.bitsRead > 64 {
+ 		return io.ErrUnexpectedEOF
+@@ -141,14 +141,14 @@
+ // init initializes and resets the bit reader.
+ func (b *bitReaderShifted) init(in []byte) error {
+ 	if len(in) < 1 {
+-		return errBitb91cee0cb1
++		return errBitStreamTooShort
+ 	}
+ 	b.in = in
+ 	b.off = uint(len(in))
+ 	// The highest bit of the last byte indicates where to start
+ 	v := in[len(in)-1]
+ 	if v == 0 {
+-		return errBitc266253874
++		return errBitEndMarkerMissing
+ 	}
+ 	b.bitsRead = 64
+ 	b.value = 0
+@@ -226,7 +226,7 @@
+ 		if w == nil {
+ 			return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+ 		}
+-		return errBit0aff194f6f
++		return errBitExtraStreamBits
+ 	}
+ 	if b.bitsRead > 64 {
+ 		return io.ErrUnexpectedEOF
+@@ -235,7 +235,7 @@
+ }
+ 
+ var (
+-	errBitb91cee0cb1 = errors.New("corrupt stream: too short")
+-	errBitc266253874 = errors.New("corrupt stream, did not find end of stream")
+-	errBit0aff194f6f = errors.New("corrupt input: unexpected bits remain on stream")
++	errBitStreamTooShort   = errors.New("corrupt stream: too short")
++	errBitEndMarkerMissing = errors.New("corrupt stream, did not find end of stream")
++	errBitExtraStreamBits  = errors.New("corrupt input: unexpected bits remain on stream")
+ )

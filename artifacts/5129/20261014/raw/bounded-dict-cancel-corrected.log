@@ -1,0 +1,250 @@
+=== RUN   TestBoundedExistingDictionaryCorpus
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007612.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/dictplain.zst
+--- PASS: TestBoundedExistingDictionaryCorpus (0.03s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007612.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/dictplain.zst (0.00s)
+=== RUN   TestBoundedPauseAndCancel
+=== RUN   TestBoundedPauseAndCancel/0
+=== RUN   TestBoundedPauseAndCancel/1
+=== RUN   TestBoundedPauseAndCancel/60
+=== RUN   TestBoundedPauseAndCancel/63
+=== RUN   TestBoundedPauseAndCancel/100
+=== RUN   TestBoundedPauseAndCancel/1000
+=== RUN   TestBoundedPauseAndCancel/2000
+SIGQUIT: quit
+PC=0x490941 m=0 sigcode=0
+
+goroutine 0 gp=0x9616a0 m=0 mp=0x9626a0 [idle]:
+runtime.futex(0x9627f8, 0x80, 0x0, 0x0, 0x0, 0x0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/sys_linux_amd64.s:569 +0x21 fp=0x7fff7ac298f0 sp=0x7fff7ac298e8 pc=0x490941
+runtime.futexsleep(0x41f189?, 0x7ac29968?, 0x4601a8?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/os_linux.go:73 +0x30 fp=0x7fff7ac29940 sp=0x7fff7ac298f0 pc=0x44ae70
+runtime.notesleep(0x9627f8)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/lock_futex.go:47 +0x87 fp=0x7fff7ac29978 sp=0x7fff7ac29940 pc=0x41eac7
+runtime.mPark(...)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:1967
+runtime.stopm()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:3008 +0x8c fp=0x7fff7ac299a8 sp=0x7fff7ac29978 pc=0x4562ec
+runtime.exitsyscallNoP(0x2942f7d261e0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:5114 +0x22a fp=0x7fff7ac299f0 sp=0x7fff7ac299a8 pc=0x45b24a
+runtime.mcall()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:496 +0x55 fp=0x7fff7ac29a08 sp=0x7fff7ac299f0 pc=0x48d315
+
+goroutine 1 gp=0x2942f7c7a1e0 m=nil [chan receive, 1 minutes]:
+runtime.gopark(0x30000007279a8?, 0x30013c8bc19a8?, 0xa8?, 0x19?, 0x76140f6bba00?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7d67918 sp=0x2942f7d678f8 pc=0x487aae
+runtime.chanrecv(0x2942f7e4a100, 0x2942f7d679ff, 0x1)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/chan.go:667 +0x4ae fp=0x2942f7d67990 sp=0x2942f7d67918 pc=0x41892e
+runtime.chanrecv1(0x960d80?, 0x732640?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/chan.go:509 +0x12 fp=0x2942f7d679b8 sp=0x2942f7d67990 pc=0x418452
+testing.(*T).Run(0x2942f7d76008, {0x713c0d?, 0x0?}, 0x722cb0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2109 +0x4e5 fp=0x2942f7d67a90 sp=0x2942f7d679b8 pc=0x51e385
+testing.runTests.func1(0x2942f7d76008)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2585 +0x3e fp=0x2942f7d67ad8 sp=0x2942f7d67a90 pc=0x52079e
+testing.tRunner(0x2942f7d76008, 0x2942f7d67be0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea fp=0x2942f7d67b28 sp=0x2942f7d67ad8 pc=0x51d36a
+testing.runTests({0x7144f9, 0x1a}, {0x716e92, 0x1f}, 0x2942f7d121e0, {0x95d1e0, 0x4e, 0x4e}, {0xc2abe08a6d6c1e63, 0x8bb2cc7339, ...})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2583 +0x505 fp=0x2942f7d67c10 sp=0x2942f7d67b28 pc=0x520665
+testing.(*M).Run(0x2942f7d10780)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2443 +0x6ac fp=0x2942f7d67e50 sp=0x2942f7d67c10 pc=0x51efec
+github.com/snissn/compress/zstd.TestMain(0x2942f7d10780)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/zstd_test.go:28 +0x6f fp=0x2942f7d67eb8 sp=0x2942f7d67e50 pc=0x675daf
+main.main()
+	_testmain.go:290 +0xa5 fp=0x2942f7d67f48 sp=0x2942f7d67eb8 pc=0x67efc5
+runtime.main()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:290 +0x2d5 fp=0x2942f7d67fe0 sp=0x2942f7d67f48 pc=0x451575
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7d67fe8 sp=0x2942f7d67fe0 pc=0x48ede1
+
+goroutine 2 gp=0x2942f7c7a780 m=nil [force gc (idle), 1 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7cb2fa8 sp=0x2942f7cb2f88 pc=0x487aae
+runtime.goparkunlock(...)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:468
+runtime.forcegchelper()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:375 +0xb3 fp=0x2942f7cb2fe0 sp=0x2942f7cb2fa8 pc=0x451893
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7cb2fe8 sp=0x2942f7cb2fe0 pc=0x48ede1
+created by runtime.init.7 in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:363 +0x1a
+
+goroutine 3 gp=0x2942f7c7ad20 m=nil [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7cb3788 sp=0x2942f7cb3768 pc=0x487aae
+runtime.goparkunlock(...)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:468
+runtime.bgsweep(0x2942f7cd2000)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgcsweep.go:324 +0x151 fp=0x2942f7cb37c8 sp=0x2942f7cb3788 pc=0x4392b1
+runtime.gcenable.gowrap1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:214 +0x17 fp=0x2942f7cb37e0 sp=0x2942f7cb37c8 pc=0x42a617
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7cb37e8 sp=0x2942f7cb37e0 pc=0x48ede1
+created by runtime.gcenable in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:214 +0x66
+
+goroutine 4 gp=0x2942f7c7af00 m=nil [GC scavenge wait]:
+runtime.gopark(0x16b308?, 0x3b9aca00?, 0x0?, 0x0?, 0x0?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7cb3f78 sp=0x2942f7cb3f58 pc=0x487aae
+runtime.goparkunlock(...)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:468
+runtime.(*scavengerState).park(0x9612c0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgcscavenge.go:425 +0x49 fp=0x2942f7cb3fa8 sp=0x2942f7cb3f78 pc=0x436d29
+runtime.bgscavenge(0x2942f7cd2000)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgcscavenge.go:658 +0x59 fp=0x2942f7cb3fc8 sp=0x2942f7cb3fa8 pc=0x4372b9
+runtime.gcenable.gowrap2()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:215 +0x17 fp=0x2942f7cb3fe0 sp=0x2942f7cb3fc8 pc=0x42a5d7
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7cb3fe8 sp=0x2942f7cb3fe0 pc=0x48ede1
+created by runtime.gcenable in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:215 +0xa5
+
+goroutine 17 gp=0x2942f7d26000 m=nil [finalizer wait, 1 minutes]:
+runtime.gopark(0x460eb5?, 0x9841c0?, 0x13?, 0x0?, 0x2942f7cb2670?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7cb2620 sp=0x2942f7cb2600 pc=0x487aae
+runtime.runFinalizers()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mfinal.go:210 +0x107 fp=0x2942f7cb27e0 sp=0x2942f7cb2620 pc=0x429627
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7cb27e8 sp=0x2942f7cb27e0 pc=0x48ede1
+created by runtime.createfing in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mfinal.go:172 +0x3d
+
+goroutine 55 gp=0x2942f7d261e0 m=nil [runnable]:
+github.com/snissn/compress/zstd.(*Decoder).CloseStep(0x2942f7c727e0)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded.go:965 +0x6d3 fp=0x2942f7d64e08 sp=0x2942f7d64e00 pc=0x60b133
+github.com/snissn/compress/zstd.TestBoundedPauseAndCancel(0x2942f7d766c8)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_test.go:322 +0x613 fp=0x2942f7d65f70 sp=0x2942f7d64e08 pc=0x631573
+testing.tRunner(0x2942f7d766c8, 0x722cb0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea fp=0x2942f7d65fc0 sp=0x2942f7d65f70 pc=0x51d36a
+testing.(*T).Run.gowrap1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x1b fp=0x2942f7d65fe0 sp=0x2942f7d65fc0 pc=0x51e4fb
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7d65fe8 sp=0x2942f7d65fe0 pc=0x48ede1
+created by testing.(*T).Run in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x4c5
+
+goroutine 22 gp=0x2942f7d265a0 m=nil [GC worker (idle)]:
+runtime.gopark(0xc46db1031c816?, 0x2942f7cae760?, 0x73?, 0xcb?, 0x4b2153?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7cae740 sp=0x2942f7cae720 pc=0x487aae
+runtime.gcBgMarkWorker(0x2942f7d023f0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1791 +0xeb fp=0x2942f7cae7c8 sp=0x2942f7cae740 pc=0x42d0eb
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1695 +0x17 fp=0x2942f7cae7e0 sp=0x2942f7cae7c8 pc=0x42cfd7
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7cae7e8 sp=0x2942f7cae7e0 pc=0x48ede1
+created by runtime.gcBgMarkStartWorkers in goroutine 21
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1695 +0x105
+
+goroutine 23 gp=0x2942f7d26780 m=nil [GC worker (idle)]:
+runtime.gopark(0xc46db1031c276?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/proc.go:462 +0xce fp=0x2942f7caef40 sp=0x2942f7caef20 pc=0x487aae
+runtime.gcBgMarkWorker(0x2942f7d023f0)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1791 +0xeb fp=0x2942f7caefc8 sp=0x2942f7caef40 pc=0x42d0eb
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1695 +0x17 fp=0x2942f7caefe0 sp=0x2942f7caefc8 pc=0x42cfd7
+runtime.goexit({})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/asm_amd64.s:1771 +0x1 fp=0x2942f7caefe8 sp=0x2942f7caefe0 pc=0x48ede1
+created by runtime.gcBgMarkStartWorkers in goroutine 21
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/mgc.go:1695 +0x105
+
+rax    0xca
+rbx    0x0
+rcx    0x490943
+rdx    0x0
+rdi    0x9627f8
+rsi    0x80
+rbp    0x7fff7ac29930
+rsp    0x7fff7ac298e8
+r8     0x0
+r9     0x0
+r10    0x0
+r11    0x286
+r12    0x1
+r13    0x1
+r14    0x9616a0
+r15    0x3d
+rip    0x490941
+rflags 0x286
+cs     0x33
+fs     0x0
+gs     0x0
+FAIL	github.com/snissn/compress/zstd	78.833s
+FAIL

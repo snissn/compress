@@ -1,0 +1,59 @@
+{
+  "toolchain": "go1.26.4",
+  "GOWORK": "off",
+  "GOMAXPROCS": 2,
+  "parallel_packages": 2,
+  "results": [
+    {
+      "path": "raw/coherent-normal.log",
+      "sha256": "3f7ae41da2097b22ccb21d2a111a518a89fabebd085e8cf4c605e74d369f7b08",
+      "bytes": 193,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/coherent-noasm-nounsafe.log",
+      "sha256": "8467d875dcc8be81239bd336fa9a2c0fba99d65c7f51419771e2286c981efefa",
+      "bytes": 193,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/freeze-normal.log",
+      "sha256": "1a4f4f870330ac7c9015abb6e65e682c19aa9141477afcb141eca563df9f420e",
+      "bytes": 38447,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/freeze-race.log",
+      "sha256": "567a7ea75f42b0050c1639a0bbc8c938e78143f9b57fd99ae39d177051868692",
+      "bytes": 210,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/freeze-386-safe.log",
+      "sha256": "5d43169608f4bf1569b4717f2ddc8f10ef913e1c674bdb9b347e24d33a1f64a1",
+      "bytes": 210,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/freeze-vet.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "result": "PASS",
+      "scope": "affected/focused component; commands documented"
+    },
+    {
+      "path": "raw/coherent-platform-compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "result": "PASS",
+      "scope": "compile-only"
+    }
+  ],
+  "latest_head_ci_and_independent_review": "PENDING; not component acceptance",
+  "original_native_fixture_rank": "OPEN; exact ABI/phase schedule missing at075"
+}

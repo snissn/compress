@@ -24,14 +24,14 @@ type bitReader struct {
 // init initializes and resets the bit reader.
 func (b *bitReader) init(in []byte) error {
 	if len(in) < 1 {
-		return errors.New("corrupt stream: too short")
+		return errBitStreamTooShort
 	}
 	b.in = in
 	b.off = uint(len(in))
 	// The highest bit of the last byte indicates where to start
 	v := in[len(in)-1]
 	if v == 0 {
-		return errors.New("corrupt stream, did not find end of stream")
+		return errBitEndMarkerMissing
 	}
 	b.bitsRead = 64
 	b.value = 0
@@ -120,3 +120,8 @@ func (b *bitReader) close() error {
 	}
 	return nil
 }
+
+var (
+	errBitStreamTooShort   = errors.New("corrupt stream: too short")
+	errBitEndMarkerMissing = errors.New("corrupt stream, did not find end of stream")
+)

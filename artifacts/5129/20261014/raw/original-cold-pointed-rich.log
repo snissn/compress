@@ -1,0 +1,5 @@
+=== RUN   TestBoundedOriginalProducerAllocationControl
+ORIGINAL_ORDINARY fixture=pointed-rich stored=791735 decoded=2101248 constructor_alloc_bytes=8936 constructor_allocs=19 complete_decode_alloc_bytes=2316104 complete_decode_allocs=16 retained_output_cap=2101264 indivisible_original_decode_call=true
+--- PASS: TestBoundedOriginalProducerAllocationControl (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.003s

@@ -3,12 +3,6 @@
 
 package zstd
 
-import (
-	"encoding/binary"
-	"errors"
-	"io"
-)
-
 // HeaderMaxSize is the maximum size of a Frame and Block Header.
 // If less is sent to Header.Decode it *may* still contain enough information.
 const HeaderMaxSize = 14 + 3
@@ -107,137 +101,10 @@ func (h *Header) Decode(in []byte) error {
 // If there isn't enough input, io.ErrUnexpectedEOF is returned.
 // The FirstBlock.OK will indicate if enough information was available to decode the first block header.
 func (h *Header) DecodeAndStrip(in []byte) (remain []byte, err error) {
-	*h = Header{}
-	if len(in) < 4 {
-		return nil, io.ErrUnexpectedEOF
-	}
-	h.HeaderSize += 4
-	b, in := in[:4], in[4:]
-	if string(b) != frameMagic {
-		if string(b[1:4]) != skippableFrameMagic || b[0]&0xf0 != 0x50 {
-			return nil, ErrMagicMismatch
-		}
-		if len(in) < 4 {
-			return nil, io.ErrUnexpectedEOF
-		}
-		h.HeaderSize += 4
-		h.Skippable = true
-		h.SkippableID = int(b[0] & 0xf)
-		h.SkippableSize = binary.LittleEndian.Uint32(in)
-		return in[4:], nil
-	}
-
-	// Read Window_Descriptor
-	// https://github.com/facebook/zstd/blob/dev/doc/zstd_compression_format.md#window_descriptor
-	if len(in) < 1 {
-		return nil, io.ErrUnexpectedEOF
-	}
-	fhd, in := in[0], in[1:]
-	h.HeaderSize++
-	h.SingleSegment = fhd&(1<<5) != 0
-	h.HasCheckSum = fhd&(1<<2) != 0
-	if fhd&(1<<3) != 0 {
-		return nil, errors.New("reserved bit set on frame header")
-	}
-
-	if !h.SingleSegment {
-		if len(in) < 1 {
-			return nil, io.ErrUnexpectedEOF
-		}
-		var wd byte
-		wd, in = in[0], in[1:]
-		h.HeaderSize++
-		windowLog := 10 + (wd >> 3)
-		windowBase := uint64(1) << windowLog
-		windowAdd := (windowBase / 8) * uint64(wd&0x7)
-		h.WindowSize = windowBase + windowAdd
-	}
-
-	// Read Dictionary_ID
-	// https://github.com/facebook/zstd/blob/dev/doc/zstd_compression_format.md#dictionary_id
-	if size := fhd & 3; size != 0 {
-		if size == 3 {
-			size = 4
-		}
-		if len(in) < int(size) {
-			return nil, io.ErrUnexpectedEOF
-		}
-		b, in = in[:size], in[size:]
-		h.HeaderSize += int(size)
-		switch len(b) {
-		case 1:
-			h.DictionaryID = uint32(b[0])
-		case 2:
-			h.DictionaryID = uint32(b[0]) | (uint32(b[1]) << 8)
-		case 4:
-			h.DictionaryID = uint32(b[0]) | (uint32(b[1]) << 8) | (uint32(b[2]) << 16) | (uint32(b[3]) << 24)
-		}
-	}
-
-	// Read Frame_Content_Size
-	// https://github.com/facebook/zstd/blob/dev/doc/zstd_compression_format.md#frame_content_size
-	var fcsSize int
-	v := fhd >> 6
-	switch v {
-	case 0:
-		if h.SingleSegment {
-			fcsSize = 1
-		}
-	default:
-		fcsSize = 1 << v
-	}
-
-	if fcsSize > 0 {
-		h.HasFCS = true
-		if len(in) < fcsSize {
-			return nil, io.ErrUnexpectedEOF
-		}
-		b, in = in[:fcsSize], in[fcsSize:]
-		h.HeaderSize += int(fcsSize)
-		switch len(b) {
-		case 1:
-			h.FrameContentSize = uint64(b[0])
-		case 2:
-			// When FCS_Field_Size is 2, the offset of 256 is added.
-			h.FrameContentSize = uint64(b[0]) | (uint64(b[1]) << 8) + 256
-		case 4:
-			h.FrameContentSize = uint64(b[0]) | (uint64(b[1]) << 8) | (uint64(b[2]) << 16) | (uint64(b[3]) << 24)
-		case 8:
-			d1 := uint32(b[0]) | (uint32(b[1]) << 8) | (uint32(b[2]) << 16) | (uint32(b[3]) << 24)
-			d2 := uint32(b[4]) | (uint32(b[5]) << 8) | (uint32(b[6]) << 16) | (uint32(b[7]) << 24)
-			h.FrameContentSize = uint64(d1) | (uint64(d2) << 32)
-		}
-	}
-
-	// Frame Header done, we will not fail from now on.
-	if len(in) < 3 {
-		return in, nil
-	}
-	tmp := in[:3]
-	bh := uint32(tmp[0]) | (uint32(tmp[1]) << 8) | (uint32(tmp[2]) << 16)
-	h.FirstBlock.Last = bh&1 != 0
-	blockType := blockType((bh >> 1) & 3)
-	// find size.
-	cSize := int(bh >> 3)
-	switch blockType {
-	case blockTypeReserved:
-		return in, nil
-	case blockTypeRLE:
-		h.FirstBlock.Compressed = true
-		h.FirstBlock.DecompressedSize = cSize
-		h.FirstBlock.CompressedSize = 1
-	case blockTypeCompressed:
-		h.FirstBlock.Compressed = true
-		h.FirstBlock.CompressedSize = cSize
-	case blockTypeRaw:
-		h.FirstBlock.DecompressedSize = cSize
-		h.FirstBlock.CompressedSize = cSize
-	default:
-		panic("Invalid block type")
-	}
-
-	h.FirstBlock.OK = true
-	return in, nil
+	var p HeaderState
+	p.Begin(h, in, true)
+	_, remain, err = p.Step(nil)
+	return remain, err
 }
 
 // AppendTo will append the encoded header to the dst slice.
