@@ -1,0 +1,85 @@
+[
+  {
+    "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/s2/cmd/_s2sx/sfx-exe",
+    "files": [
+      {
+        "path": "darwin-amd64.s2",
+        "bytes": 1348884,
+        "sha256": "4c656b4abbe7af6f71745d55892b159611b682e1926c7ee49f187ee5b5ae65c7"
+      },
+      {
+        "path": "darwin-arm64.s2",
+        "bytes": 1246863,
+        "sha256": "df3e0b1b50ee61c651cc00e89f4687d8e3acedc43fecae264a65e4dde97b2011"
+      },
+      {
+        "path": "linux-amd64.s2",
+        "bytes": 1352613,
+        "sha256": "f531fe09885aa3aa997f95e1efcb7bd04e49461aef8f6d4859f676cc7c657368"
+      },
+      {
+        "path": "linux-arm.s2",
+        "bytes": 1280870,
+        "sha256": "49c9ca2b688c254e83851ca492dff5bcf0d8b00766aee3b2f9d1789358a2a6e8"
+      },
+      {
+        "path": "linux-arm64.s2",
+        "bytes": 1225634,
+        "sha256": "f0ef7775e1bcc78cbe087570a2d54b1aa986973f0d2243ee56470b0f36b0ad96"
+      },
+      {
+        "path": "linux-mips64.s2",
+        "bytes": 1188256,
+        "sha256": "0192309467b9f18781f0cfba23d80bb53b3c6db31f36f8935e95c7b1f2672345"
+      },
+      {
+        "path": "linux-ppc64le.s2",
+        "bytes": 1251243,
+        "sha256": "718a4ce28c6c67307f91be5d7809ff7f14cfe62a558973013668b2c02b03b1ab"
+      },
+      {
+        "path": "windows-386.s2",
+        "bytes": 1315321,
+        "sha256": "6a6d89b1619ae465f80874f1562f7b3b3839d4602185688745e8ffea6dfbca3e"
+      },
+      {
+        "path": "windows-amd64.s2",
+        "bytes": 1371730,
+        "sha256": "ddf0b1bf9b2ff91f0f8b3c884b5dc922416f88493816988472b8fe2e0eda182b"
+      }
+    ],
+    "file_bytes": 11581414,
+    "consumers": [],
+    "lsof_returncode": 1,
+    "release_gate": "existing generation/modfile/s2 roundtrip consumers finished; exact source/raw recipes retained in this packet; hosted CI recreates its own outputs"
+  },
+  {
+    "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2",
+    "files": [
+      {
+        "path": "s2c",
+        "bytes": 9311538,
+        "sha256": "3050443f45629b157eca013ea60bd4adcaf066f0f41fabab516f3ec2cdff703f"
+      },
+      {
+        "path": "s2c.s2",
+        "bytes": 5870603,
+        "sha256": "944e5811718e63bdc417c785b042fb88b2939baf4583fe3a59c274afe4b81d10"
+      },
+      {
+        "path": "s2d",
+        "bytes": 8739867,
+        "sha256": "3ee708b5155a3b86e73faa4a224c9ff5d33f1e070ff7f3348368bb9e390c71f0"
+      },
+      {
+        "path": "s2sx",
+        "bytes": 15091194,
+        "sha256": "c7c334f5505b3a33b36bb620489e6cd28cbc51a89cb113d898182e64cd9758b0"
+      }
+    ],
+    "file_bytes": 39013202,
+    "consumers": [],
+    "lsof_returncode": 1,
+    "release_gate": "existing generation/modfile/s2 roundtrip consumers finished; exact source/raw recipes retained in this packet; hosted CI recreates its own outputs"
+  }
+]

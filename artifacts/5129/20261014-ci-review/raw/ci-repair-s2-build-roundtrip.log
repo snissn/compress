@@ -1,0 +1,6 @@
+COMMAND ['/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go', 'build', '-p', '2', '-o', '/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2/s2c', 'github.com/snissn/compress/s2/cmd/s2c']
+COMMAND ['/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go', 'build', '-p', '2', '-o', '/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2/s2d', 'github.com/snissn/compress/s2/cmd/s2d']
+COMMAND ['/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2/s2c', '-verify', 's2c']
+Compressing s2c -> s2c.s2 9311538 -> 5870603 [63.05%]; 603.2MB/s
+... Verified ok.COMMAND ['/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2/s2d', 's2c.s2']
+Decompressing s2c.s2 -> s2c 5870603 -> 9311538 [158.61%]; 1256.3MB/s

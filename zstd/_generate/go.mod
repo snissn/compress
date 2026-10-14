@@ -1,11 +1,11 @@
-module github.com/klauspost/compress/zstd/_generate
+module github.com/snissn/compress/zstd/_generate
 
 go 1.23
 
 toolchain go1.24.2
 
 require (
-	github.com/klauspost/compress v1.15.15
+	github.com/snissn/compress v1.15.15
 	github.com/mmcloughlin/avo v0.6.0
 )
 
@@ -15,4 +15,4 @@ require (
 	golang.org/x/tools v0.25.1 // indirect
 )
 
-replace github.com/klauspost/compress => ../..
+replace github.com/snissn/compress => ../..

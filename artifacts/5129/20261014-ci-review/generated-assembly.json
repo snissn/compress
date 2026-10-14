@@ -1,0 +1,62 @@
+{
+  "huff0/decompress_amd64.go": {
+    "sha256": "ccf0d90b851f2f42bb4752ad772bcab64b47a4e4b5562bd077d8bbaa2f19d4ed",
+    "unchanged_from_prior": true
+  },
+  "huff0/decompress_amd64.s": {
+    "sha256": "1be4b028f6a98b957cf7557629bbc3aaead44fccf0c60f796fdee608b8d7ee9e",
+    "unchanged_from_prior": true
+  },
+  "s2/decode_amd64.s": {
+    "sha256": "4dfa3c5900fbb407354a9a683e50100632fc2519d52ab4614ff5bcae6f5d2dd7",
+    "unchanged_from_prior": true
+  },
+  "s2/decode_arm64.s": {
+    "sha256": "ad0710ebbcb49c2fccb9e58c4457ff484adda266217a3f83438a3431a52ebc8f",
+    "unchanged_from_prior": true
+  },
+  "s2/encode_amd64.go": {
+    "sha256": "6f554aa3f66b3558f3c4d756e579534e95ec79bc1cde04aa49d5402fc24c0c16",
+    "unchanged_from_prior": true
+  },
+  "s2/encodeblock_amd64.go": {
+    "sha256": "148bd45b94af9f88298008d89e93c70630571e42f832015c75fc7d261743e399",
+    "unchanged_from_prior": true
+  },
+  "s2/encodeblock_amd64.s": {
+    "sha256": "1809163cd12521ecefbbb25d1637ad68c20f4552df8e81869c997ca16e01c5ee",
+    "unchanged_from_prior": true
+  },
+  "zstd/fse_decoder_amd64.go": {
+    "sha256": "e5707ea7a113933777046040972215dfc20d59a1b015ce58355594de782e353a",
+    "unchanged_from_prior": true
+  },
+  "zstd/fse_decoder_amd64.s": {
+    "sha256": "c4a1dfa1b108aa32f587b676523d09858c5ee5df9753d0067af5aee303e5df4b",
+    "unchanged_from_prior": true
+  },
+  "zstd/internal/xxhash/xxhash_amd64.s": {
+    "sha256": "3796a9c399d49392c3ad83af1452099d24c1e6fb993941d8bd1735879f5edbc8",
+    "unchanged_from_prior": true
+  },
+  "zstd/internal/xxhash/xxhash_arm64.s": {
+    "sha256": "0e2b30d48c0ab8035e201d06c5b74813e39da76c7dc7e3239f4dd4acba7fbb64",
+    "unchanged_from_prior": true
+  },
+  "zstd/matchlen_amd64.go": {
+    "sha256": "c25bde63d36f4c9ea507bb9376548d3e5274fb7f96b2cda0e4056e932c1c09e1",
+    "unchanged_from_prior": true
+  },
+  "zstd/matchlen_amd64.s": {
+    "sha256": "f6983c33f36ef09e255c1d029158fa31adfaf6cbc56d264d3ff6431097cfbc0f",
+    "unchanged_from_prior": true
+  },
+  "zstd/seqdec_amd64.go": {
+    "sha256": "7778976cea55ca86e1463655c2b594b46fd3ffa563fd07dac118ad00a7e8ff28",
+    "unchanged_from_prior": true
+  },
+  "zstd/seqdec_amd64.s": {
+    "sha256": "b3c4b4f8cc3224e2243824c767d6e6f2c61ca637a553104a581e69c4bdb7173f",
+    "unchanged_from_prior": true
+  }
+}

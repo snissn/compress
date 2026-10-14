@@ -1,0 +1,5 @@
+gen.go
+go run gen.go -out ../encodeblock_amd64.s -stubs ../encodeblock_amd64.go -pkg=s2
+gofmt -w ../encodeblock_amd64.go
+go run cleanup.go ../encodeblock_amd64.s
+go: downloading github.com/klauspost/asmfmt v1.3.2

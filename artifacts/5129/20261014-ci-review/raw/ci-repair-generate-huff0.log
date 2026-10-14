@@ -1,0 +1,3 @@
+gen.go
+go run gen.go -out ../decompress_amd64.s -pkg=huff0
+gofmt -w ../decompress_amd64.go

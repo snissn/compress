@@ -1,0 +1,5 @@
+s2/cmd/_s2sx/main.go:22:2: no required module provides package github.com/snissn/compress/s2; to add it:
+	go get github.com/snissn/compress/s2
+s2/cmd/_s2sx/main.go:23:2: no required module provides package github.com/snissn/compress/s2/cmd/internal/readahead; to add it:
+	go get github.com/snissn/compress/s2/cmd/internal/readahead
+s2/cmd/_s2sx/main.go:47:12: pattern sfx-exe: no matching files found

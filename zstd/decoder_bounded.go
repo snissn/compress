@@ -966,7 +966,9 @@ func (b *boundedDecoder) step(output []byte) (written int, done bool, err error)
 						if !b.charge(1, 0) {
 							return written, false, nil
 						}
-						b.lookup.begin(&b.segments, b.position-uint64(b.matchOffset))
+						// Segment coordinates restart with each independent frame. Raw output
+						// remains cumulative, but it is never eligible as prior-frame history.
+						b.lookup.begin(&b.segments, b.position-b.frameStart-uint64(b.matchOffset))
 					}
 					ok, src, e := b.lookup.step(b.work)
 					if e != nil || !ok {
