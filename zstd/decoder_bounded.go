@@ -152,7 +152,7 @@ func (d *Decoder) Begin(input []byte, owner any, mode BoundedOutput, raw []byte,
 // maximum original block plus a maximum header is admitted before allocation.
 func (d *Decoder) BeginStream(owner any, mode BoundedOutput, raw []byte, dict BorrowedDictionary) (bool, error) {
 	b := d.bounded
-	if b == nil || b.begun || owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
+	if b == nil || b.begun || b.closing || owner == nil || mode > BoundedSpans || (len(dict.Data) > 0 && dict.Owner == nil) {
 		return false, ErrBoundedMode
 	}
 	if b.inputBuffer == nil {

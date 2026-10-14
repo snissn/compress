@@ -1,0 +1,23 @@
+=== RUN   TestBoundedBeginStreamRejectsPausedClose
+=== RUN   TestBoundedBeginStreamRejectsPausedClose/phase=0/mode=0
+    decoder_bounded_begin_close_test.go:59: rejected BeginStream performed work or retained input: retained=66048->205312 R=1->2 B=66048->205312 input=139264
+    decoder_bounded_begin_close_test.go:69: finish original CloseStep false <nil>
+=== RUN   TestBoundedBeginStreamRejectsPausedClose/phase=0/mode=1
+    decoder_bounded_begin_close_test.go:59: rejected BeginStream performed work or retained input: retained=66048->205312 R=1->2 B=66048->205312 input=139264
+    decoder_bounded_begin_close_test.go:69: finish original CloseStep false <nil>
+=== RUN   TestBoundedBeginStreamRejectsPausedClose/phase=6/mode=0
+    decoder_bounded_begin_close_test.go:59: rejected BeginStream performed work or retained input: retained=66048->205312 R=10->11 B=69816->209080 input=139264
+    decoder_bounded_begin_close_test.go:73: CloseStep stranded capacity: retained=139776 want=512
+    decoder_bounded_begin_close_test.go:77: original owner retirement 139264
+=== RUN   TestBoundedBeginStreamRejectsPausedClose/phase=6/mode=1
+    decoder_bounded_begin_close_test.go:59: rejected BeginStream performed work or retained input: retained=66048->205312 R=10->11 B=69816->209080 input=139264
+    decoder_bounded_begin_close_test.go:73: CloseStep stranded capacity: retained=139776 want=512
+    decoder_bounded_begin_close_test.go:77: original owner retirement 139264
+--- FAIL: TestBoundedBeginStreamRejectsPausedClose (0.00s)
+    --- FAIL: TestBoundedBeginStreamRejectsPausedClose/phase=0/mode=0 (0.00s)
+    --- FAIL: TestBoundedBeginStreamRejectsPausedClose/phase=0/mode=1 (0.00s)
+    --- FAIL: TestBoundedBeginStreamRejectsPausedClose/phase=6/mode=0 (0.00s)
+    --- FAIL: TestBoundedBeginStreamRejectsPausedClose/phase=6/mode=1 (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.001s
+FAIL
