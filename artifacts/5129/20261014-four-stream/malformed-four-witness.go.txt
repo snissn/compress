@@ -1,0 +1,8 @@
+package main
+import("fmt";"github.com/snissn/compress/zstd")
+type work struct{r,b uint64}
+func(w *work)Reserve(r,b uint64)bool{if r>w.r||b>w.b{return false};w.r-=r;w.b-=b;return true}
+func(w *work)Available()(uint64,uint64){return w.r,w.b}
+func(w *work)Retain(n uint64)bool{return true}
+func(w *work)Release(n uint64){}
+func main(){frame:=[]byte{0x28,0xb5,0x2f,0xfd,0x20,1,0x85,0,0,0x16,0,3,128,0x10,1,0,1,0,1,0,2,1,2,1,0};ordinary,_:=zstd.NewReader(nil,zstd.WithDecoderConcurrency(1));got,err:=ordinary.DecodeAll(frame,nil);fmt.Printf("ordinary=%x err=%v\n",got,err);ordinary.Close();w:=&work{32,1<<20};d,_,_:=zstd.NewBoundedReader(w);w.r=32;w.b=1<<20;d.Begin(frame,&frame,zstd.BoundedSpans,nil,zstd.BorrowedDictionary{});defer func(){fmt.Printf("bounded panic=%v\n",recover())}();for i:=0;i<10000;i++{w.r=32;w.b=1<<20;n,done,e:=d.Step(make([]byte,10));if e!=nil||done{fmt.Println("bounded",i,n,done,e);return}}}

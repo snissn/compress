@@ -1,0 +1,2 @@
+ok  	github.com/snissn/compress/huff0	0.028s
+ok  	github.com/snissn/compress/zstd	0.059s

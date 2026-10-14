@@ -278,10 +278,26 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
 					return false, errStepInputTooSmall
 				}
 				p.start = 6
-				p.phase = 1
+				p.phase = 7
 			} else {
 				p.start = 0
 				p.phase = 2
+			}
+		case 7:
+			// Validate every destination partition before initializing readers or
+			// interpreting symbols. An empty final partition is valid, but a
+			// partition starting beyond dst is corruption, not an empty stream.
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, nil
+			}
+			each := len(p.dst)/4 + (len(p.dst)%4+3)/4
+			if each*p.stream > len(p.dst) {
+				return false, errStepLiteralOutputSize
+			}
+			p.stream++
+			if p.stream == 4 {
+				p.stream = 0
+				p.phase = 1
 			}
 		case 1:
 			if !decoderwork.Charge(w, 1, 11) {
@@ -319,9 +335,9 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
 			p.offset = 0
 			p.limit = len(p.dst)
 			if p.four {
-				each := (len(p.dst) + 3) / 4
+				each := len(p.dst)/4 + (len(p.dst)%4+3)/4
 				p.offset = each * p.stream
-				p.limit = min(p.offset+each, len(p.dst))
+				p.limit = p.offset + min(each, len(p.dst)-p.offset)
 			}
 			p.phase = 4
 		case 4:
@@ -331,6 +347,9 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
 			}
 			if !decoderwork.Charge(w, 1, 7) {
 				return false, nil
+			}
+			if p.offset < 0 || p.offset > p.limit {
+				return false, errStepLiteralOutputSize
 			}
 			br := &p.br[p.stream]
 			if br.off == 0 && br.bitsRead >= 64 {

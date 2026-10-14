@@ -1,0 +1,25 @@
+{
+  "base": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "prior_head": "e7e11c6fc2695eec0c4d127a6bda83ceedc475d8",
+  "files": [
+    {
+      "path": "huff0/decompress_step.go",
+      "sha256": "0237fb6e908473f1924d7ce71d233c1ba18617663aa95bfc46481c1ba9756e59",
+      "git_blob": "3f2440fe653eeb4e54ec6d4e07365ae7977650d1",
+      "prior_blob": "f115f45ee18f6788e2ea74862aa838f114df001c"
+    },
+    {
+      "path": "huff0/decompress_step_test.go",
+      "sha256": "ff53d68a0aa0c19b01274f38a4a5492e0f7a25becbaff8bc8365426d5238d1e3",
+      "git_blob": "61f6ed71f4712574239fd18312bca08d9da8ba57",
+      "prior_blob": "ad853c2f5d6c70cc6297dc6d93043c317a916703"
+    },
+    {
+      "path": "zstd/decoder_bounded_four_stream_test.go",
+      "sha256": "c13624fb3d5b6cd5d6efb19acc06d7e946036afd8f948fceb425cc1beb35f592",
+      "git_blob": "3be9108bb28e90f22082aaea6fd7d5280183f02a",
+      "prior_blob": null
+    }
+  ],
+  "sole_production_change": "LiteralState four-stream destination partition validation; continuation layout unchanged; sole production caller zstd bounded phase110"
+}

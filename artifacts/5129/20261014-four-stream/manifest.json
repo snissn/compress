@@ -1,0 +1,111 @@
+{
+  "prior_head": "e7e11c6fc2695eec0c4d127a6bda83ceedc475d8",
+  "source_receipt": "source.json",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4087,
+      "sha256": "dd14b30281c3cc020916e932de117d83cf7c9f04aae5dfae19fc6a62b4baefc8"
+    },
+    {
+      "path": "applicability.json",
+      "bytes": 43456,
+      "sha256": "77c980c76c36323317a7f8d3d80e1f69089286e10b82c09d2806201ab9b466f1"
+    },
+    {
+      "path": "malformed-four-witness.go.txt",
+      "bytes": 914,
+      "sha256": "05af3d619d7f1e3b2cc0e37979845fce0b81cc30e5e8ab0169f9a4537419f8fc"
+    },
+    {
+      "path": "raw/exact-e7e-public-red.log",
+      "bytes": 118,
+      "sha256": "6fe3b661f253b952891fe4c14cd815275f0a2acdec8fec4e57345d6fd777823b"
+    },
+    {
+      "path": "raw/exact-repaired-public-green.log",
+      "bytes": 120,
+      "sha256": "0fd39058fd6f6d87ce38cbbb00098a851a9892ce8ac6c533aa9b70cca8e1cdb7"
+    },
+    {
+      "path": "raw/four-stream-custody-normal-fixed.log",
+      "bytes": 807,
+      "sha256": "4499dd9b58391f9e023d7904fa2c1e9ab0e2f3e8a996f19de125089928e65fca"
+    },
+    {
+      "path": "raw/four-stream-custody-normal-q32.log",
+      "bytes": 89,
+      "sha256": "cc825ac4cee031d8ba89d951c8abd8b1d9ff05b973ed6c5dd558aceea79f4c62"
+    },
+    {
+      "path": "raw/four-stream-custody-normal.log",
+      "bytes": 807,
+      "sha256": "aae1cc4395b1cc57e227e03280cbe1a4da61bec46da4dd54eb9c4e40fbbcfab1"
+    },
+    {
+      "path": "raw/four-stream-focused-386-safe.log",
+      "bytes": 89,
+      "sha256": "89d5300a9449478211c296b72abb168f6721a4d1d632d341189f4d80adb23c1e"
+    },
+    {
+      "path": "raw/four-stream-focused-normal.log",
+      "bytes": 89,
+      "sha256": "410c7e9acb809c3ad31d53396b59a78e1b4a3d39750c9a2c30d8654e519b8529"
+    },
+    {
+      "path": "raw/four-stream-focused-race.log",
+      "bytes": 89,
+      "sha256": "9878d05c38341c8c111dd77c6350114673c45c253cb8714799cd47764105d19b"
+    },
+    {
+      "path": "raw/four-stream-focused-vet.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/four-stream-normal.log",
+      "bytes": 44,
+      "sha256": "76a7ef1c049d938b1034e8b6109e850afee1dc4dad196958daf09fb55141ffce"
+    },
+    {
+      "path": "raw/four-stream-validation-commands.json",
+      "bytes": 2787,
+      "sha256": "c15922f11e064620ecc796523285902d55c8b9547ecafb32d34bdf4aaa437236"
+    },
+    {
+      "path": "raw/independent-review-e7e11c6.md",
+      "bytes": 10416,
+      "sha256": "320aa5b864454d35a1af39bf6d79ad2c25f34e76e048daa6c0057effe30276b7"
+    },
+    {
+      "path": "raw/regression-e7e-red.log",
+      "bytes": 2184,
+      "sha256": "3b031118720185e9f2f3adc2ff3c751b6891405ab89aa9ec7a5bf4d0aafb6d28"
+    },
+    {
+      "path": "repair.diff",
+      "bytes": 10957,
+      "sha256": "e94b8a1c0730b7cb90d3211382d2601727838f785128461937e5a672a34b3352"
+    },
+    {
+      "path": "source/huff0/decompress_step.go.txt",
+      "bytes": 12159,
+      "sha256": "0237fb6e908473f1924d7ce71d233c1ba18617663aa95bfc46481c1ba9756e59"
+    },
+    {
+      "path": "source/huff0/decompress_step_test.go.txt",
+      "bytes": 4824,
+      "sha256": "ff53d68a0aa0c19b01274f38a4a5492e0f7a25becbaff8bc8365426d5238d1e3"
+    },
+    {
+      "path": "source/zstd/decoder_bounded_four_stream_test.go.txt",
+      "bytes": 5899,
+      "sha256": "c13624fb3d5b6cd5d6efb19acc06d7e946036afd8f948fceb425cc1beb35f592"
+    },
+    {
+      "path": "source.json",
+      "bytes": 1075,
+      "sha256": "04edc1045b4cc7d3a7ff16e8923071c11c83c09e3232049ff831dbf3d905a0ff"
+    }
+  ]
+}
