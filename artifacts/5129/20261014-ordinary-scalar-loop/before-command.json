@@ -1,0 +1,34 @@
+{
+  "classification": "affected ordinary scalar causal diagnostic; not native MVCC or final parent acceptance",
+  "source_head": "f5507c8be61f8d70e881701f4424d817652171d4",
+  "source_clean_before_packet": true,
+  "environment": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "CGO_ENABLED": "1",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "argv": [
+    "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+    "test",
+    "-tags",
+    "noasm",
+    "-run",
+    "^$",
+    "-bench",
+    "^BenchmarkDecoder_DecodeAll$/plrabn12",
+    "-benchmem",
+    "-benchtime=100x",
+    "-count=7",
+    "./zstd"
+  ],
+  "benchmark_harness_sha256": "a4d1805892664476f01d3b58089450992dc083f1d0f7cf8e3beae00858b53f83",
+  "fixture_sha256": "e337e6309a468388c38161eb6ff5e01b9712273d6118c3a430a2081cbfdfe178",
+  "production_seqdec_sha256": "10973a6ec51804e043209c7aa21a245573b1f62225399f18ebd82a1196ddca0d",
+  "started_unix": 1791970419.0785844,
+  "review": "Existing upstream BenchmarkDecoder_DecodeAll and original benchdecoder.zip; concurrency1 decodes actual compressed fixtures with output reuse, fails on decode error. Exact plrabn12 name visible in raw output. Source frozen, workers reserved quiet host; no new harness or fixture.",
+  "finished_unix": 1791970421.0544314,
+  "exit": 0
+}

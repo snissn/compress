@@ -1,0 +1,13 @@
+goos: linux
+goarch: amd64
+pkg: github.com/snissn/compress/zstd
+cpu: AMD Ryzen 7 9700X 8-Core Processor             
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1019362 ns/op	 472.71 MB/s	      12 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1014373 ns/op	 475.03 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1014421 ns/op	 475.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1014041 ns/op	 475.19 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1013910 ns/op	 475.25 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1014076 ns/op	 475.17 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecoder_DecodeAll/plrabn12.txt.zst-2         	     100	   1014055 ns/op	 475.18 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/snissn/compress/zstd	0.737s

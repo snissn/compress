@@ -114,12 +114,6 @@ func (p *sequenceState) Begin(s *sequenceDecs) {
 	*p = sequenceState{s: s, remaining: s.nSeqs}
 }
 
-// BeginPrepared resumes the original ordinary initialize result. The same
-// scalar interpretation/next-state phases serve ordinary generic and bounded
-// synchronous decoding; the existing assembly fast path remains unchanged.
-func (p *sequenceState) BeginPrepared(s *sequenceDecs) {
-	*p = sequenceState{s: s, ll: s.litLengths.state.state, ml: s.matchLengths.state.state, of: s.offsets.state.state, remaining: s.nSeqs, phase: 3}
-}
 func (p *sequenceState) Next(w decoderwork.Work) (ready, done bool, err error) {
 	for {
 		s := p.s
