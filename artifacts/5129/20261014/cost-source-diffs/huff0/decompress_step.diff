@@ -1,0 +1,247 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/huff0/decompress_step.go	2026-10-13 19:23:52.356464173 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/huff0/decompress_step.go	2026-10-13 19:58:23.766437805 -1000
+@@ -46,7 +46,7 @@
+ 				return false, nil, nil
+ 			}
+ 			if len(p.in) <= 1 {
+-				return false, nil, errStep7a12390d25
++				return false, nil, errStepTableInputTooSmall
+ 			}
+ 			p.n = p.in[0]
+ 			p.in = p.in[1:]
+@@ -54,7 +54,7 @@
+ 				s.symbolLen = uint16(p.n - 127)
+ 				p.size = (int(s.symbolLen) + 1) / 2
+ 				if p.size > len(p.in) {
+-					return false, nil, errStep7a12390d25
++					return false, nil, errStepTableInputTooSmall
+ 				}
+ 				p.phase = 1
+ 			} else {
+@@ -63,7 +63,7 @@
+ 					if w == nil {
+ 						return false, nil, fmt.Errorf("input too small for table, want %d bytes, have %d", p.size, len(p.in))
+ 					}
+-					return false, nil, errStepf8439fbee2
++					return false, nil, errStepTruncatedTableInput
+ 				}
+ 				p.phase = 2
+ 			}
+@@ -84,16 +84,19 @@
+ 		case 2:
+ 			if s.fse == nil {
+ 				size := uint64(unsafe.Sizeof(fse.Scratch{}))
++				if w != nil {
++					size = decoderwork.AllocationCharge(size)
++				}
+ 				if !decoderwork.Charge(w, 1, size) {
+ 					return false, nil, nil
+ 				}
+ 				if w != nil && !w.Retain(size) {
+-					return false, nil, errStep176b8912d8
++					return false, nil, errStepFSERetention
+ 				}
+ 				s.fse = &fse.Scratch{}
+ 				p.ownedFSE = size
+ 			}
+-			if !decoderwork.Charge(w, 1, 0) {
++			if !decoderwork.Charge(w, 1, uint64(unsafe.Sizeof(fse.DecompressState{}))+256) {
+ 				return false, nil, nil
+ 			}
+ 			p.weights.Begin(s.fse, p.in[:p.size], s.huffWeight[:0:255])
+@@ -104,13 +107,13 @@
+ 				if w == nil {
+ 					return false, nil, fmt.Errorf("fse decompress returned: %w", e)
+ 				}
+-				return false, nil, errStepe71f717669
++				return false, nil, errStepFSEDefinition
+ 			}
+ 			if !ok {
+ 				return false, nil, nil
+ 			}
+ 			if len(b) > 255 {
+-				return false, nil, errStep4b85f3c5a2
++				return false, nil, errStepOutputTableTooLarge
+ 			}
+ 			s.symbolLen = uint16(len(b))
+ 			p.in = p.in[p.size:]
+@@ -124,7 +127,7 @@
+ 				v := s.huffWeight[p.i]
+ 				p.i++
+ 				if v > tableLogMax {
+-					return false, nil, errStep0257715797
++					return false, nil, errStepWeightTooLarge
+ 				}
+ 				p.ranks[v]++
+ 				p.total += (1 << v) >> 1
+@@ -136,23 +139,23 @@
+ 				return false, nil, nil
+ 			}
+ 			if p.total == 0 {
+-				return false, nil, errStepcdc8972ef1
++				return false, nil, errStepZeroWeights
+ 			}
+ 			log := bits.Len32(p.total)
+ 			if log > tableLogMax {
+-				return false, nil, errStep4260064507
++				return false, nil, errStepTableLogRange
+ 			}
+ 			s.actualTableLog = uint8(log)
+ 			rest := uint32(1<<log) - p.total
+ 			last := bits.Len32(rest)
+ 			if rest == 0 || uint32(1<<(last-1)) != rest {
+-				return false, nil, errStepa9d0cd6a34
++				return false, nil, errStepLastWeightPower
+ 			}
+ 			s.huffWeight[s.symbolLen] = uint8(last)
+ 			s.symbolLen++
+ 			p.ranks[last]++
+ 			if p.ranks[1] < 2 || p.ranks[1]&1 != 0 {
+-				return false, nil, errStep546df41926
++				return false, nil, errStepRankOneParity
+ 			}
+ 			p.i = 1
+ 			p.total = 0
+@@ -172,11 +175,14 @@
+ 		case 7:
+ 			if len(s.dt.single) != 1<<tableLogMax {
+ 				size := uint64((1 << tableLogMax) * 2)
++				if w != nil {
++					size = decoderwork.AllocationCharge(size)
++				}
+ 				if !decoderwork.Charge(w, 1, size) {
+ 					return false, nil, nil
+ 				}
+ 				if w != nil && !w.Retain(size) {
+-					return false, nil, errStepf7e2ad14a0
++					return false, nil, errStepDecodeTableRetention
+ 				}
+ 				s.dt.single = make([]dEntrySingle, 1<<tableLogMax)
+ 				p.ownedDT = size
+@@ -185,11 +191,14 @@
+ 		case 8:
+ 			if cap(s.prevTable) < 256 {
+ 				size := uint64(256) * uint64(unsafe.Sizeof(cTableEntry{}))
++				if w != nil {
++					size = decoderwork.AllocationCharge(size)
++				}
+ 				if !decoderwork.Charge(w, 1, size) {
+ 					return false, nil, nil
+ 				}
+ 				if w != nil && !w.Retain(size) {
+-					return false, nil, errStep0a3c196a16
++					return false, nil, errStepEncodeTableRetention
+ 				}
+ 				s.prevTable = make(cTable, 256)
+ 				p.ownedCT = size
+@@ -262,11 +271,11 @@
+ 				return false, nil
+ 			}
+ 			if p.s == nil || len(p.s.dt.single) == 0 {
+-				return false, errStep8d2689b985
++				return false, errStepNoTable
+ 			}
+ 			if p.four {
+ 				if len(p.src) < 10 {
+-					return false, errStepe7418d4afa
++					return false, errStepInputTooSmall
+ 				}
+ 				p.start = 6
+ 				p.phase = 1
+@@ -283,7 +292,7 @@
+ 				i := p.stream * 2
+ 				length = int(p.src[i]) | int(p.src[i+1])<<8
+ 				if p.start+length >= len(p.src) {
+-					return false, errStep9fbb08b74f
++					return false, errStepLiteralTruncation
+ 				}
+ 			}
+ 			if e := p.br[p.stream].init(p.src[p.start : p.start+length]); e != nil {
+@@ -325,13 +334,13 @@
+ 			}
+ 			br := &p.br[p.stream]
+ 			if br.off == 0 && br.bitsRead >= 64 {
+-				return false, errStepde1e761d4d
++				return false, errStepLiteralOutputSize
+ 			}
+ 			br.fill()
+ 			v := p.s.dt.single[br.peekBitsFast(p.s.actualTableLog)&((1<<tableLogMax)-1)]
+ 			n := uint8(v.entry)
+ 			if n == 0 || uint(br.bitsRead)+uint(n) > 64 && br.off == 0 {
+-				return false, errStep949e1a4043
++				return false, errStepLiteralStream
+ 			}
+ 			br.advance(n)
+ 			p.dst[p.offset] = uint8(v.entry >> 8)
+@@ -361,7 +370,7 @@
+ func (p *TableState) ClearStep(w decoderwork.Work) (bool, error) {
+ 	switch p.closePhase {
+ 	case 0:
+-		if !decoderwork.Charge(w, 1, 0) {
++		if !decoderwork.Charge(w, 1, 64) {
+ 			return false, nil
+ 		}
+ 		p.in = nil
+@@ -376,7 +385,7 @@
+ 		}
+ 		p.closePhase = 2
+ 	case 2:
+-		if !decoderwork.Charge(w, 1, 0) {
++		if !decoderwork.Charge(w, 1, 64) {
+ 			return false, nil
+ 		}
+ 		if p.s != nil {
+@@ -388,12 +397,13 @@
+ 		p.ownedFSE = 0
+ 		p.closePhase = 3
+ 	case 3:
+-		if !decoderwork.Charge(w, 1, 0) {
++		if !decoderwork.Charge(w, 1, 128) {
+ 			return false, nil
+ 		}
+ 		if p.s != nil {
+ 			p.s.dt.single = nil
+ 			p.s.cTable = nil
++			p.s.prevTable = nil
+ 		}
+ 		if w != nil && p.ownedDT != 0 {
+ 			w.Release(p.ownedDT)
+@@ -411,21 +421,21 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStep7a12390d25 = errors.New("input too small for table")
+-	errStepf8439fbee2 = errors.New("input too small for table, want invalid bytes, have invalid")
+-	errStep176b8912d8 = errors.New("huff0: FSE retention refused")
+-	errStepe71f717669 = errors.New("fse decompress returned: invalid definition")
+-	errStep4b85f3c5a2 = errors.New("corrupt input: output table too large")
+-	errStep0257715797 = errors.New("corrupt input: weight too large")
+-	errStepcdc8972ef1 = errors.New("corrupt input: weights zero")
+-	errStep4260064507 = errors.New("corrupt input: tableLog too big")
+-	errStepa9d0cd6a34 = errors.New("corrupt input: last value not power of two")
+-	errStep546df41926 = errors.New("corrupt input: min elt size, even check failed ")
+-	errStepf7e2ad14a0 = errors.New("huff0: table retention refused")
+-	errStep0a3c196a16 = errors.New("huff0: encoder table retention refused")
+-	errStep8d2689b985 = errors.New("no table loaded")
+-	errStepe7418d4afa = errors.New("input too small")
+-	errStep9fbb08b74f = errors.New("truncated input (or invalid offset)")
+-	errStepde1e761d4d = errors.New("literal output size mismatch")
+-	errStep949e1a4043 = errors.New("corrupt literal stream")
++	errStepTableInputTooSmall   = errors.New("input too small for table")
++	errStepTruncatedTableInput  = errors.New("truncated table input")
++	errStepFSERetention         = errors.New("huff0: FSE retention refused")
++	errStepFSEDefinition        = errors.New("fse decompress returned: invalid definition")
++	errStepOutputTableTooLarge  = errors.New("corrupt input: output table too large")
++	errStepWeightTooLarge       = errors.New("corrupt input: weight too large")
++	errStepZeroWeights          = errors.New("corrupt input: weights zero")
++	errStepTableLogRange        = errors.New("corrupt input: tableLog too big")
++	errStepLastWeightPower      = errors.New("corrupt input: last value not power of two")
++	errStepRankOneParity        = errors.New("corrupt input: min elt size, even check failed ")
++	errStepDecodeTableRetention = errors.New("huff0: table retention refused")
++	errStepEncodeTableRetention = errors.New("huff0: encoder table retention refused")
++	errStepNoTable              = errors.New("no table loaded")
++	errStepInputTooSmall        = errors.New("input too small")
++	errStepLiteralTruncation    = errors.New("truncated input (or invalid offset)")
++	errStepLiteralOutputSize    = errors.New("literal output size mismatch")
++	errStepLiteralStream        = errors.New("corrupt literal stream")
+ )

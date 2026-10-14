@@ -1,0 +1,35 @@
+{
+  "classification": "same-host same-harness affected scalar cost diagnostic",
+  "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+  "exact_restored_blob": "0bfb0e43c7b657f7be6ba1313a04b03f0ab84f9d",
+  "restored_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+  "runtime_diff_sha256": "f109479f27f1d0393c5ae0a4c7a7776674924aa3a92f0e127deb8589bcb3a28c",
+  "argv": [
+    "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+    "test",
+    "-tags",
+    "noasm",
+    "-run",
+    "^$",
+    "-bench",
+    "^BenchmarkDecoder_DecodeAll$/plrabn12",
+    "-benchmem",
+    "-benchtime=100x",
+    "-count=7",
+    "./zstd"
+  ],
+  "environment": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "CGO_ENABLED": "1",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "harness_sha256": "a4d1805892664476f01d3b58089450992dc083f1d0f7cf8e3beae00858b53f83",
+  "fixture_sha256": "e337e6309a468388c38161eb6ff5e01b9712273d6118c3a430a2081cbfdfe178",
+  "started_unix": 1791970518.4022362,
+  "construction_scope": "Only original optimized ordinary decodeSync file restored verbatim; bounded decoder/table continuation bytes unchanged.",
+  "exit": 0,
+  "finished_unix": 1791970520.0270362
+}

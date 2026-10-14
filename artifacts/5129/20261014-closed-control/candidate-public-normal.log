@@ -1,0 +1,118 @@
+=== RUN   TestBoundedClosedControlOrdinaryInterface
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/unbegun/WrapperWriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_raw/WrapperWriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/whole_spans/WrapperWriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_raw/WrapperWriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/fed_spans/WrapperWriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/ReadEmpty
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/Read
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/WriteTo
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/ResetNil
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/ResetReader
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/DecodeAll
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/WrapperRead
+=== RUN   TestBoundedClosedControlOrdinaryInterface/failed/WrapperWriteTo
+--- PASS: TestBoundedClosedControlOrdinaryInterface (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/unbegun/WrapperWriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_raw/WrapperWriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/whole_spans/WrapperWriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_raw/WrapperWriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/fed_spans/WrapperWriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/ReadEmpty (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/Read (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/WriteTo (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/ResetNil (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/ResetReader (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/DecodeAll (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/WrapperRead (0.00s)
+    --- PASS: TestBoundedClosedControlOrdinaryInterface/failed/WrapperWriteTo (0.00s)
+=== RUN   TestBoundedClosedControlBoundedInterface
+--- PASS: TestBoundedClosedControlBoundedInterface (0.00s)
+=== RUN   TestBoundedPublicModeCrossingClose
+=== RUN   TestBoundedPublicModeCrossingClose/ordinary_active
+=== RUN   TestBoundedPublicModeCrossingClose/unbegun
+=== RUN   TestBoundedPublicModeCrossingClose/begun_raw
+=== RUN   TestBoundedPublicModeCrossingClose/begun_spans
+=== RUN   TestBoundedPublicModeCrossingClose/reset_paused
+=== RUN   TestBoundedPublicModeCrossingClose/close_refused
+=== RUN   TestBoundedPublicModeCrossingClose/close_paused
+--- PASS: TestBoundedPublicModeCrossingClose (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/ordinary_active (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/unbegun (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/begun_raw (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/begun_spans (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/reset_paused (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/close_refused (0.00s)
+    --- PASS: TestBoundedPublicModeCrossingClose/close_paused (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.004s

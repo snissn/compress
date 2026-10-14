@@ -7,6 +7,7 @@ package zstd
 import (
 	"errors"
 	"fmt"
+	"github.com/snissn/compress/internal/decoderwork"
 	"io"
 	"math/bits"
 
@@ -26,13 +27,13 @@ type bitReader struct {
 // init initializes and resets the bit reader.
 func (b *bitReader) init(in []byte) error {
 	if len(in) < 1 {
-		return errors.New("corrupt stream: too short")
+		return errBitStreamTooShort
 	}
 	b.in = in
 	// The highest bit of the last byte indicates where to start
 	v := in[len(in)-1]
 	if v == 0 {
-		return errors.New("corrupt stream, did not find end of stream")
+		return errBitEndMarkerMissing
 	}
 	b.cursor = len(in)
 	b.bitsRead = 64
@@ -117,12 +118,17 @@ func (b *bitReader) remain() uint {
 }
 
 // close the bitstream and returns an error if out-of-buffer reads occurred.
-func (b *bitReader) close() error {
+func (b *bitReader) close() error { return b.closeWithWork(nil) }
+
+func (b *bitReader) closeWithWork(w decoderwork.Work) error {
 	// Release reference.
 	b.in = nil
 	b.cursor = 0
 	if !b.finished() {
-		return fmt.Errorf("%d extra bits on block, should be 0", b.remain())
+		if w == nil {
+			return fmt.Errorf("%d extra bits on block, should be 0", b.remain())
+		}
+		return errBitExtraBlockBits
 	}
 	if b.bitsRead > 64 {
 		return io.ErrUnexpectedEOF
@@ -133,3 +139,9 @@ func (b *bitReader) close() error {
 func highBits(val uint32) (n uint32) {
 	return uint32(bits.Len32(val) - 1)
 }
+
+var (
+	errBitStreamTooShort   = errors.New("corrupt stream: too short")
+	errBitEndMarkerMissing = errors.New("corrupt stream, did not find end of stream")
+	errBitExtraBlockBits   = errors.New("unexpected extra bits on block, should be 0")
+)

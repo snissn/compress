@@ -1,0 +1,336 @@
+diff --git a/huff0/decompress_step.go b/huff0/decompress_step.go
+index f115f45..3f2440f 100644
+--- a/huff0/decompress_step.go
++++ b/huff0/decompress_step.go
+@@ -278,11 +278,27 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
+ 					return false, errStepInputTooSmall
+ 				}
+ 				p.start = 6
+-				p.phase = 1
++				p.phase = 7
+ 			} else {
+ 				p.start = 0
+ 				p.phase = 2
+ 			}
++		case 7:
++			// Validate every destination partition before initializing readers or
++			// interpreting symbols. An empty final partition is valid, but a
++			// partition starting beyond dst is corruption, not an empty stream.
++			if !decoderwork.Charge(w, 1, 0) {
++				return false, nil
++			}
++			each := len(p.dst)/4 + (len(p.dst)%4+3)/4
++			if each*p.stream > len(p.dst) {
++				return false, errStepLiteralOutputSize
++			}
++			p.stream++
++			if p.stream == 4 {
++				p.stream = 0
++				p.phase = 1
++			}
+ 		case 1:
+ 			if !decoderwork.Charge(w, 1, 11) {
+ 				return false, nil
+@@ -319,9 +335,9 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
+ 			p.offset = 0
+ 			p.limit = len(p.dst)
+ 			if p.four {
+-				each := (len(p.dst) + 3) / 4
++				each := len(p.dst)/4 + (len(p.dst)%4+3)/4
+ 				p.offset = each * p.stream
+-				p.limit = min(p.offset+each, len(p.dst))
++				p.limit = p.offset + min(each, len(p.dst)-p.offset)
+ 			}
+ 			p.phase = 4
+ 		case 4:
+@@ -332,6 +348,9 @@ func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
+ 			if !decoderwork.Charge(w, 1, 7) {
+ 				return false, nil
+ 			}
++			if p.offset < 0 || p.offset > p.limit {
++				return false, errStepLiteralOutputSize
++			}
+ 			br := &p.br[p.stream]
+ 			if br.off == 0 && br.bitsRead >= 64 {
+ 				return false, errStepLiteralOutputSize
+diff --git a/huff0/decompress_step_test.go b/huff0/decompress_step_test.go
+index ad853c2..61f6ed7 100644
+--- a/huff0/decompress_step_test.go
++++ b/huff0/decompress_step_test.go
+@@ -1,7 +1,9 @@
+ package huff0
+ 
+ import (
++	"bytes"
+ 	"github.com/snissn/compress/internal/decoderwork"
++	"reflect"
+ 	"testing"
+ )
+ 
+@@ -97,3 +99,88 @@ func TestTableStateLastAliasBeforeRefund(t *testing.T) {
+ 	}
+ 	var _ decoderwork.Work = w
+ }
++
++// Use the real public table and jump-table grammar. Validation must suspend
++// before each partition control and reject impossible geometry before any
++// reader alias or output effect; literal probes retain their original 1R/7B.
++func TestLiteralStateFourStreamBeforeEffect(t *testing.T) {
++	scratch, _, err := ReadTable([]byte{128, 0x10}, nil)
++	if err != nil {
++		t.Fatal(err)
++	}
++	src := []byte{1, 0, 1, 0, 1, 0, 2, 1, 2, 1}
++	dst := []byte{0xa5}
++	p := &LiteralState{}
++	p.Begin(scratch, src, dst, true)
++	w := &tableCustodyWork{}
++	for calls := 0; calls < 8; calls++ {
++		before := *p
++		w.r = 0
++		w.b = 0
++		done, e := p.Step(w)
++		if done || e != nil || !reflect.DeepEqual(before, *p) || dst[0] != 0xa5 {
++			t.Fatal("refusal changed validation state", calls, e)
++		}
++		w.r = 1
++		w.b = 0
++		done, e = p.Step(w)
++		for i := range p.br {
++			if p.br[i].in != nil {
++				t.Fatal("initialized reader before partition validation")
++			}
++		}
++		if dst[0] != 0xa5 {
++			t.Fatal("interpreted malformed partition")
++		}
++		if e != nil {
++			if e != errStepLiteralOutputSize {
++				t.Fatal(e)
++			}
++			break
++		}
++		if done || calls == 7 {
++			t.Fatal("malformed partition was accepted or stalled")
++		}
++	}
++	p.Clear()
++	if p.s != nil || p.src != nil || p.dst != nil {
++		t.Fatal("cancel retained input/output aliases")
++	}
++	// Valid partition: refuse independently on records and on bytes exactly at
++	// an actual table probe, then allow one probe without restarting or advancing.
++	src = []byte{1, 0, 1, 0, 1, 0, 4, 4, 4, 4}
++	dst = bytes.Repeat([]byte{0xa5}, 8)
++	p.Begin(scratch, src, dst, true)
++	for calls := 0; calls < 20 && p.phase != 4; calls++ {
++		w.r = 1
++		w.b = 11
++		done, e := p.Step(w)
++		if done || e != nil {
++			t.Fatal(done, e)
++		}
++	}
++	if p.phase != 4 || p.offset != 0 {
++		t.Fatal("did not reach first symbol")
++	}
++	for _, budget := range [][2]uint64{{0, 7}, {1, 6}} {
++		before := *p
++		w.r = budget[0]
++		w.b = budget[1]
++		done, e := p.Step(w)
++		if done || e != nil || !reflect.DeepEqual(before, *p) || !bytes.Equal(dst, bytes.Repeat([]byte{0xa5}, 8)) {
++			t.Fatal("probe refusal changed state", e)
++		}
++	}
++	w.r = 1
++	w.b = 7
++	done, e := p.Step(w)
++	if done || e != nil || p.offset != 1 || dst[0] != 0 || !bytes.Equal(dst[1:], bytes.Repeat([]byte{0xa5}, 7)) {
++		t.Fatal("probe advanced past budget", done, e, p.offset, dst)
++	}
++	p.Clear()
++	for i := range p.br {
++		if p.br[i].in != nil {
++			t.Fatal("cancel retained reader alias")
++		}
++	}
++}
+diff --git a/zstd/decoder_bounded_four_stream_test.go b/zstd/decoder_bounded_four_stream_test.go
+new file mode 100644
+index 0000000..3be9108
+--- /dev/null
++++ b/zstd/decoder_bounded_four_stream_test.go
+@@ -0,0 +1,172 @@
++package zstd
++
++import (
++	"bytes"
++	"encoding/hex"
++	"fmt"
++	"reflect"
++	"testing"
++)
++
++// Public wire uses the original two-symbol Huffman table, jump table, and
++// four independently terminated streams; only declared output and stream bits
++// vary. In particular, length three has a valid empty fourth stream.
++func shortFourStreamFrame(n int, streams [4]byte) []byte {
++	h := uint32(6 | n<<4 | 12<<14)
++	return []byte{0x28, 0xb5, 0x2f, 0xfd, 0x20, byte(n), 0x85, 0, 0,
++		byte(h), byte(h >> 8), byte(h >> 16), 128, 0x10, 1, 0, 1, 0, 1, 0,
++		streams[0], streams[1], streams[2], streams[3], 0}
++}
++
++func TestBoundedFourStreamPartitions(t *testing.T) {
++	exact, err := hex.DecodeString("28b52ffd200185000016000380100100010001000201020100")
++	if err != nil {
++		t.Fatal(err)
++	}
++	cases := []struct {
++		name  string
++		frame []byte
++		valid bool
++	}{
++		{"reported-length1", exact, false},
++		{"length2", shortFourStreamFrame(2, [4]byte{2, 2, 1, 2}), false},
++		{"length5", shortFourStreamFrame(5, [4]byte{4, 4, 2, 2}), false},
++		{"length3-empty-fourth", shortFourStreamFrame(3, [4]byte{2, 2, 2, 1}), true},
++		{"length4", shortFourStreamFrame(4, [4]byte{2, 2, 2, 2}), true},
++		{"length6-empty-fourth", shortFourStreamFrame(6, [4]byte{4, 4, 4, 1}), true},
++		{"length7", shortFourStreamFrame(7, [4]byte{4, 4, 4, 2}), true},
++		{"length8", shortFourStreamFrame(8, [4]byte{4, 4, 4, 4}), true},
++		{"length9-empty-fourth", shortFourStreamFrame(9, [4]byte{8, 8, 8, 1}), true},
++		{"length4-first-stream-overrun", shortFourStreamFrame(4, [4]byte{4, 2, 2, 2}), false},
++		{"length4-first-stream-underrun", shortFourStreamFrame(4, [4]byte{1, 2, 2, 2}), false},
++	}
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			ordinary, e := NewReader(nil, WithDecoderConcurrency(1))
++			if e != nil {
++				t.Fatal(e)
++			}
++			want, oracleErr := ordinary.DecodeAll(c.frame, nil)
++			ordinary.Close()
++			if (oracleErr == nil) != c.valid {
++				t.Fatalf("ordinary classification: %v", oracleErr)
++			}
++			for _, mode := range []BoundedOutput{BoundedRaw, BoundedSpans} {
++				for _, fed := range []bool{false, true} {
++					t.Run(fmt.Sprintf("mode%d/fed%v", mode, fed), func(t *testing.T) {
++						w := &boundedTestWork{limit: 32 << 20}
++						w.quantum()
++						d, ok, e := NewBoundedReader(w)
++						if !ok || e != nil {
++							t.Fatal(ok, e)
++						}
++						defer closeBoundedForTest(t, &d, w)
++						got, e := multiFrameOutcome(t, d, w, c.frame, BorrowedDictionary{}, mode, fed, false)
++						if (e == nil) != c.valid {
++							t.Fatalf("bounded classification: %v, oracle %v", e, oracleErr)
++						}
++						if c.valid && !bytes.Equal(got, want) {
++							t.Fatalf("output %x != ordinary %x", got, want)
++						}
++						// Error cleanup/reset must detach the malformed input and preserve same-owner
++						// cold tables without allowing stale partition state to affect the next frame.
++						valid := shortFourStreamFrame(3, [4]byte{2, 2, 2, 1})
++						got, e = multiFrameOutcome(t, d, w, valid, BorrowedDictionary{}, mode, fed, true)
++						if e != nil || !bytes.Equal(got, []byte{0, 0, 0}) {
++							t.Fatalf("reset after short stream: %x %v", got, e)
++						}
++					})
++				}
++			}
++		})
++	}
++}
++
++type fourStreamPauseWork struct {
++	*boundedTestWork
++	decoder *boundedDecoder
++	pause   bool
++}
++
++func (w *fourStreamPauseWork) Reserve(r, b uint64) bool {
++	if w.pause && w.decoder != nil && w.decoder.phase == 110 {
++		return false
++	}
++	return w.boundedTestWork.Reserve(r, b)
++}
++
++func TestBoundedFourStreamCancelBeforeValidation(t *testing.T) {
++	frame := shortFourStreamFrame(1, [4]byte{2, 1, 2, 1})
++	for _, mode := range []BoundedOutput{BoundedRaw, BoundedSpans} {
++		for _, fed := range []bool{false, true} {
++			t.Run(fmt.Sprintf("mode%d/fed%v", mode, fed), func(t *testing.T) {
++				w := &boundedTestWork{limit: 32 << 20}
++				w.quantum()
++				gate := &fourStreamPauseWork{boundedTestWork: w, pause: true}
++				d, ok, e := NewBoundedReader(gate)
++				if !ok || e != nil {
++					t.Fatal(ok, e)
++				}
++				gate.decoder = d.bounded
++				raw := make([]byte, 0, 1)
++				if fed {
++					ok, e = d.BeginStream(&frame, mode, raw, BorrowedDictionary{})
++				} else {
++					ok, e = d.Begin(frame, &frame, mode, raw, BorrowedDictionary{})
++				}
++				if !ok || e != nil {
++					t.Fatal(ok, e)
++				}
++				pos := 0
++				span := make([]byte, 8)
++				found := false
++				for calls := 0; calls < 10000; calls++ {
++					// Earlier grammar transitions need multi-record reservations. The
++					// callback gate refuses the first real LiteralState reservation,
++					// before partition validation, without modifying parser state.
++					w.quantum()
++					if _, need := d.InputRequest(); need {
++						end := min(pos+3, len(frame))
++						n, _, e := d.FeedInput(frame[pos:end], end == len(frame))
++						pos += n
++						if e != nil {
++							t.Fatal(e)
++						}
++					} else {
++						n, done, e := d.Step(span)
++						if n != 0 || done || e != nil {
++							t.Fatal(n, done, e)
++						}
++					}
++					if d.bounded.phase == 110 {
++						found = true
++						break
++					}
++				}
++				if !found {
++					t.Fatal("did not pause before validation")
++				}
++				gate.pause = false
++				retained := w.retained
++				phase := d.bounded.phase
++				literal := d.bounded.literal
++				buffer := append([]byte(nil), d.bounded.block.literalBuf...)
++				input := append([]byte(nil), frame...)
++				w.quantum()
++				beforeR, beforeB := w.r, w.b
++				w.refuse = true
++				n, done, e := d.Step(span)
++				if n != 0 || done || e != nil || d.bounded.phase != phase || w.retained != retained || w.usedR != 0 || w.usedB != 0 || w.r != beforeR || w.b != beforeB ||
++					!reflect.DeepEqual(literal, d.bounded.literal) || !bytes.Equal(buffer, d.bounded.block.literalBuf) || !bytes.Equal(input, frame) {
++					t.Fatal("refused validation changed effects/custody")
++				}
++				closed, e := d.CloseStep()
++				if closed || e != nil || w.retained != retained {
++					t.Fatal("refused close changed custody")
++				}
++				w.refuse = false
++				closeBoundedForTest(t, &d, w)
++			})
++		}
++	}
++}

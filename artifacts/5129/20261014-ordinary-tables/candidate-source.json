@@ -1,0 +1,49 @@
+{
+  "prior": "3b25800b7d75ccafd0984621f17e1c9a1e2693f9",
+  "base": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "source": [
+    {
+      "path": "fse/decompress.go",
+      "size": 9412,
+      "sha256": "f30d291722fa174e3961a272f054a19e52c6101a9bf52464e19c12a997bfb088",
+      "byte_exact_upstream": true
+    },
+    {
+      "path": "huff0/decompress.go",
+      "size": 29575,
+      "sha256": "2252d5f37da24ca8cdc7cc82a61594cd608c36f7269a728c2085fe19ce3b586d",
+      "byte_exact_upstream": true
+    },
+    {
+      "path": "zstd/fse_decoder.go",
+      "size": 8668,
+      "sha256": "005f20afa6bd1c58091acd7a7ea5c9500610d4a41bf7846e4ba9c59a5326be58",
+      "byte_exact_upstream": true
+    },
+    {
+      "path": "zstd/fse_decoder_generic.go",
+      "size": 1816,
+      "sha256": "3345ee073bd946deef317e9a78818e1144e71d17e5e954c504e200e1934af7d4",
+      "byte_exact_upstream": true
+    },
+    {
+      "path": "zstd/decodeheader.go",
+      "size": 7958,
+      "sha256": "18a618ead4628fb685e7da85c37af5e65517ed2d17c1c5029a352610f4929a06",
+      "byte_exact_upstream": true
+    }
+  ],
+  "repair_diff_sha256": "e7f0ee02944ae974c79e4f5aaf025ca029093891aef70e43d41a02d31b72de78",
+  "affected_harness": [
+    {
+      "path": "fse/fse_test.go",
+      "sha256": "890672369bc45f4a117ffad5a2e115cf75a0e1c5833c7234b7e2e280f6c3258e"
+    },
+    {
+      "path": "huff0/decompress_test.go",
+      "sha256": "e9276e16c48b565a927f5e49b07f3f80b7d5a5123a3c539bfee49f986eb7d84d"
+    }
+  ],
+  "bounded_engines_unchanged": true,
+  "sibling_audit": "Restored all five ordinary FSE count/table, Huffman table, and public frame-header files byte-exact upstream. Remaining bitReader closeWithWork nil branches exist only in corruption diagnostic formatting; normal close clears same fields and is compiler-inlineable, with measured FSE/Huff ordinary zeroalloc fast paths. Explicit bounded step engines unchanged."
+}

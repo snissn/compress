@@ -1,0 +1,76 @@
+=== RUN   TestBoundedOriginalProducerDifferential
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=0 frame=0 calls=61 R=1905 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=0 frame=0 calls=61 R=1905 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=0 frame=0 calls=61 R=1905 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=0 frame=0 calls=61 R=1905 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=11 frame=20 calls=61 R=1914 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=11 frame=20 calls=61 R=1917 peak=91104 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=11 frame=24 calls=61 R=1915 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=11 frame=24 calls=61 R=1918 peak=91104 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=150000 frame=39 calls=65 R=2040 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=150000 frame=39 calls=79 R=2099 peak=222304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=150000 frame=43 calls=65 R=2041 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=150000 frame=43 calls=79 R=2100 peak=222304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=1044480 frame=268 calls=195 R=6176 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=1044480 frame=268 calls=413 R=10714 peak=1107904 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=1044480 frame=272 calls=195 R=6177 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=1044480 frame=272 calls=413 R=10715 peak=1107904 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=2101248 frame=791735 calls=33464 R=1070731 peak=194512 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=2101248 frame=791735 calls=33630 R=1073999 peak=2326512 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=2101248 frame=791739 calls=33464 R=1070732 peak=194512 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=2101248 frame=791739 calls=33630 R=1074000 peak=2326512 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0
+    decoder_bounded_test.go:155: raw=3200000 frame=662 calls=398 R=12633 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1
+    decoder_bounded_test.go:155: raw=3200000 frame=662 calls=960 R=22031 peak=3272704 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0
+    decoder_bounded_test.go:155: raw=3200000 frame=666 calls=398 R=12634 peak=58304 fixed=58304
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1
+    decoder_bounded_test.go:155: raw=3200000 frame=666 calls=960 R=22032 peak=3272704 fixed=58304
+--- PASS: TestBoundedOriginalProducerDifferential (0.04s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1 (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.044s

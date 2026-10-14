@@ -1,0 +1,137 @@
+[
+  {
+    "Name": "leaf255-compact-false",
+    "Compact": false,
+    "K": 255,
+    "RawBytes": 1044480,
+    "StoredBytes": 294,
+    "Header": {
+      "SingleSegment": true,
+      "WindowSize": 0,
+      "DictionaryID": 0,
+      "HasFCS": true,
+      "FrameContentSize": 1044480,
+      "Skippable": false,
+      "SkippableID": 0,
+      "SkippableSize": 0,
+      "HeaderSize": 9,
+      "FirstBlock": {
+        "OK": true,
+        "Last": false,
+        "Compressed": true,
+        "DecompressedSize": 0,
+        "CompressedSize": 87
+      },
+      "HasCheckSum": false
+    },
+    "Members": [
+      {
+        "Name": "leaf255-compact-false.file",
+        "Bytes": 3390,
+        "SHA256": "69914ca5ee51a35a4b31329294ccf326392fed79e87a136ea713b16a692d5276"
+      },
+      {
+        "Name": "leaf255-compact-false.zstd",
+        "Bytes": 294,
+        "SHA256": "030393f5179aa5e9a2c4a90dc4063effdc672dd150fdec929fd631d58451a117"
+      },
+      {
+        "Name": "leaf255-compact-false.raw",
+        "Bytes": 1044480,
+        "SHA256": "56c78f06ef6007e7e30c61f03583107a2502927449ee676b2a587df9d8f2747d"
+      }
+    ],
+    "OrdinarySelectedCRC": true,
+    "CorruptCRCRejected": true
+  },
+  {
+    "Name": "leaf255-compact-true",
+    "Compact": true,
+    "K": 255,
+    "RawBytes": 26520,
+    "StoredBytes": 104,
+    "Header": {
+      "SingleSegment": true,
+      "WindowSize": 0,
+      "DictionaryID": 0,
+      "HasFCS": true,
+      "FrameContentSize": 26520,
+      "Skippable": false,
+      "SkippableID": 0,
+      "SkippableSize": 0,
+      "HeaderSize": 7,
+      "FirstBlock": {
+        "OK": true,
+        "Last": true,
+        "Compressed": true,
+        "DecompressedSize": 0,
+        "CompressedSize": 94
+      },
+      "HasCheckSum": false
+    },
+    "Members": [
+      {
+        "Name": "leaf255-compact-true.file",
+        "Bytes": 3200,
+        "SHA256": "05c3f35b9d686dee962aa363d3642bf813c7845831460f6cbf8758c6fc63ce72"
+      },
+      {
+        "Name": "leaf255-compact-true.zstd",
+        "Bytes": 104,
+        "SHA256": "a56039f7b6ac4c6d960eb82e0235292d200fb8ca4bdcc6c0c3a64903b46dbb0e"
+      },
+      {
+        "Name": "leaf255-compact-true.raw",
+        "Bytes": 26520,
+        "SHA256": "f5b9401c3458ebb9340fc4bd3ee80a1a9d7896280aa2f48e58aaf443598dfd46"
+      }
+    ],
+    "OrdinarySelectedCRC": true,
+    "CorruptCRCRejected": true
+  },
+  {
+    "Name": "leaf255-dictionary",
+    "Compact": false,
+    "K": 255,
+    "RawBytes": 1044480,
+    "StoredBytes": 295,
+    "Header": {
+      "SingleSegment": true,
+      "WindowSize": 0,
+      "DictionaryID": 73,
+      "HasFCS": true,
+      "FrameContentSize": 1044480,
+      "Skippable": false,
+      "SkippableID": 0,
+      "SkippableSize": 0,
+      "HeaderSize": 10,
+      "FirstBlock": {
+        "OK": true,
+        "Last": false,
+        "Compressed": true,
+        "DecompressedSize": 0,
+        "CompressedSize": 87
+      },
+      "HasCheckSum": false
+    },
+    "Members": [
+      {
+        "Name": "leaf255-dictionary.file",
+        "Bytes": 3391,
+        "SHA256": "f945bbafb1908d19938ae3dfe6ea29e77ef406621c61cbaad2b9c3e9730e40a9"
+      },
+      {
+        "Name": "leaf255-dictionary.zstd",
+        "Bytes": 295,
+        "SHA256": "40d026b0c6d09bdb5c373712bc64f93c6d55327df66d435513b49319eb9bb006"
+      },
+      {
+        "Name": "leaf255-dictionary.raw",
+        "Bytes": 1044480,
+        "SHA256": "56c78f06ef6007e7e30c61f03583107a2502927449ee676b2a587df9d8f2747d"
+      }
+    ],
+    "OrdinarySelectedCRC": true,
+    "CorruptCRCRejected": true
+  }
+]

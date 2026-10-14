@@ -1,0 +1,51 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/zstd/history_step.go	2026-10-13 19:23:52.357084038 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/history_step.go	2026-10-13 19:35:20.118912418 -1000
+@@ -28,12 +28,12 @@
+ 	if h.tail != nil && h.tail.used < historySegmentBytes {
+ 		return true, nil
+ 	}
+-	size := uint64(unsafe.Sizeof(historySegment{}))
++	size := decoderwork.AllocationCharge(uint64(unsafe.Sizeof(historySegment{})))
+ 	if !decoderwork.Charge(w, 1, size) {
+ 		return false, nil
+ 	}
+ 	if !w.Retain(size) {
+-		return false, errStepe4fb98e8df
++		return false, errStepHistoryRetention
+ 	}
+ 	p := &historySegment{previous: h.tail, start: h.position}
+ 	if h.tail == nil {
+@@ -67,7 +67,7 @@
+ 		old.next = nil
+ 		old.previous = nil
+ 		old = nil
+-		w.Release(uint64(unsafe.Sizeof(historySegment{})))
++		w.Release(decoderwork.AllocationCharge(uint64(unsafe.Sizeof(historySegment{}))))
+ 	}
+ 	return true, nil
+ }
+@@ -86,7 +86,7 @@
+ 		old.next = nil
+ 		old.previous = nil
+ 		old = nil
+-		w.Release(uint64(unsafe.Sizeof(historySegment{})))
++		w.Release(decoderwork.AllocationCharge(uint64(unsafe.Sizeof(historySegment{}))))
+ 	}
+ 	h.position = 0
+ 	h.window = 0
+@@ -117,12 +117,12 @@
+ 		}
+ 		p.node = n.previous
+ 	}
+-	return false, nil, errStep950e0ae09a
++	return false, nil, errStepMissingHistory
+ }
+ func (p *historyLookup) clear() { *p = historyLookup{} }
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStepe4fb98e8df = errors.New("zstd: history retention refused")
+-	errStep950e0ae09a = errors.New("zstd: match outside retained history")
++	errStepHistoryRetention = errors.New("zstd: history retention refused")
++	errStepMissingHistory   = errors.New("zstd: match outside retained history")
+ )

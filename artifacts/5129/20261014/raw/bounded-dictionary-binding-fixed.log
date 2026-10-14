@@ -1,0 +1,113 @@
+=== RUN   TestBoundedOriginalRawDictionaryZeroID
+--- PASS: TestBoundedOriginalRawDictionaryZeroID (0.00s)
+=== RUN   TestBoundedRawDictionaryMustMatchFrameID
+--- PASS: TestBoundedRawDictionaryMustMatchFrameID (0.00s)
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=294 mode=0 calls=225 R=5231 B=5625096 peakConservativeAdmission=1270272 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=294 mode=1 calls=476 R=6952 B=5935056 peakConservativeAdmission=1532416 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:199: raw=26520 stored=104 mode=0 calls=93 R=2792 B=413719 peakConservativeAdmission=254464 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:199: raw=26520 stored=104 mode=1 calls=105 R=3263 B=434879 peakConservativeAdmission=262656 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:199: raw=2101248 stored=791735 mode=1 calls=36131 R=1146359 B=23922634 peakConservativeAdmission=3033600 callerReadOperations=258; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=295 mode=0 calls=361 R=9486 B=5672090 peakConservativeAdmission=1299584 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:199: raw=1044480 stored=295 mode=1 calls=618 R=11491 B=5991138 peakConservativeAdmission=1561728 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+--- PASS: TestBoundedActualGomapProducerFrames (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+=== RUN   TestBoundedExistingDictionaryCorpus
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007612.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/dictplain.zst
+--- PASS: TestBoundedExistingDictionaryCorpus (0.03s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007612.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/dictplain.zst (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.045s

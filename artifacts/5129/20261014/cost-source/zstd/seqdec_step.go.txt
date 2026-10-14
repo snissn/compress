@@ -1,0 +1,222 @@
+// Copyright 2019-2026 Klaus Post and contributors. All rights reserved.
+// License information can be found in the LICENSE file.
+package zstd
+
+import (
+	"errors"
+	"fmt"
+	"github.com/snissn/compress/internal/decoderwork"
+	"io"
+)
+
+type sequenceTableState struct {
+	s        *fseDecoder
+	count    decoderwork.NCount
+	build    decoderwork.Table
+	bases    []baseOffset
+	phase, i int
+	consumed int
+}
+
+func (p *sequenceTableState) Begin(s *fseDecoder, in []byte, maxSymbol uint16, bases []baseOffset) {
+	p.s = s
+	p.bases = bases
+	p.phase = 0
+	p.i = 0
+	p.consumed = 0
+	p.count.Begin(in, s.norm[:], maxSymbol)
+}
+func (p *sequenceTableState) BeginBuild(s *fseDecoder, bases []baseOffset) {
+	p.s = s
+	p.bases = bases
+	p.phase = 1
+	p.i = 0
+	p.consumed = 0
+}
+func (p *sequenceTableState) Step(w decoderwork.Work) (bool, int, error) {
+	for {
+		s := p.s
+		switch p.phase {
+		case 0:
+			ok, n, e := p.count.Step(w, tablelogAbsoluteMax)
+			if e != nil {
+				return false, 0, e
+			}
+			if !ok {
+				return false, 0, nil
+			}
+			s.actualTableLog, s.symbolLen = p.count.TableLog, p.count.Symbols
+			p.consumed = n
+			p.phase = 1
+		case 1:
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, 0, nil
+			}
+			p.build.Begin(s.norm[:], s.stateTable[:], int(s.symbolLen), s.actualTableLog, 8, 16, 16)
+			p.phase = 2
+		case 2:
+			ok, e := p.build.Step(w,
+				func(i int, v uint8) { s.dt[i].setAddBits(v) },
+				func(i int) uint8 { return s.dt[i].addBits() },
+				func(i int, n uint8, v uint16) { x := s.dt[i]; x.setNBits(n); x.setNewState(v); s.dt[i] = x })
+			if e != nil {
+				return false, 0, e
+			}
+			if !ok {
+				return false, 0, nil
+			}
+			s.maxBits = 0
+			p.i = 0
+			p.phase = 3
+		case 3:
+			if p.i == 1<<s.actualTableLog {
+				p.phase = 4
+				continue
+			}
+			if !decoderwork.Charge(w, 2, 24) {
+				return false, 0, nil
+			}
+			v := s.dt[p.i]
+			add := v.addBits()
+			if int(add) >= len(p.bases) {
+				if w == nil {
+					return false, 0, fmt.Errorf("invalid decoding table entry %d, symbol %d >= max (%d)", p.i, add, len(p.bases))
+				}
+				return false, 0, errStepea80f62bea
+			}
+			lu := p.bases[add]
+			if lu.addBits > s.maxBits {
+				s.maxBits = lu.addBits
+			}
+			v.setExt(lu.addBits, lu.baseLine)
+			s.dt[p.i] = v
+			p.i++
+		case 4:
+			return true, p.consumed, nil
+		}
+	}
+}
+func (p *sequenceTableState) Clear() { *p = sequenceTableState{} }
+
+// sequenceState is the original decodeSync scalar loop's suspended state.
+// Copies are performed by the same history/output policy outside interpretation.
+type sequenceState struct {
+	s                       *sequenceDecs
+	ll, ml, of              decSymbol
+	literals, match, offset int
+	remaining               int
+	phase                   int
+	bits                    uint32
+}
+
+func (p *sequenceState) Begin(s *sequenceDecs) {
+	*p = sequenceState{s: s, remaining: s.nSeqs}
+}
+
+// BeginPrepared resumes the original ordinary initialize result. The same
+// scalar interpretation/next-state phases serve ordinary generic and bounded
+// synchronous decoding; the existing assembly fast path remains unchanged.
+func (p *sequenceState) BeginPrepared(s *sequenceDecs) {
+	*p = sequenceState{s: s, ll: s.litLengths.state.state, ml: s.matchLengths.state.state, of: s.offsets.state.state, remaining: s.nSeqs, phase: 3}
+}
+func (p *sequenceState) Next(w decoderwork.Work) (ready, done bool, err error) {
+	for {
+		s := p.s
+		br := s.br
+		switch p.phase {
+		case 0:
+			if !decoderwork.Charge(w, 1, 12) {
+				return false, false, nil
+			}
+			if s.litLengths.fse == nil || s.matchLengths.fse == nil || s.offsets.fse == nil {
+				if w == nil {
+					return false, false, fmt.Errorf("nil sequence decoder")
+				}
+				return false, false, errStep0b07f70f7f
+			}
+			br.fill()
+			p.ll = s.litLengths.fse.dt[br.getBits(s.litLengths.fse.actualTableLog)]
+			p.phase = 1
+		case 1:
+			if !decoderwork.Charge(w, 1, 12) {
+				return false, false, nil
+			}
+			br.fill()
+			p.of = s.offsets.fse.dt[br.getBits(s.offsets.fse.actualTableLog)]
+			p.phase = 2
+		case 2:
+			if !decoderwork.Charge(w, 1, 12) {
+				return false, false, nil
+			}
+			br.fill()
+			p.ml = s.matchLengths.fse.dt[br.getBits(s.matchLengths.fse.actualTableLog)]
+			p.phase = 3
+		case 3:
+			if p.remaining == 0 {
+				return false, true, nil
+			}
+			if !decoderwork.Charge(w, 8, 24) {
+				return false, false, nil
+			}
+			if br.overread() {
+				return false, false, io.ErrUnexpectedEOF
+			}
+			p.literals, p.offset, p.match = s.next(br, p.ll, p.ml, p.of)
+			br.fill()
+			p.phase = 4
+		case 4:
+			return true, false, nil
+		case 5:
+			if p.remaining == 1 {
+				if !decoderwork.Charge(w, 1, 0) {
+					return false, false, nil
+				}
+				p.remaining = 0
+				if e := br.closeWithWork(w); e != nil {
+					return false, false, e
+				}
+				p.phase = 3
+				continue
+			}
+			if !decoderwork.Charge(w, 1, 4) {
+				return false, false, nil
+			}
+			n := p.ll.nbBits() + p.ml.nbBits() + p.of.nbBits()
+			p.bits = 0
+			if n != 0 {
+				p.bits = br.get32BitsFast(n)
+			}
+			p.phase = 6
+		case 6:
+			if !decoderwork.Charge(w, 1, 8) {
+				return false, false, nil
+			}
+			low := uint16(p.bits >> ((p.of.nbBits() + p.ml.nbBits()) & 31))
+			p.ll = s.litLengths.fse.dt[(p.ll.newState()+low)&maxTableMask]
+			p.phase = 7
+		case 7:
+			if !decoderwork.Charge(w, 1, 8) {
+				return false, false, nil
+			}
+			low := uint16(p.bits>>(p.of.nbBits()&31)) & uint16((1<<p.ml.nbBits())-1)
+			p.ml = s.matchLengths.fse.dt[(p.ml.newState()+low)&maxTableMask]
+			p.phase = 8
+		case 8:
+			if !decoderwork.Charge(w, 1, 8) {
+				return false, false, nil
+			}
+			low := uint16(p.bits) & uint16((1<<p.of.nbBits())-1)
+			p.of = s.offsets.fse.dt[(p.of.newState()+low)&maxTableMask]
+			p.remaining--
+			p.phase = 3
+		}
+	}
+}
+func (p *sequenceState) Copied() { p.phase = 5 }
+func (p *sequenceState) Clear()  { *p = sequenceState{} }
+
+// Static bounded failures do not allocate or retain per-request diagnostics.
+var (
+	errStepea80f62bea = errors.New("invalid decoding table entry invalid, symbol invalid >= max (invalid)")
+	errStep0b07f70f7f = errors.New("nil sequence decoder")
+)

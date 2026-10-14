@@ -1,0 +1,20 @@
+{
+  "exact_files": [
+    {
+      "path": "/tmp/mvcc5129-begin-close-c33-c99hjv21/decoder_bounded.go",
+      "device": 47,
+      "inode": 9072879,
+      "size": 41108,
+      "sha256": "c27b29fd4f0707a1a2c6986171a267e71c36d5d1e6bb482840fefd79b96c054c"
+    },
+    {
+      "path": "/tmp/mvcc5129-begin-close-c33-c99hjv21/overlay.json",
+      "device": 47,
+      "inode": 9072880,
+      "size": 165,
+      "sha256": "a05b35250a397ed4414ea309c6dbde330a46a374bbf03fb8537d40bd7b551ec6"
+    }
+  ],
+  "root": "/tmp/mvcc5129-begin-close-c33-c99hjv21",
+  "absent": true
+}

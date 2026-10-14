@@ -1,0 +1,29 @@
+{
+  "benchmark": "BenchmarkDecoder_DecodeAll/plrabn12.txt.zst",
+  "tags": "noasm",
+  "iterations_each": 100,
+  "samples_each": 7,
+  "before_ns_per_op": [
+    1409431,
+    1400846,
+    1400468,
+    1399870,
+    1409895,
+    1392239,
+    1399448
+  ],
+  "after_ns_per_op": [
+    1013287,
+    1010479,
+    1008757,
+    1024411,
+    1007874,
+    1006972,
+    1006838
+  ],
+  "before_median_ns": 1400468,
+  "after_median_ns": 1008757,
+  "elapsed_reduction_percent": 27.970007169032062,
+  "before_over_after_overhead_percent": 38.83105643876572,
+  "interpretation": "Reported ordinary scalar regression reproduced. Restore exact maintained optimized scalar loop; bounded decoder remains resumable. This affected same-host control is not native MVCC/Dgraph evidence."
+}

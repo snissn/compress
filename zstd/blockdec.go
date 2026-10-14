@@ -272,18 +272,16 @@ func (b *blockDec) decodeBuf(hist *history) error {
 	}
 }
 
-func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err error) {
+// parseLiteralHeader is shared by ordinary and suspended decoding.
+// It interprets at most four format fields and reads at most five bytes.
+func parseLiteralHeader(in []byte) (litType literalsBlockType, litRegenSize, litCompSize int, fourStreams bool, remain []byte, err error) {
 	// There must be at least one byte for Literals_Block_Type and one for Sequences_Section_Header
 	if len(in) < 2 {
-		return in, ErrBlockTooSmall
+		return litType, litRegenSize, litCompSize, fourStreams, in, ErrBlockTooSmall
 	}
 
-	litType := literalsBlockType(in[0] & 3)
-	var litRegenSize int
-	var litCompSize int
+	litType = literalsBlockType(in[0] & 3)
 	sizeFormat := (in[0] >> 2) & 3
-	var fourStreams bool
-	var literals []byte
 	switch litType {
 	case literalsBlockRaw, literalsBlockRLE:
 		switch sizeFormat {
@@ -299,7 +297,7 @@ func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err 
 			//  Regenerated_Size uses 20 bits (0-1048575). Literals_Section_Header uses 3 bytes.
 			if len(in) < 3 {
 				println("too small: litType:", litType, " sizeFormat", sizeFormat, len(in))
-				return in, ErrBlockTooSmall
+				return litType, litRegenSize, litCompSize, fourStreams, in, ErrBlockTooSmall
 			}
 			litRegenSize = int(in[0]>>4) + (int(in[1]) << 4) + (int(in[2]) << 12)
 			in = in[3:]
@@ -310,7 +308,7 @@ func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err 
 			// Both Regenerated_Size and Compressed_Size use 10 bits (0-1023).
 			if len(in) < 3 {
 				println("too small: litType:", litType, " sizeFormat", sizeFormat, len(in))
-				return in, ErrBlockTooSmall
+				return litType, litRegenSize, litCompSize, fourStreams, in, ErrBlockTooSmall
 			}
 			n := uint64(in[0]>>4) + (uint64(in[1]) << 4) + (uint64(in[2]) << 12)
 			litRegenSize = int(n & 1023)
@@ -321,7 +319,7 @@ func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err 
 			fourStreams = true
 			if len(in) < 4 {
 				println("too small: litType:", litType, " sizeFormat", sizeFormat, len(in))
-				return in, ErrBlockTooSmall
+				return litType, litRegenSize, litCompSize, fourStreams, in, ErrBlockTooSmall
 			}
 			n := uint64(in[0]>>4) + (uint64(in[1]) << 4) + (uint64(in[2]) << 12) + (uint64(in[3]) << 20)
 			litRegenSize = int(n & 16383)
@@ -331,7 +329,7 @@ func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err 
 			fourStreams = true
 			if len(in) < 5 {
 				println("too small: litType:", litType, " sizeFormat", sizeFormat, len(in))
-				return in, ErrBlockTooSmall
+				return litType, litRegenSize, litCompSize, fourStreams, in, ErrBlockTooSmall
 			}
 			n := uint64(in[0]>>4) + (uint64(in[1]) << 4) + (uint64(in[2]) << 12) + (uint64(in[3]) << 20) + (uint64(in[4]) << 28)
 			litRegenSize = int(n & 262143)
@@ -339,6 +337,16 @@ func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err 
 			in = in[5:]
 		}
 	}
+	return litType, litRegenSize, litCompSize, fourStreams, in, nil
+}
+
+func (b *blockDec) decodeLiterals(in []byte, hist *history) (remain []byte, err error) {
+	litType, litRegenSize, litCompSize, fourStreams, in, err := parseLiteralHeader(in)
+	if err != nil {
+		return in, err
+	}
+	var literals []byte
+	sizeFormat := uint8(0) // diagnostic only; parsing is shared above.
 	if debugDecoder {
 		println("literals type:", litType, "litRegenSize:", litRegenSize, "litCompSize:", litCompSize, "sizeFormat:", sizeFormat, "4X:", fourStreams)
 	}

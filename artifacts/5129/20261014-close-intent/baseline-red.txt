@@ -1,0 +1,211 @@
+=== RUN   TestBoundedTerminalCloseRejectsBindings
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=66048->66048 R=1->3 B=66048->67320
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=66048->66048 R=1->3 B=66048->67320
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=66048->66048 R=1->3 B=66048->67320
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=66048->66048 R=1->3 B=66048->67320
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=205312->205312 R=5->7 B=205440->206712
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=205312->205312 R=5->7 B=205440->206712
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=205312->205312 R=5->7 B=205440->206712
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=false err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=0->2 closing=true retained=205312->205312 R=5->7 B=205440->206712
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=66048->66048 R=8->14 B=67768->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=66048->205312 R=8->15 B=67768->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=66048->66048 R=8->14 B=67768->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=66048->205312 R=8->15 B=67768->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=205312->66048 R=12->18 B=207160->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=205312->205312 R=12->19 B=207160->349624
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=205312->66048 R=12->18 B=207160->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=4->0 closing=false retained=205312->205312 R=12->19 B=207160->349624
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=66048->66048 R=9->14 B=68792->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=66048->205312 R=9->15 B=68792->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=66048->66048 R=9->14 B=68792->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=66048->205312 R=9->15 B=68792->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=205312->66048 R=13->18 B=208184->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=205312->205312 R=13->19 B=208184->349624
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=205312->66048 R=13->18 B=208184->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=5->0 closing=false retained=205312->205312 R=13->19 B=208184->349624
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->66048 R=10->14 B=69816->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->205312 R=10->15 B=69816->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->66048 R=10->14 B=69816->70968
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->205312 R=10->15 B=69816->210232
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->66048 R=14->18 B=209208->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->205312 R=14->19 B=209208->349624
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=begin
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=stream
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=reset
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->66048 R=14->18 B=209208->210360
+=== RUN   TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=reset-stream
+    decoder_bounded_close_intent_test.go:61: binding replaced terminal close: ok=true err=<nil>
+    decoder_bounded_close_intent_test.go:64: rejected binding changed original lifecycle/admission: phase=6->0 closing=false retained=66048->205312 R=14->19 B=209208->349624
+--- FAIL: TestBoundedTerminalCloseRejectsBindings (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=false/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=0/begun=true/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=false/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=4/begun=true/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=false/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=5/begun=true/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=false/mode=1/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=0/op=reset-stream (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=begin (0.00s)
+    --- PASS: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=stream (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=reset (0.00s)
+    --- FAIL: TestBoundedTerminalCloseRejectsBindings/phase=6/begun=true/mode=1/op=reset-stream (0.00s)
+=== RUN   TestBoundedClosePromotesPausedReset
+=== RUN   TestBoundedClosePromotesPausedReset/stream=false/promote=false
+=== RUN   TestBoundedClosePromotesPausedReset/stream=false/promote=true
+    decoder_bounded_close_intent_test.go:144: reset downgraded promoted close: ok=true err=<nil> phase=0
+=== RUN   TestBoundedClosePromotesPausedReset/stream=true/promote=false
+=== RUN   TestBoundedClosePromotesPausedReset/stream=true/promote=true
+    decoder_bounded_close_intent_test.go:144: reset downgraded promoted close: ok=true err=<nil> phase=0
+=== NAME  TestBoundedClosePromotesPausedReset
+    decoder_bounded_close_intent_test.go:175: fixed continuation sizeof=58208 control=512
+--- FAIL: TestBoundedClosePromotesPausedReset (0.00s)
+    --- PASS: TestBoundedClosePromotesPausedReset/stream=false/promote=false (0.00s)
+    --- FAIL: TestBoundedClosePromotesPausedReset/stream=false/promote=true (0.00s)
+    --- PASS: TestBoundedClosePromotesPausedReset/stream=true/promote=false (0.00s)
+    --- FAIL: TestBoundedClosePromotesPausedReset/stream=true/promote=true (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.003s
+FAIL

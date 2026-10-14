@@ -1,0 +1,28 @@
+--- FAIL: TestBoundedFourStreamPartitions (0.00s)
+    --- FAIL: TestBoundedFourStreamPartitions/reported-length1 (0.00s)
+        --- FAIL: TestBoundedFourStreamPartitions/reported-length1/mode0/fedfalse (0.00s)
+panic: runtime error: index out of range [2] with length 1 [recovered, repanicked]
+
+goroutine 20 [running]:
+testing.tRunner.func1.2({0x702320, 0xb5ef7f0a030})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:1974 +0x232
+testing.tRunner.func1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:1977 +0x349
+panic({0x702320?, 0xb5ef7f0a030?})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/panic.go:860 +0x13a
+github.com/snissn/compress/huff0.(*LiteralState).Step(0xb5ef7f27ff0, {0x73f7a8, 0xb5ef7f14008})
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/huff0/decompress_step.go:346 +0x657
+github.com/snissn/compress/zstd.(*boundedDecoder).step(0xb5ef7f1a000, {0xb5ef7f32db0, 0x1000, 0x1000})
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded.go:750 +0x316a
+github.com/snissn/compress/zstd.(*Decoder).Step(0xb5ef7f80000?, {0xb5ef7ee8db0?, 0x927c0?, 0x0?})
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded.go:268 +0x14e
+github.com/snissn/compress/zstd.multiFrameOutcome(0xb5ef7eee908, 0xb5ef7f06120, 0xb5ef7f14008, {0xb5ef7eca0c0, 0x19, 0x19}, {0x0, {0x0, 0x0, 0x0}, ...}, ...)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_multiframe_test.go:67 +0x51d
+github.com/snissn/compress/zstd.TestBoundedFourStreamPartitions.func1.1(0xb5ef7eee908)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decoder_bounded_four_stream_test.go:45 +0x1e5
+testing.tRunner(0xb5ef7eee908, 0xb5ef7ecc310)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea
+created by testing.(*T).Run in goroutine 19
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x4c5
+FAIL	github.com/snissn/compress/zstd	0.003s
+FAIL

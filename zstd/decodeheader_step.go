@@ -1,0 +1,188 @@
+// Copyright 2020-2026 Klaus Post and contributors. All rights reserved.
+// License information can be found in the LICENSE file.
+package zstd
+
+import (
+	"encoding/binary"
+	"errors"
+	"github.com/snissn/compress/internal/decoderwork"
+	"io"
+)
+
+// HeaderState is the original Header parser suspended between fields.
+// Its containing object, Header and immutable input are caller-admitted.
+type HeaderState struct {
+	h          *Header
+	in         []byte
+	phase      int
+	descriptor byte
+	first      bool
+}
+
+func (p *HeaderState) Begin(h *Header, in []byte, firstBlock bool) {
+	*h = Header{}
+	*p = HeaderState{h: h, in: in, first: firstBlock}
+}
+func (p *HeaderState) Step(w decoderwork.Work) (done bool, remain []byte, err error) {
+	for {
+		h := p.h
+		switch p.phase {
+		case 0:
+			if !decoderwork.Charge(w, 1, 4) {
+				return false, nil, nil
+			}
+			if len(p.in) < 4 {
+				return false, nil, io.ErrUnexpectedEOF
+			}
+			b := p.in[:4]
+			p.in = p.in[4:]
+			h.HeaderSize = 4
+			if string(b) != frameMagic {
+				if string(b[1:]) != skippableFrameMagic || b[0]&0xf0 != 0x50 {
+					return false, nil, ErrMagicMismatch
+				}
+				h.Skippable = true
+				h.SkippableID = int(b[0] & 15)
+				p.phase = 7
+			} else {
+				p.phase = 1
+			}
+		case 1:
+			if !decoderwork.Charge(w, 1, 1) {
+				return false, nil, nil
+			}
+			if len(p.in) < 1 {
+				return false, nil, io.ErrUnexpectedEOF
+			}
+			p.descriptor = p.in[0]
+			p.in = p.in[1:]
+			h.HeaderSize++
+			h.SingleSegment = p.descriptor&32 != 0
+			h.HasCheckSum = p.descriptor&4 != 0
+			if p.descriptor&8 != 0 {
+				return false, nil, errStepReservedFrameBit
+			}
+			p.phase = 2
+		case 2:
+			if !h.SingleSegment {
+				if !decoderwork.Charge(w, 1, 1) {
+					return false, nil, nil
+				}
+				if len(p.in) < 1 {
+					return false, nil, io.ErrUnexpectedEOF
+				}
+				wd := p.in[0]
+				p.in = p.in[1:]
+				h.HeaderSize++
+				base := uint64(1) << (10 + (wd >> 3))
+				h.WindowSize = base + (base/8)*uint64(wd&7)
+			}
+			p.phase = 3
+		case 3:
+			size := int(p.descriptor & 3)
+			if size == 3 {
+				size = 4
+			}
+			if size != 0 {
+				if !decoderwork.Charge(w, 1, uint64(size)) {
+					return false, nil, nil
+				}
+				if len(p.in) < size {
+					return false, nil, io.ErrUnexpectedEOF
+				}
+				b := p.in[:size]
+				p.in = p.in[size:]
+				h.HeaderSize += size
+				switch size {
+				case 1:
+					h.DictionaryID = uint32(b[0])
+				case 2:
+					h.DictionaryID = uint32(binary.LittleEndian.Uint16(b))
+				case 4:
+					h.DictionaryID = binary.LittleEndian.Uint32(b)
+				}
+			}
+			p.phase = 4
+		case 4:
+			size := 0
+			v := p.descriptor >> 6
+			if v == 0 {
+				if h.SingleSegment {
+					size = 1
+				}
+			} else {
+				size = 1 << v
+			}
+			if size != 0 {
+				if !decoderwork.Charge(w, 1, uint64(size)) {
+					return false, nil, nil
+				}
+				if len(p.in) < size {
+					return false, nil, io.ErrUnexpectedEOF
+				}
+				b := p.in[:size]
+				p.in = p.in[size:]
+				h.HeaderSize += size
+				h.HasFCS = true
+				switch size {
+				case 1:
+					h.FrameContentSize = uint64(b[0])
+				case 2:
+					h.FrameContentSize = uint64(binary.LittleEndian.Uint16(b)) + 256
+				case 4:
+					h.FrameContentSize = uint64(binary.LittleEndian.Uint32(b))
+				case 8:
+					h.FrameContentSize = binary.LittleEndian.Uint64(b)
+				}
+			}
+			p.phase = 5
+		case 5:
+			if p.first && len(p.in) >= 3 {
+				if !decoderwork.Charge(w, 1, 3) {
+					return false, nil, nil
+				}
+				b := p.in
+				bh := uint32(b[0]) | uint32(b[1])<<8 | uint32(b[2])<<16
+				h.FirstBlock.Last = bh&1 != 0
+				typ := blockType((bh >> 1) & 3)
+				size := int(bh >> 3)
+				switch typ {
+				case blockTypeReserved:
+					p.phase = 6
+					continue
+				case blockTypeRLE:
+					h.FirstBlock.Compressed = true
+					h.FirstBlock.DecompressedSize = size
+					h.FirstBlock.CompressedSize = 1
+				case blockTypeCompressed:
+					h.FirstBlock.Compressed = true
+					h.FirstBlock.CompressedSize = size
+				case blockTypeRaw:
+					h.FirstBlock.DecompressedSize = size
+					h.FirstBlock.CompressedSize = size
+				}
+				h.FirstBlock.OK = true
+			}
+			p.phase = 6
+		case 6:
+			return true, p.in, nil
+		case 7:
+			if !decoderwork.Charge(w, 1, 4) {
+				return false, nil, nil
+			}
+			if len(p.in) < 4 {
+				return false, nil, io.ErrUnexpectedEOF
+			}
+			h.SkippableSize = binary.LittleEndian.Uint32(p.in)
+			h.HeaderSize += 4
+			p.in = p.in[4:]
+			p.phase = 6
+		}
+	}
+}
+func (p *HeaderState) Clear() { *p = HeaderState{} }
+
+// Static bounded failures do not allocate or retain per-request diagnostics.
+var (
+	errStepReservedFrameBit = errors.New("reserved bit set on frame header")
+)

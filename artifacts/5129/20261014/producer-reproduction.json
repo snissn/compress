@@ -1,0 +1,12 @@
+{
+  "producer_gomap_runtime": "075ae77487778a872384a935c6d550359ca76452",
+  "producer_compress": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "native_artifact_head": "a9553da930ae6568a56c7e1bcf51a400cafcf86d",
+  "harness_install": "Copy producer-harness/*.go.txt under original filenames into frozen gomap TreeDB/internal/valuelog isolated WT, retaining original075 production/helper bytes. No go.mod/runtime changes.",
+  "commands": [
+    "GOWORK=off GOMAXPROCS=2 NATIVE_ZSTD_LEAF_ARTIFACT=<owned-out> /home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go test -p 2 ./TreeDB/internal/valuelog -run ^TestNativeZSTDActualLeafFixtureExport$ -count=1 -v",
+    "GOWORK=off GOMAXPROCS=2 NATIVE_ZSTD_RANK_ARTIFACT=<owned-out> NATIVE_ZSTD_RANK_EXPORT=1 /home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go test -p 2 ./TreeDB/internal/valuelog -run ^TestNativeZSTDPhysicalRankCensus$ -count=1 -v"
+  ],
+  "toolchain": "go1.26.4 linux/amd64",
+  "native_runtime_mutation": false
+}

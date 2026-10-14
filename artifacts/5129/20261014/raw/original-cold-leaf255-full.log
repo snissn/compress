@@ -1,0 +1,5 @@
+=== RUN   TestBoundedOriginalProducerAllocationControl
+ORIGINAL_ORDINARY fixture=leaf255-full stored=294 decoded=1044480 constructor_alloc_bytes=8936 constructor_allocs=19 complete_decode_alloc_bytes=1204280 complete_decode_allocs=8 retained_output_cap=1044496 indivisible_original_decode_call=true
+--- PASS: TestBoundedOriginalProducerAllocationControl (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.002s

@@ -1,0 +1,227 @@
+// Copyright 2018-2026 Klaus Post and contributors. All rights reserved.
+// License information can be found in the LICENSE file.
+// The normalized-count parser is factored from fse/decompress.go and
+// zstd/fse_decoder.go. Its bitstream layout and transitions are unchanged.
+package decoderwork
+
+import (
+	"encoding/binary"
+	"errors"
+	"fmt"
+)
+
+// NCount is the original normalized-count parser's suspended state. Input and
+// Norm are borrowed for the whole parse. Begin is constant-size; Step prices
+// each control/entry interpretation and actual four-byte input probe.
+type NCount struct {
+	in                          []byte
+	norm                        []int16
+	off, phase                  int
+	stream                      uint32
+	bits, nb                    uint
+	remaining, threshold, total int32
+	symbol, zeroEnd, maxSymbol  uint16
+	previousZero                bool
+	TableLog                    uint8
+	Symbols                     uint16
+}
+
+func (p *NCount) Begin(in []byte, norm []int16, maxSymbol uint16) {
+	*p = NCount{in: in, norm: norm, maxSymbol: maxSymbol}
+}
+
+func (p *NCount) Step(w Work, maxLog uint8) (done bool, consumed int, err error) {
+	for {
+		switch p.phase {
+		case 0:
+			if !Charge(w, 1, 4) {
+				return false, 0, nil
+			}
+			if len(p.in) < 4 {
+				return false, 0, errStepe7418d4afa
+			}
+			p.stream = binary.LittleEndian.Uint32(p.in)
+			p.nb = uint(p.stream&15) + 5
+			if p.nb > uint(maxLog) {
+				return false, 0, errStep172309a57f
+			}
+			p.TableLog = uint8(p.nb)
+			p.stream >>= 4
+			p.bits = 4
+			p.remaining = int32(1<<p.nb) + 1
+			p.threshold = int32(1 << p.nb)
+			p.nb++
+			p.phase = 1
+		case 1:
+			if !Charge(w, 1, 0) {
+				return false, 0, nil
+			}
+			if p.remaining <= 1 || p.symbol > p.maxSymbol {
+				p.phase = 7
+				continue
+			}
+			if p.previousZero {
+				p.zeroEnd = p.symbol
+				p.phase = 2
+			} else {
+				p.phase = 5
+			}
+		case 2:
+			if !Charge(w, 1, 4) {
+				return false, 0, nil
+			}
+			if p.stream&0xffff != 0xffff {
+				p.phase = 3
+				continue
+			}
+			if p.zeroEnd > 255-24 {
+				return false, 0, errStep9b7d3dfb96
+			}
+			p.zeroEnd += 24
+			if len(p.in)-p.off > 5 {
+				p.off += 2
+				p.stream = binary.LittleEndian.Uint32(p.in[p.off:]) >> p.bits
+			} else {
+				p.stream >>= 16
+				p.bits += 16
+			}
+		case 3:
+			if !Charge(w, 1, 0) {
+				return false, 0, nil
+			}
+			if p.stream&3 == 3 {
+				if p.zeroEnd > 255-3 {
+					return false, 0, errStep9b7d3dfb96
+				}
+				p.zeroEnd += 3
+				p.stream >>= 2
+				p.bits += 2
+				continue
+			}
+			p.zeroEnd += uint16(p.stream & 3)
+			p.bits += 2
+			if p.zeroEnd > 255 {
+				return false, 0, errStep9b7d3dfb96
+			}
+			p.phase = 4
+		case 4:
+			if p.symbol < p.zeroEnd {
+				if !Charge(w, 1, 2) {
+					return false, 0, nil
+				}
+				p.norm[p.symbol&255] = 0
+				p.symbol++
+				continue
+			}
+			if !Charge(w, 1, 4) {
+				return false, 0, nil
+			}
+			if r := len(p.in) - p.off; r >= 7 || r-int(p.bits>>3) >= 4 {
+				p.off += int(p.bits >> 3)
+				p.bits &= 7
+				p.stream = binary.LittleEndian.Uint32(p.in[p.off:]) >> p.bits
+			} else {
+				p.stream >>= 2
+			}
+			p.phase = 5
+		case 5:
+			if !Charge(w, 1, 2) {
+				return false, 0, nil
+			}
+			max := 2*p.threshold - 1 - p.remaining
+			var count int32
+			if int32(p.stream)&(p.threshold-1) < max {
+				count = int32(p.stream) & (p.threshold - 1)
+				p.bits += p.nb - 1
+			} else {
+				count = int32(p.stream) & (2*p.threshold - 1)
+				if count >= p.threshold {
+					count -= max
+				}
+				p.bits += p.nb
+			}
+			count--
+			if count < 0 {
+				p.remaining += count
+				p.total -= count
+			} else {
+				p.remaining -= count
+				p.total += count
+			}
+			p.norm[p.symbol&255] = int16(count)
+			p.symbol++
+			p.previousZero = count == 0
+			p.phase = 6
+		case 6:
+			if !Charge(w, 1, 4) {
+				return false, 0, nil
+			}
+			if p.remaining < p.threshold {
+				p.nb--
+				p.threshold >>= 1
+				continue
+			}
+			if r := len(p.in) - p.off; r >= 7 || r-int(p.bits>>3) >= 4 {
+				p.off += int(p.bits >> 3)
+				p.bits &= 7
+			} else {
+				p.bits -= uint(8 * (len(p.in) - 4 - p.off))
+				p.off = len(p.in) - 4
+			}
+			p.stream = binary.LittleEndian.Uint32(p.in[p.off:]) >> (p.bits & 31)
+			p.phase = 1
+		case 7:
+			if !Charge(w, 1, 0) {
+				return false, 0, nil
+			}
+			p.Symbols = p.symbol
+			if p.symbol <= 1 {
+				if w == nil {
+					return false, 0, fmt.Errorf("symbolLen (%d) too small", p.symbol)
+				}
+				return false, 0, errStepb9c70318fd
+			}
+			if p.symbol > 256 {
+				if w == nil {
+					return false, 0, fmt.Errorf("symbolLen (%d) too big", p.symbol)
+				}
+				return false, 0, errStep96c0cca7aa
+			}
+			if p.remaining != 1 {
+				if w == nil {
+					return false, 0, fmt.Errorf("corruption detected (remaining %d != 1)", p.remaining)
+				}
+				return false, 0, errStep4b00496b59
+			}
+			if p.bits > 32 {
+				if w == nil {
+					return false, 0, fmt.Errorf("corruption detected (bitCount %d > 32)", p.bits)
+				}
+				return false, 0, errStep55c887b564
+			}
+			if p.total != 1<<p.TableLog {
+				if w == nil {
+					return false, 0, fmt.Errorf("corruption detected (total %d)", p.total)
+				}
+				return false, 0, errStep4e0e35679f
+			}
+			p.off += int((p.bits + 7) >> 3)
+			p.phase = 8
+		case 8:
+			return true, p.off, nil
+		}
+	}
+}
+func (p *NCount) Clear() { *p = NCount{} }
+
+// Static bounded failures do not allocate or retain per-request diagnostics.
+var (
+	errStepe7418d4afa = errors.New("input too small")
+	errStep172309a57f = errors.New("tableLog too large")
+	errStep9b7d3dfb96 = errors.New("maxSymbolValue too small")
+	errStepb9c70318fd = errors.New("symbolLen (invalid) too small")
+	errStep96c0cca7aa = errors.New("symbolLen (invalid) too big")
+	errStep4b00496b59 = errors.New("corruption detected (remaining invalid != 1)")
+	errStep55c887b564 = errors.New("corruption detected (bitCount invalid > 32)")
+	errStep4e0e35679f = errors.New("corruption detected (total invalid)")
+)

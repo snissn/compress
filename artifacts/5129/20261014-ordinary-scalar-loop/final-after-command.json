@@ -1,0 +1,46 @@
+{
+  "name": "final-after-noasm",
+  "argv": [
+    "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+    "test",
+    "-tags",
+    "noasm",
+    "-run",
+    "^$",
+    "-bench",
+    "^BenchmarkDecoder_DecodeAll$/plrabn12",
+    "-benchmem",
+    "-benchtime=100x",
+    "-count=7",
+    "./zstd"
+  ],
+  "environment": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "CGO_ENABLED": "1",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+  "source_frozen": {
+    "zstd/seqdec.go": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "zstd/seqdec_step.go": "f4eaa5a951d44c1afb197f4cfbd55ff894b7a116363a9e75969db039363e53ae",
+    "zstd/decoder_test.go": "a4d1805892664476f01d3b58089450992dc083f1d0f7cf8e3beae00858b53f83",
+    "zstd/testdata/benchdecoder.zip": "e337e6309a468388c38161eb6ff5e01b9712273d6118c3a430a2081cbfdfe178"
+  },
+  "started_unix": 1791970924.2278864,
+  "load_before": [
+    0.22216796875,
+    0.2275390625,
+    0.22998046875
+  ],
+  "context": "same host/toolchain/fixture/ordinary harness; source-only worker progress, no new decoder fixture/harness",
+  "exit": 0,
+  "finished_unix": 1791970925.8299575,
+  "load_after": [
+    0.22216796875,
+    0.2275390625,
+    0.22998046875
+  ]
+}

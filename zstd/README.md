@@ -439,3 +439,14 @@ For new features/fixes, remember to add tests and for performance enhancements i
 For general feedback and experience reports, feel free to open an issue or write me on [Twitter](https://twitter.com/sh0dan).
 
 This package includes the excellent [`github.com/cespare/xxhash`](https://github.com/cespare/xxhash) package Copyright (c) 2016 Caleb Spare.
+
+### Caller-budgeted original decoder continuation
+
+`NewBoundedReader` provides cold, resumable decoding on the original parser,
+entropy-table and scalar sequence primitives. The enclosing operation supplies
+its existing work and retention admission callbacks. Complete admitted Raw
+output or necessary segmented history with output spans are explicit policies;
+caller-fed block input avoids a whole compressed-frame allocation or hidden I/O.
+See [bounded decoder work, input, and lifetime contract](BOUNDED_DECODER.md) for
+before-effect accounting, dictionary custody, Reset/CloseStep, ordinary API
+separation, supported original grammar, and the limits of component evidence.

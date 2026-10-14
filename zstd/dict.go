@@ -315,7 +315,7 @@ func BuildDict(o BuildDictOptions) ([]byte, error) {
 	}
 	sort.Slice(sortedOffsets, func(i, j int) bool {
 		a, b := sortedOffsets[i], sortedOffsets[j]
-		if a == b {
+		if newOffsets[a] == newOffsets[b] {
 			// Prefer the longer offset
 			return sortedOffsets[i] > sortedOffsets[j]
 		}

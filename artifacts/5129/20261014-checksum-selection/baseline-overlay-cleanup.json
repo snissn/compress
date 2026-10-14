@@ -1,0 +1,8 @@
+{
+  "root": "/tmp/mvcc5129-checksum-baseline-8c-n0tql3zb",
+  "old_source_sha256": "4a895a7ae0767f57184de173af8dcdacd64dded23297bd2e5adf944eae2b371e",
+  "disposable_file_bytes": 40976,
+  "writers_consumers": "overlay test exited; native build consumer quiescent",
+  "source_recovery": "git show 8c7503cd5a5a9fb02cd426fa8ce72be593fef92e:zstd/decoder_bounded.go",
+  "absent": true
+}

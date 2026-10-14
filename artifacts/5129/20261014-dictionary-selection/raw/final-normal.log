@@ -1,0 +1,284 @@
+=== RUN   TestBoundedDictionarySelectionDefinition
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-nil
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-slice
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-mismatch
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-absent
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-binary-id-only
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-empty
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-different-id
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=<nil> output="test"; bounded error=<nil> output="test"
+=== RUN   TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-after-reset
+    decoder_bounded_dictionary_selection_test.go:80: ordinary error=unknown dictionary output=""; bounded error=unknown dictionary output=""
+--- PASS: TestBoundedDictionarySelectionDefinition (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedfalse/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode0/fedtrue/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedfalse/binary-id-only-after-reset (0.00s)
+    --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-nil (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-empty-slice (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/raw-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-mismatch (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-absent (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-binary-id-only (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-empty (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/no-id-raw-different-id (0.00s)
+        --- PASS: TestBoundedDictionarySelectionDefinition/mode1/fedtrue/binary-id-only-after-reset (0.00s)
+=== RUN   TestBoundedEmptyDictionaryColdRefusal
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdicttrue
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdictfalse
+=== RUN   TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdicttrue
+--- PASS: TestBoundedEmptyDictionaryColdRefusal (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedfalse/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode0/fedtrue/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedfalse/rawdicttrue (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdictfalse (0.00s)
+    --- PASS: TestBoundedEmptyDictionaryColdRefusal/mode1/fedtrue/rawdicttrue (0.00s)
+=== RUN   TestBoundedOriginalRawDictionaryZeroID
+--- PASS: TestBoundedOriginalRawDictionaryZeroID (0.00s)
+=== RUN   TestBoundedRawDictionaryMustMatchFrameID
+--- PASS: TestBoundedRawDictionaryMustMatchFrameID (0.00s)
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedfalse
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedtrue
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedfalse
+=== RUN   TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedtrue
+--- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedfalse (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode0/fedtrue (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedfalse (0.00s)
+    --- PASS: TestBoundedConcatenatedDictionaryAndFrameIndependence/mode1/fedtrue (0.00s)
+=== RUN   TestBoundedExistingDictionaryCorpus
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007612.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/dictplain.zst
+--- PASS: TestBoundedExistingDictionaryCorpus (0.03s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007612.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/dictplain.zst (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.042s

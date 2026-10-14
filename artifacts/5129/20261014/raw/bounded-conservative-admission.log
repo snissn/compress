@@ -1,0 +1,46 @@
+=== RUN   TestBoundedColdConstructorAllocationWitness
+    decoder_bounded_allocation_test.go:33: requestedContaining=58472 conservativeAdmission=66048 Decoder=264 continuation=58208 allocatorAllocatedDelta=65824 allocationCount=2 R=1 B=66048; fixed Decoder remains caller reachable after CloseStep
+--- PASS: TestBoundedColdConstructorAllocationWitness (0.00s)
+=== RUN   TestBoundedMalformedErrorAllocations
+=== RUN   TestBoundedMalformedErrorAllocations/dictionary-zero-id
+    decoder_bounded_allocation_test.go:81: returned="dictionaries cannot have ID 0" allocations=0 R=1 B=8; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/header-truncated
+    decoder_bounded_allocation_test.go:81: returned="unexpected EOF" allocations=0 R=2 B=148; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/reserved-block
+    decoder_bounded_allocation_test.go:81: returned="invalid input: reserved block type encountered" allocations=0 R=1 B=3; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/literal-truncated
+    decoder_bounded_allocation_test.go:81: returned="block too small" allocations=0 R=8 B=8; static package error has no per-operation capacity refund
+--- PASS: TestBoundedMalformedErrorAllocations (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/dictionary-zero-id (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/header-truncated (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/reserved-block (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/literal-truncated (0.00s)
+=== RUN   TestBoundedSkippableUint32Length
+--- PASS: TestBoundedSkippableUint32Length (0.00s)
+=== RUN   TestBoundedResetSameOwner
+--- PASS: TestBoundedResetSameOwner (0.00s)
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=294 mode=0 calls=225 R=5231 B=5612808 peakContaining=1257984 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=294 mode=1 calls=476 R=6952 B=5926864 peakContaining=1524224 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:195: raw=26520 stored=104 mode=0 calls=93 R=2792 B=399279 peakContaining=240024 callerReadOperations=2; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:195: raw=26520 stored=104 mode=1 calls=105 R=3263 B=426687 peakContaining=254464 callerReadOperations=2; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:195: raw=2101248 stored=791735 mode=1 calls=36131 R=1146359 B=23914442 peakContaining=3025408 callerReadOperations=258; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=295 mode=0 calls=361 R=9486 B=5659802 peakContaining=1279162 callerReadOperations=32; oracle allocation excluded
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:195: raw=1044480 stored=295 mode=1 calls=618 R=11491 B=5982946 peakContaining=1545402 callerReadOperations=32; oracle allocation excluded
+--- PASS: TestBoundedActualGomapProducerFrames (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.015s

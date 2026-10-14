@@ -1,0 +1,46 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/zstd/seqdec_step.go	2026-10-13 19:23:52.357152079 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/seqdec_step.go	2026-10-13 19:47:41.868059589 -1000
+@@ -7,6 +7,7 @@
+ 	"fmt"
+ 	"github.com/snissn/compress/internal/decoderwork"
+ 	"io"
++	"unsafe"
+ )
+ 
+ type sequenceTableState struct {
+@@ -49,7 +50,7 @@
+ 			p.consumed = n
+ 			p.phase = 1
+ 		case 1:
+-			if !decoderwork.Charge(w, 1, 0) {
++			if !decoderwork.Charge(w, 1, uint64(unsafe.Sizeof(decoderwork.Table{}))) {
+ 				return false, 0, nil
+ 			}
+ 			p.build.Begin(s.norm[:], s.stateTable[:], int(s.symbolLen), s.actualTableLog, 8, 16, 16)
+@@ -82,7 +83,7 @@
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("invalid decoding table entry %d, symbol %d >= max (%d)", p.i, add, len(p.bases))
+ 				}
+-				return false, 0, errStepea80f62bea
++				return false, 0, errStepSequenceSymbolRange
+ 			}
+ 			lu := p.bases[add]
+ 			if lu.addBits > s.maxBits {
+@@ -132,7 +133,7 @@
+ 				if w == nil {
+ 					return false, false, fmt.Errorf("nil sequence decoder")
+ 				}
+-				return false, false, errStep0b07f70f7f
++				return false, false, errStepNilSequenceDecoder
+ 			}
+ 			br.fill()
+ 			p.ll = s.litLengths.fse.dt[br.getBits(s.litLengths.fse.actualTableLog)]
+@@ -217,6 +218,6 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStepea80f62bea = errors.New("invalid decoding table entry invalid, symbol invalid >= max (invalid)")
+-	errStep0b07f70f7f = errors.New("nil sequence decoder")
++	errStepSequenceSymbolRange = errors.New("decoding table symbol outside allowed range")
++	errStepNilSequenceDecoder  = errors.New("nil sequence decoder")
+ )

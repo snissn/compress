@@ -1,0 +1,4 @@
+=== RUN   TestBoundedOriginalRawDictionaryZeroID
+--- PASS: TestBoundedOriginalRawDictionaryZeroID (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.002s

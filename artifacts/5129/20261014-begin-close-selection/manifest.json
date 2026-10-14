@@ -1,0 +1,104 @@
+{
+  "members": [
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/386-final-control.txt",
+      "sha256": "71cf96811bbefde73fbefcd038507ebf130fdc827f4c300092c55a1ffb514a00",
+      "bytes": 1451
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/386.txt",
+      "sha256": "71cf96811bbefde73fbefcd038507ebf130fdc827f4c300092c55a1ffb514a00",
+      "bytes": 1451
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/README.md",
+      "sha256": "e1e6bfd1948be1dce2e6b1f9a52a81ca692a2166ddc6759a35f32817f7fb8772",
+      "bytes": 1769
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-command.json",
+      "sha256": "5ee041df87d9a64964802d5bf4a8a76e6badcd2f1236543d1fcfde0154e3e3cb",
+      "bytes": 708
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-control-overlay-cleanup.json",
+      "sha256": "a7ee07f977d96ddc82ee7ce3ad9e5a1a8b5857a405bf0f4528cb66d1fcfe76e9",
+      "bytes": 578
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-control-red.txt",
+      "sha256": "8666dd689e8bfe94e0a7e04b7bb2b03772a6c58698fe113630392c2f3fd7dd29",
+      "bytes": 1726
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-red.txt",
+      "sha256": "c55436cc43264de27c5e72539c1c19e838dffd75277f44eeccce55b886ff6ae3",
+      "bytes": 1890
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-final-v2-red.txt",
+      "sha256": "8feb53357c7a24e39f85fa04d4a680e31f8eccd56c6a5ef31e0e1f4e858b0dd2",
+      "bytes": 1726
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-overlay-cleanup.json",
+      "sha256": "9eed54b31584708934e36ce7761968d68c373b2cfb9a3edaec71141afb67f7ce",
+      "bytes": 560
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/baseline-red.txt",
+      "sha256": "ba639ec6dc32255b3fc5a66df62e2f1975875920f93f47c91eab61b283386cea",
+      "bytes": 1058
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/commands-final-control.json",
+      "sha256": "49b6cc36f6a88bcea9f894e5de3e03eb675b5eef4985215f70217da377977db5",
+      "bytes": 2550
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/commands.json",
+      "sha256": "5a56f581b2faa6ad28d2edc384c781929d477a882d07b9e0a76fb44c870b0b85",
+      "bytes": 2652
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/normal-command.json",
+      "sha256": "f98ef0051bb7796a8d3fbbc5384bae279c8dcf1f85b042bf6c3b132ec406aa83",
+      "bytes": 388
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/normal-final-control.txt",
+      "sha256": "27a4cbae3b3a463dd20fbad914bf46ee28d0de0230c9fc7872efc51a6a589c94",
+      "bytes": 69751
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/normal-v2.txt",
+      "sha256": "0ce68ecaf3217027a84344612710d6225dcd38808926d2cc143c6795d74d13aa",
+      "bytes": 69751
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/normal.txt",
+      "sha256": "7b0a0dc59b7a5d4d1e2b90df56a97d1cd31d60acc37117d869e93e89ca985333",
+      "bytes": 69920
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/race-final-control.txt",
+      "sha256": "40c221eef03950024016ad9755d2791629291b356d2f5f9b5661ae8a10bf5d0a",
+      "bytes": 3553
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/race.txt",
+      "sha256": "9af2f7395eeafc80875fae0eeb85eea94186855ff260613372d60ffe44ac0187",
+      "bytes": 3553
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/repair.diff",
+      "sha256": "8c157931efe67d16ee2eda1c7eb6777beb2f148904b734ca84ba8b00c5017dd2",
+      "bytes": 765
+    },
+    {
+      "path": "artifacts/5129/20261014-begin-close-selection/source.json",
+      "sha256": "ec365c9488b601b0e4a47a5e3477dc860665526d472ab5034759d806594858c2",
+      "bytes": 19830
+    }
+  ]
+}

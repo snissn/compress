@@ -1,0 +1,27 @@
+{
+  "source": "bca3cf38c81d4add5b3d283e64c4adf27d814cec",
+  "inventory_sha256": "3658f3b97c529ea62136fab9453ad6c6fb4a5d42167a9904ae9b339f51defcf2",
+  "manifest_sha256": "03f4f60d517b6bc949f9d4ee8f33ada64405c82c2a2f3a4fc1e33f8f78425f05",
+  "paths": [
+    {
+      "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/s2/cmd/_s2sx/sfx-exe",
+      "absent": true,
+      "measured_file_bytes": 11581414
+    },
+    {
+      "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/ci-repair-s2",
+      "absent": true,
+      "measured_file_bytes": 39013202
+    }
+  ],
+  "measured_file_bytes": 50594616,
+  "observed_free_space_delta": 50634752,
+  "free_space_delta_is_ambient_sensitive": true,
+  "preserved": [
+    "active fork and native worktrees",
+    "original packet",
+    "compressed producer testdata/dictionary",
+    "bare repository",
+    "shared caches"
+  ]
+}

@@ -1,0 +1,25 @@
+=== RUN   TestNativeZSTDActualLeafFixtureExport
+    native_zstd_leaf_fixture_export_test.go:163: leaf255-compact-false actual K=255 raw=1044480 stored=294 header={SingleSegment:true WindowSize:0 DictionaryID:0 HasFCS:true FrameContentSize:1044480 Skippable:false SkippableID:0 SkippableSize:0 HeaderSize:9 FirstBlock:{OK:true Last:false Compressed:true DecompressedSize:0 CompressedSize:87} HasCheckSum:false} fixture=/tmp/TestNativeZSTDActualLeafFixtureExport3346169223/001/leaf_vlog/value-l255-000001.log
+    native_zstd_leaf_fixture_export_test.go:163: leaf255-compact-true actual K=255 raw=26520 stored=104 header={SingleSegment:true WindowSize:0 DictionaryID:0 HasFCS:true FrameContentSize:26520 Skippable:false SkippableID:0 SkippableSize:0 HeaderSize:7 FirstBlock:{OK:true Last:true Compressed:true DecompressedSize:0 CompressedSize:94} HasCheckSum:false} fixture=/tmp/TestNativeZSTDActualLeafFixtureExport3346169223/002/leaf_vlog/value-l255-000001.log
+--- FAIL: TestNativeZSTDActualLeafFixtureExport (0.01s)
+panic: runtime error: integer divide by zero [recovered, repanicked]
+
+goroutine 19 [running]:
+testing.tRunner.func1.2({0x844420, 0xc0cc20})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:1974 +0x232
+testing.tRunner.func1()
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:1977 +0x349
+panic({0x844420?, 0xc0cc20?})
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/runtime/panic.go:860 +0x13a
+github.com/snissn/compress/zstd.BuildDict({0x49, {0x1ea78f180008, 0xff, 0xff}, {0x1ea78f17a000, 0x2000, 0x2000}, {0x1000, 0x4, 0x8}, ...})
+	/home/mikers/go/pkg/mod/github.com/snissn/compress@v1.18.2-snissn.0.0.20260506201017-87fb149e4721/zstd/dict.go:439 +0x2754
+github.com/snissn/gomap/TreeDB/internal/valuelog.continuationDictionaryProducer(0x1ea78f178248)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/native-4878-traversal/TreeDB/internal/valuelog/native_zstd_leaf_fixture_export_test.go:186 +0x218
+github.com/snissn/gomap/TreeDB/internal/valuelog.TestNativeZSTDActualLeafFixtureExport(0x1ea78f178248)
+	/home/mikers/benchmarks/mvcc-4871-repair-20261013/native-4878-traversal/TreeDB/internal/valuelog/native_zstd_leaf_fixture_export_test.go:54 +0x4af
+testing.tRunner(0x1ea78f178248, 0x8d9c08)
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2036 +0xea
+created by testing.(*T).Run in goroutine 1
+	/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/src/testing/testing.go:2101 +0x4c5
+FAIL	github.com/snissn/gomap/TreeDB/internal/valuelog	0.010s
+FAIL

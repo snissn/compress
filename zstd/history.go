@@ -10,6 +10,8 @@ import (
 
 // history contains the information transferred between blocks.
 type history struct {
+	// Optional bounded storage policy; ordinary contiguous semantics are unchanged.
+	segmented *segmentedHistory
 	// Literal decompression
 	huffTree *huff0.Scratch
 

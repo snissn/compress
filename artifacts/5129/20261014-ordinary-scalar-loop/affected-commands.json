@@ -1,0 +1,150 @@
+[
+  {
+    "name": "normal",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-count=1",
+      "-run",
+      "^(TestBounded|Test_seqdec_|TestDecoderRegression|TestDecoderRawDict|TestDecoder_SmallDict)",
+      "-v",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "seqdec_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "started_unix": 1791970686.3561754,
+    "exit": 0,
+    "finished_unix": 1791970687.5440748
+  },
+  {
+    "name": "noasm",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-tags",
+      "noasm,nounsafe",
+      "-count=1",
+      "-run",
+      "^(TestBounded|Test_seqdec_|TestDecoderRegression|TestDecoderRawDict|TestDecoder_SmallDict)",
+      "-v",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "seqdec_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "started_unix": 1791970687.5444129,
+    "exit": 0,
+    "finished_unix": 1791970688.721855
+  },
+  {
+    "name": "race",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-race",
+      "-tags",
+      "noasm,nounsafe",
+      "-count=1",
+      "-run",
+      "^(TestBounded|Test_seqdec_)",
+      "-v",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "seqdec_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "started_unix": 1791970688.7221122,
+    "exit": 0,
+    "finished_unix": 1791970694.62547
+  },
+  {
+    "name": "386",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-tags",
+      "noasm,nounsafe",
+      "-count=1",
+      "-run",
+      "^(TestBounded|Test_seqdec_)",
+      "-v",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "0",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOARCH": "386"
+    },
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "seqdec_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "started_unix": 1791970694.6258569,
+    "exit": 0,
+    "finished_unix": 1791970695.8891046
+  },
+  {
+    "name": "vet",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "seqdec_sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+    "started_unix": 1791970695.8894336,
+    "exit": 0,
+    "finished_unix": 1791970696.0623112
+  },
+  {
+    "name": "final-noasm",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-tags",
+      "noasm,nounsafe",
+      "-count=1",
+      "-run",
+      "^(TestBounded|Test_seqdec_|TestDecoderRegression|TestDecoderRawDict|TestDecoder_SmallDict)",
+      "-v",
+      "./zstd"
+    ],
+    "source_parent": "f5507c8be61f8d70e881701f4424d817652171d4",
+    "started_unix": 1791970923.078296,
+    "reason": "Removed verified unused BeginPrepared helper formerly used only by replaced ordinary loop; actual bounded Begin/Next bytes unchanged.",
+    "exit": 0,
+    "finished_unix": 1791970924.2270672
+  }
+]

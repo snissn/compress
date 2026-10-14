@@ -1,0 +1,6 @@
+# github.com/snissn/compress/huff0
+huff0/bitreader.go:118:6: undefined: w
+ok  	github.com/snissn/compress/fse	0.001s
+FAIL	github.com/snissn/compress/huff0 [build failed]
+FAIL	github.com/snissn/compress/zstd [build failed]
+FAIL

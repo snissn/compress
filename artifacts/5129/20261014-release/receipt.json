@@ -1,0 +1,168 @@
+{
+  "source_commit": "99a8f74436c977080236326f2cdd40ef39d53107",
+  "packet_manifest_sha256": "b7e99b423e7d7a15bcbaf70c9de8661716a39d61dd900d4fb3e938b3197c79f5",
+  "last_consumers": "Final actual-producer semantics, dictionary, stream/custody, rank/allocation/cold, ordinary controls and platform compilation completed; no remaining command needs generated exports/binaries. Actual compressed payloads/dictionary retained as committed zstd testdata; producer source/raw receipts/reproduction retained in closed packet.",
+  "protected": [
+    "active compress-5129 WT",
+    "active native-4878-traversal WT and harness WIP",
+    "bare repos",
+    "shared module/build caches",
+    "protected original source/fixtures"
+  ],
+  "targets": [
+    {
+      "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer",
+      "members": [
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf-producer-receipts.json",
+          "bytes": 3512,
+          "allocated_bytes": 4096,
+          "inode": 107127039,
+          "sha256": "f9725effae65f3d40cba540dced6e85462800672bc92ed996809ab1d2e4e1bdb"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-false.file",
+          "bytes": 3390,
+          "allocated_bytes": 4096,
+          "inode": 107127033,
+          "sha256": "69914ca5ee51a35a4b31329294ccf326392fed79e87a136ea713b16a692d5276"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-false.raw",
+          "bytes": 1044480,
+          "allocated_bytes": 1044480,
+          "inode": 107127035,
+          "sha256": "56c78f06ef6007e7e30c61f03583107a2502927449ee676b2a587df9d8f2747d"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-false.zstd",
+          "bytes": 294,
+          "allocated_bytes": 4096,
+          "inode": 107127034,
+          "sha256": "030393f5179aa5e9a2c4a90dc4063effdc672dd150fdec929fd631d58451a117"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-true.file",
+          "bytes": 3200,
+          "allocated_bytes": 4096,
+          "inode": 107127036,
+          "sha256": "05c3f35b9d686dee962aa363d3642bf813c7845831460f6cbf8758c6fc63ce72"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-true.raw",
+          "bytes": 26520,
+          "allocated_bytes": 28672,
+          "inode": 107127038,
+          "sha256": "f5b9401c3458ebb9340fc4bd3ee80a1a9d7896280aa2f48e58aaf443598dfd46"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-compact-true.zstd",
+          "bytes": 104,
+          "allocated_bytes": 4096,
+          "inode": 107127037,
+          "sha256": "a56039f7b6ac4c6d960eb82e0235292d200fb8ca4bdcc6c0c3a64903b46dbb0e"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-dictionary.dict",
+          "bytes": 8249,
+          "allocated_bytes": 12288,
+          "inode": 107127101,
+          "sha256": "2f59793172438daf0995f867a471b560194544d793f8d3307af1a8853b5c4ac1"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-dictionary.file",
+          "bytes": 3391,
+          "allocated_bytes": 4096,
+          "inode": 107127102,
+          "sha256": "f945bbafb1908d19938ae3dfe6ea29e77ef406621c61cbaad2b9c3e9730e40a9"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-dictionary.raw",
+          "bytes": 1044480,
+          "allocated_bytes": 1044480,
+          "inode": 107127104,
+          "sha256": "56c78f06ef6007e7e30c61f03583107a2502927449ee676b2a587df9d8f2747d"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-leaf-producer/leaf255-dictionary.zstd",
+          "bytes": 295,
+          "allocated_bytes": 4096,
+          "inode": 107127103,
+          "sha256": "40d026b0c6d09bdb5c373712bc64f93c6d55327df66d435513b49319eb9bb006"
+        }
+      ],
+      "measured_file_bytes": 2137915,
+      "observed_allocated_bytes": 2158592,
+      "lsof_returncode": 1,
+      "lsof_stdout": "",
+      "lsof_stderr": "lsof: WARNING: can't stat() fuse.portal file system /run/user/0/doc\n      Output information may be incomplete.\nlsof: WARNING: can't stat() nsfs file system /run/docker/netns/default\n      Output information may be incomplete.\n"
+    },
+    {
+      "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-pointed-producer",
+      "members": [
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-pointed-producer/census.json",
+          "bytes": 10602,
+          "allocated_bytes": 12288,
+          "inode": 107127047,
+          "sha256": "e6517af00753717acc9363f9d76ba4de856b5ab9baf01b2374623e302a3672f8"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-pointed-producer/fixture/value-000001.log",
+          "bytes": 791783,
+          "allocated_bytes": 794624,
+          "inode": 107127044,
+          "sha256": "31f7f83c713ec221c0936aed469d7f3491a5f37cf039f36d07495e20939746bd"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-pointed-producer/pointed.raw",
+          "bytes": 2101248,
+          "allocated_bytes": 2101248,
+          "inode": 107127046,
+          "sha256": "3bbedc025e46824bcaad4f2412609a5128b9904dba4f9ca8c51b89f734b349d5"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/actual-pointed-producer/pointed.zstd",
+          "bytes": 791735,
+          "allocated_bytes": 794624,
+          "inode": 107127045,
+          "sha256": "b4e1f7bb7dc386223be2ebf43d7b1d7e210c75e8fe0f0c150b2249a6b9e59fa5"
+        }
+      ],
+      "measured_file_bytes": 3695368,
+      "observed_allocated_bytes": 3702784,
+      "lsof_returncode": 1,
+      "lsof_stdout": "",
+      "lsof_stderr": "lsof: WARNING: can't stat() fuse.portal file system /run/user/0/doc\n      Output information may be incomplete.\nlsof: WARNING: can't stat() nsfs file system /run/docker/netns/default\n      Output information may be incomplete.\n"
+    },
+    {
+      "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/platform-compile",
+      "members": [
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/platform-compile/zstd-darwin.test",
+          "bytes": 7893154,
+          "allocated_bytes": 7897088,
+          "inode": 107126512,
+          "sha256": "88806ff62c8e1b119bcb1baa2f74fc31e5b0c07c2d995b08db07b11166a0fc87"
+        },
+        {
+          "path": "/home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/platform-compile/zstd-windows.test.exe",
+          "bytes": 8446464,
+          "allocated_bytes": 8450048,
+          "inode": 107126511,
+          "sha256": "becb7e4c8c1daf531efd44f91b574eed73e4be0061463bca6be514af1478021a"
+        }
+      ],
+      "measured_file_bytes": 16339618,
+      "observed_allocated_bytes": 16347136,
+      "lsof_returncode": 1,
+      "lsof_stdout": "",
+      "lsof_stderr": "lsof: WARNING: can't stat() fuse.portal file system /run/user/0/doc\n      Output information may be incomplete.\nlsof: WARNING: can't stat() nsfs file system /run/docker/netns/default\n      Output information may be incomplete.\n"
+    }
+  ],
+  "deleted_paths_absent": true,
+  "measured_file_bytes": 22172901,
+  "observed_free_space_delta": 22212608,
+  "free_space_note": "Ambient host writes mean this delta is not exact reclaimed allocation.",
+  "worktree_registration_changed": false
+}

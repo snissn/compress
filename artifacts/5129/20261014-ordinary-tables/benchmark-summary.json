@@ -1,0 +1,68 @@
+[
+  {
+    "package": "fse",
+    "case": "BenchmarkDecompress/gettysburg-2",
+    "before_median_ns": 4746.0,
+    "after_median_ns": 3345.0,
+    "before_ops_sec": 210703.75052675937,
+    "after_ops_sec": 298953.66218236176,
+    "change_percent": -29.519595448798984,
+    "bytes_op": 0,
+    "allocs_op": 0
+  },
+  {
+    "package": "fse",
+    "case": "BenchmarkDecompress/endzerobits-2",
+    "before_median_ns": 230.0,
+    "after_median_ns": 86.58,
+    "before_ops_sec": 4347826.0869565215,
+    "after_ops_sec": 11550011.550011551,
+    "change_percent": -62.35652173913044,
+    "bytes_op": 0,
+    "allocs_op": 0
+  },
+  {
+    "package": "fse",
+    "case": "BenchmarkDecompress/normcount2-2",
+    "before_median_ns": 1529.0,
+    "after_median_ns": 589.1,
+    "before_ops_sec": 654022.2367560497,
+    "after_ops_sec": 1697504.6681378372,
+    "change_percent": -61.4715500327011,
+    "bytes_op": 0,
+    "allocs_op": 0
+  },
+  {
+    "package": "huff",
+    "case": "BenchmarkDecompress1XTable/crash2-2",
+    "before_median_ns": 574.7,
+    "after_median_ns": 323.3,
+    "before_ops_sec": 1740038.2808421785,
+    "after_ops_sec": 3093102.3816888337,
+    "change_percent": -43.74456238037238,
+    "bytes_op": 0,
+    "allocs_op": 0
+  },
+  {
+    "package": "huff",
+    "case": "BenchmarkDecompress1XTable/endnonzero-2",
+    "before_median_ns": 412.4,
+    "after_median_ns": 233.5,
+    "before_ops_sec": 2424830.2618816686,
+    "after_ops_sec": 4282655.2462526765,
+    "change_percent": -43.38021338506304,
+    "bytes_op": 0,
+    "allocs_op": 0
+  },
+  {
+    "package": "huff",
+    "case": "BenchmarkDecompress1XTable/case1-2",
+    "before_median_ns": 1547.0,
+    "after_median_ns": 948.1,
+    "before_ops_sec": 646412.4111182934,
+    "after_ops_sec": 1054741.0610695074,
+    "change_percent": -38.71363930187459,
+    "bytes_op": 0,
+    "allocs_op": 0
+  }
+]

@@ -1,0 +1,403 @@
+=== RUN   TestAllocationChargeEnclosingAllocations
+--- PASS: TestAllocationChargeEnclosingAllocations (0.00s)
+PASS
+ok  	github.com/snissn/compress/internal/decoderwork	0.001s
+testing: warning: no tests to run
+PASS
+ok  	github.com/snissn/compress/fse	0.001s [no tests to run]
+=== RUN   TestTableStateLastAliasBeforeRefund
+--- PASS: TestTableStateLastAliasBeforeRefund (0.00s)
+PASS
+ok  	github.com/snissn/compress/huff0	0.004s
+=== RUN   TestBoundedColdConstructorAllocationWitness
+    decoder_bounded_allocation_test.go:34: requestedContaining=58472 conservativeAdmission=66048 Decoder=264 continuation=58208 allocatorAllocatedDelta=65824 allocationCount=2 R=1 B=66048; fixed Decoder remains caller reachable after CloseStep
+--- PASS: TestBoundedColdConstructorAllocationWitness (0.00s)
+=== RUN   TestBoundedMalformedErrorAllocations
+=== RUN   TestBoundedMalformedErrorAllocations/dictionary-zero-id
+    decoder_bounded_allocation_test.go:82: returned="dictionaries cannot have ID 0" allocations=0 R=1 B=8; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/header-truncated
+    decoder_bounded_allocation_test.go:82: returned="unexpected EOF" allocations=0 R=2 B=148; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/reserved-block
+    decoder_bounded_allocation_test.go:82: returned="invalid input: reserved block type encountered" allocations=0 R=1 B=3; static package error has no per-operation capacity refund
+=== RUN   TestBoundedMalformedErrorAllocations/literal-truncated
+    decoder_bounded_allocation_test.go:82: returned="block too small" allocations=0 R=8 B=8; static package error has no per-operation capacity refund
+--- PASS: TestBoundedMalformedErrorAllocations (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/dictionary-zero-id (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/header-truncated (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/reserved-block (0.00s)
+    --- PASS: TestBoundedMalformedErrorAllocations/literal-truncated (0.00s)
+=== RUN   TestBoundedNecessaryHistoryN2N
+    decoder_bounded_allocation_test.go:136: N=1048576 stored=395174 calls=17967 R=574223 B=11826682 peakConservative=1526272 observedDecoderAllocated=1520928 observedDecoderAllocations=37; original immutable input/oracle/spans excluded; linked history lookup probes included
+    decoder_bounded_allocation_test.go:136: N=2097152 stored=790173 calls=35847 R=1145673 B=23409478 peakConservative=2836992 observedDecoderAllocated=2831680 observedDecoderAllocations=70; original immutable input/oracle/spans excluded; linked history lookup probes included
+--- PASS: TestBoundedNecessaryHistoryN2N (0.02s)
+=== RUN   TestBoundedOriginalRawDictionaryZeroID
+--- PASS: TestBoundedOriginalRawDictionaryZeroID (0.00s)
+=== RUN   TestBoundedRawDictionaryMustMatchFrameID
+--- PASS: TestBoundedRawDictionaryMustMatchFrameID (0.00s)
+=== RUN   TestBoundedOriginalBlockInput
+=== RUN   TestBoundedOriginalBlockInput/tiny-split-header
+    decoder_bounded_input_test.go:97: decoded=11 stored=24 inputCapacity=131090 chunk=1
+=== RUN   TestBoundedOriginalBlockInput/rich-compressed-blocks
+    decoder_bounded_input_test.go:97: decoded=2101248 stored=791739 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/stored-input-over-two-MiB
+    decoder_bounded_input_test.go:97: decoded=2300000 stored=2300121 inputCapacity=131090 chunk=4096
+=== RUN   TestBoundedOriginalBlockInput/RLE
+    decoder_bounded_input_test.go:97: decoded=150000 stored=43 inputCapacity=131090 chunk=17
+--- PASS: TestBoundedOriginalBlockInput (0.02s)
+    --- PASS: TestBoundedOriginalBlockInput/tiny-split-header (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/rich-compressed-blocks (0.01s)
+    --- PASS: TestBoundedOriginalBlockInput/stored-input-over-two-MiB (0.00s)
+    --- PASS: TestBoundedOriginalBlockInput/RLE (0.00s)
+=== RUN   TestBoundedStreamRefusalResetAndCancel
+--- PASS: TestBoundedStreamRefusalResetAndCancel (0.00s)
+=== RUN   TestBoundedSkippableUint32Length
+--- PASS: TestBoundedSkippableUint32Length (0.00s)
+=== RUN   TestBoundedResetSameOwner
+--- PASS: TestBoundedResetSameOwner (0.00s)
+=== RUN   TestBoundedAdmissionAndOutputBinding
+--- PASS: TestBoundedAdmissionAndOutputBinding (0.00s)
+=== RUN   TestBoundedOriginalFramingFailures
+=== RUN   TestBoundedOriginalFramingFailures/truncate
+=== RUN   TestBoundedOriginalFramingFailures/truncate#01
+=== RUN   TestBoundedOriginalFramingFailures/truncate#02
+=== RUN   TestBoundedOriginalFramingFailures/truncate#03
+=== RUN   TestBoundedOriginalFramingFailures/truncate#04
+=== RUN   TestBoundedOriginalFramingFailures/truncate#05
+=== RUN   TestBoundedOriginalFramingFailures/truncate#06
+--- PASS: TestBoundedOriginalFramingFailures (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#01 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#02 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#03 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#04 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#05 (0.00s)
+    --- PASS: TestBoundedOriginalFramingFailures/truncate#06 (0.00s)
+=== RUN   TestBoundedRLEExpansionPause
+--- PASS: TestBoundedRLEExpansionPause (0.00s)
+=== RUN   TestBoundedOriginalProducerAllocationControl
+    decoder_bounded_ordinary_control_test.go:90: one explicit fresh-process fixture
+--- SKIP: TestBoundedOriginalProducerAllocationControl (0.00s)
+=== RUN   TestBoundedActualGomapProducerFrames
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1907 B=155792 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=4 B=521 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=61 B=1143 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=257 B=1220 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=10 B=896 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=2573 B=4296960 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=64 B=3777 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=16 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=1131008 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=294 mode=0 calls=225 R=5231 B=5626368 peakConservativeAdmission=1270272 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-full/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2035 B=159888 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=4 B=521 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=91 B=2103 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=305 B=2244 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=18 B=41984 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=5057 B=6653768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=34 B=1344 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=96 B=4801 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=294 mode=1 calls=499 R=7980 B=6984200 peakConservativeAdmission=1532416 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1907 B=155792 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=4 B=519 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=8 B=8 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=1 B=1 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=3 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=1 B=89 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=52 B=216 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=8 B=820 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=792 B=139564 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=1 B=2048 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=4 B=466 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=115200 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=26520 stored=104 mode=0 calls=93 R=2792 B=414991 peakConservativeAdmission=254464 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-compact/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2035 B=159888 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=4 B=519 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=8 B=8 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=1 B=3 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=1 B=1 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=3 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=1 B=89 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=56 B=344 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=15 B=41921 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=1406 B=175095 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=1 B=2048 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=1 B=40 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=6 B=530 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=26520 stored=104 mode=1 calls=114 R=3549 B=463247 peakConservativeAdmission=262656 callerReadOperations=2; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/pointed-rich/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2035 B=159888 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=4 B=521 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=193 B=4483 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=264 B=264 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=10 R=2 B=139856 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=11 R=33 B=9768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=47 B=547 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=45 B=417 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=525 B=3839 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=33 B=2937 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=14314 B=84912 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=3637 B=8062516 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=5327 B=5415300 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=33 B=67584 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=71 B=2792 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=582 B=2383323 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=100 R=384 B=12049 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=110 R=1121085 B=9597544 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=6 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=2101248 stored=791735 mode=1 calls=36227 R=1148630 B=26031426 peakConservativeAdmission=3033600 callerReadOperations=258; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw
+    decoder_bounded_producer_test.go:203: phase=0 R=1907 B=155792 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=1 R=4254 B=48264 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=4 B=262 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=522 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=61 B=1143 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=257 B=1220 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=10 B=896 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=2573 B=4296960 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=64 B=3778 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=160 R=16 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=4 B=1131008 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=295 mode=0 calls=361 R=9486 B=5674634 peakConservativeAdmission=1299584 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+=== RUN   TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans
+    decoder_bounded_producer_test.go:203: phase=0 R=2035 B=159888 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=1 R=4538 B=57352 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=2 R=6 B=326 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=3 R=5 B=522 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=7 R=91 B=2103 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=8 R=128 B=128 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=12 R=16 B=48 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=13 R=16 B=16 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=14 R=138 B=405 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=15 R=16 B=1424 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=16 R=305 B=2244 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=17 R=18 B=41984 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=18 R=5057 B=6653768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=32 R=16 B=32768 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=34 R=1 B=0 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=36 R=34 B=1344 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=70 R=96 B=4802 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:203: phase=199 R=3 B=82432 (199=enclosing preparation, includes caller read/feed while suspended)
+    decoder_bounded_producer_test.go:206: raw=1044480 stored=295 mode=1 calls=641 R=12519 B=7041554 peakConservativeAdmission=1561728 callerReadOperations=32; verification collector/oracle excluded, caller dictionary is a borrowed operation edge rather than physical definition death
+--- PASS: TestBoundedActualGomapProducerFrames (0.02s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-full/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-compact/spans (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/pointed-rich/spans (0.01s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/raw (0.00s)
+    --- PASS: TestBoundedActualGomapProducerFrames/leaf255-dictionary/spans (0.00s)
+=== RUN   TestBoundedOriginalProducerDifferential
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1907 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2035 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=61 R=1907 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=0 frame=0 calls=63 R=2035 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=61 R=1918 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=20 calls=64 R=2051 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=61 R=1919 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/small/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=11 frame=24 calls=64 R=2052 peak=107008 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=66 R=2083 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=39 calls=82 R=2309 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=66 R=2084 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=150000 frame=43 calls=82 R=2310 peak=270848 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=260 R=8159 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=268 calls=496 R=13720 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=260 R=8160 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=1044480 frame=272 calls=496 R=13721 peak=1376768 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=33568 R=1072845 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791735 calls=35917 R=1147943 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=33568 R=1072846 peak=215552 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=2101248 frame=791739 calls=35917 R=1147944 peak=2877952 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=560 R=17547 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=662 calls=1134 R=29216 peak=4080128 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=560 R=17548 peak=66048 fixed=58472
+=== RUN   TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1
+    decoder_bounded_test.go:176: raw=3200000 frame=666 calls=1134 R=29217 peak=4080128 fixed=58472
+--- PASS: TestBoundedOriginalProducerDifferential (0.04s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/empty/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/small/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/rle/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/max-leaf/crc=true/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=false/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/oversized-rich/crc=true/mode=1 (0.01s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=false/mode=1 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=0 (0.00s)
+    --- PASS: TestBoundedOriginalProducerDifferential/cross-segment-overlap/crc=true/mode=1 (0.00s)
+=== RUN   TestBoundedExistingDictionaryCorpus
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d0/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007601.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d1/z007612.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d2/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007600.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007602.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007603.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007604.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007605.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007606.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007607.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007608.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/d3/z007609.zst
+=== RUN   TestBoundedExistingDictionaryCorpus/dictplain.zst
+--- PASS: TestBoundedExistingDictionaryCorpus (0.03s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/ed815069aa6c7e0b4e2973e8648d462beac28f3f.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d0/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007601.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d1/z007612.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d2/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007600.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007602.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007603.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007604.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007605.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007606.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007607.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007608.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/d3/z007609.zst (0.00s)
+    --- PASS: TestBoundedExistingDictionaryCorpus/dictplain.zst (0.00s)
+=== RUN   TestBoundedPauseAndCancel
+=== RUN   TestBoundedPauseAndCancel/0
+=== RUN   TestBoundedPauseAndCancel/1
+=== RUN   TestBoundedPauseAndCancel/60
+=== RUN   TestBoundedPauseAndCancel/63
+=== RUN   TestBoundedPauseAndCancel/100
+=== RUN   TestBoundedPauseAndCancel/1000
+=== RUN   TestBoundedPauseAndCancel/2000
+--- PASS: TestBoundedPauseAndCancel (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/0 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/1 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/60 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/63 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/100 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/1000 (0.00s)
+    --- PASS: TestBoundedPauseAndCancel/2000 (0.00s)
+PASS
+ok  	github.com/snissn/compress/zstd	0.134s

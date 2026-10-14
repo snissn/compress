@@ -1,0 +1,102 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/internal/decoderwork/ncount.go	2026-10-13 19:23:52.356525143 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/internal/decoderwork/ncount.go	2026-10-13 19:34:02.241099676 -1000
+@@ -38,12 +38,12 @@
+ 				return false, 0, nil
+ 			}
+ 			if len(p.in) < 4 {
+-				return false, 0, errStepe7418d4afa
++				return false, 0, errStepInputTooSmall
+ 			}
+ 			p.stream = binary.LittleEndian.Uint32(p.in)
+ 			p.nb = uint(p.stream&15) + 5
+ 			if p.nb > uint(maxLog) {
+-				return false, 0, errStep172309a57f
++				return false, 0, errStepTableLogTooLarge
+ 			}
+ 			p.TableLog = uint8(p.nb)
+ 			p.stream >>= 4
+@@ -75,7 +75,7 @@
+ 				continue
+ 			}
+ 			if p.zeroEnd > 255-24 {
+-				return false, 0, errStep9b7d3dfb96
++				return false, 0, errStepMaxSymbolTooSmall
+ 			}
+ 			p.zeroEnd += 24
+ 			if len(p.in)-p.off > 5 {
+@@ -91,7 +91,7 @@
+ 			}
+ 			if p.stream&3 == 3 {
+ 				if p.zeroEnd > 255-3 {
+-					return false, 0, errStep9b7d3dfb96
++					return false, 0, errStepMaxSymbolTooSmall
+ 				}
+ 				p.zeroEnd += 3
+ 				p.stream >>= 2
+@@ -101,7 +101,7 @@
+ 			p.zeroEnd += uint16(p.stream & 3)
+ 			p.bits += 2
+ 			if p.zeroEnd > 255 {
+-				return false, 0, errStep9b7d3dfb96
++				return false, 0, errStepMaxSymbolTooSmall
+ 			}
+ 			p.phase = 4
+ 		case 4:
+@@ -179,31 +179,31 @@
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("symbolLen (%d) too small", p.symbol)
+ 				}
+-				return false, 0, errStepb9c70318fd
++				return false, 0, errStepSymbolCountTooSmall
+ 			}
+ 			if p.symbol > 256 {
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("symbolLen (%d) too big", p.symbol)
+ 				}
+-				return false, 0, errStep96c0cca7aa
++				return false, 0, errStepSymbolCountTooLarge
+ 			}
+ 			if p.remaining != 1 {
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("corruption detected (remaining %d != 1)", p.remaining)
+ 				}
+-				return false, 0, errStep4b00496b59
++				return false, 0, errStepNormalizationRemaining
+ 			}
+ 			if p.bits > 32 {
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("corruption detected (bitCount %d > 32)", p.bits)
+ 				}
+-				return false, 0, errStep55c887b564
++				return false, 0, errStepNormalizationBitCount
+ 			}
+ 			if p.total != 1<<p.TableLog {
+ 				if w == nil {
+ 					return false, 0, fmt.Errorf("corruption detected (total %d)", p.total)
+ 				}
+-				return false, 0, errStep4e0e35679f
++				return false, 0, errStepNormalizationTotal
+ 			}
+ 			p.off += int((p.bits + 7) >> 3)
+ 			p.phase = 8
+@@ -216,12 +216,12 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStepe7418d4afa = errors.New("input too small")
+-	errStep172309a57f = errors.New("tableLog too large")
+-	errStep9b7d3dfb96 = errors.New("maxSymbolValue too small")
+-	errStepb9c70318fd = errors.New("symbolLen (invalid) too small")
+-	errStep96c0cca7aa = errors.New("symbolLen (invalid) too big")
+-	errStep4b00496b59 = errors.New("corruption detected (remaining invalid != 1)")
+-	errStep55c887b564 = errors.New("corruption detected (bitCount invalid > 32)")
+-	errStep4e0e35679f = errors.New("corruption detected (total invalid)")
++	errStepInputTooSmall          = errors.New("input too small")
++	errStepTableLogTooLarge       = errors.New("tableLog too large")
++	errStepMaxSymbolTooSmall      = errors.New("maxSymbolValue too small")
++	errStepSymbolCountTooSmall    = errors.New("symbol count too small")
++	errStepSymbolCountTooLarge    = errors.New("symbol count too large")
++	errStepNormalizationRemaining = errors.New("corruption detected: normalization remaining is not one")
++	errStepNormalizationBitCount  = errors.New("corruption detected: normalization bit count exceeds 32")
++	errStepNormalizationTotal     = errors.New("corruption detected: invalid normalization total")
+ )

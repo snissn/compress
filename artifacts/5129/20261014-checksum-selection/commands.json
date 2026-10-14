@@ -1,0 +1,86 @@
+{
+  "go": "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+  "environment": {
+    "GOWORK": "off",
+    "GOMAXPROCS": "2",
+    "CGO_ENABLED": "1",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "timing": "No shell elapsed-time receipt was captured; raw package times are preserved without inventing total timings.",
+  "commands": [
+    {
+      "recipe": "Final normal public bounded matrix",
+      "argv": [
+        "test",
+        "-p",
+        "2",
+        "./zstd",
+        "-run",
+        "^TestBounded",
+        "-count=1",
+        "-v"
+      ],
+      "raw": "normal-v3.txt",
+      "exit": 0
+    },
+    {
+      "recipe": "Final focused race matrix",
+      "argv": [
+        "test",
+        "-race",
+        "-tags",
+        "nounsafe",
+        "-p",
+        "2",
+        "./zstd",
+        "-run",
+        "^(TestBoundedChecksumSelection|TestBoundedOriginalProducerDifferential|TestBoundedOriginalFramingFailures|TestBoundedRLEExpansionPause|TestBoundedConcatenatedCompressedHistory)$",
+        "-count=1",
+        "-v"
+      ],
+      "raw": "race.txt",
+      "exit": 0
+    },
+    {
+      "recipe": "Final 386 safe matrix",
+      "argv": [
+        "test",
+        "-tags",
+        "noasm,nounsafe",
+        "-p",
+        "2",
+        "./zstd",
+        "-run",
+        "^(TestBoundedChecksumSelection|TestBoundedOriginalFramingFailures)$",
+        "-count=1",
+        "-v"
+      ],
+      "environment_override": {
+        "GOARCH": "386",
+        "CGO_ENABLED": "0"
+      },
+      "raw": "386.txt",
+      "exit": 0
+    },
+    {
+      "recipe": "Exact original production with final test via Go overlay; temporary overlay removed, checked by baseline-overlay-cleanup.json",
+      "argv": [
+        "test",
+        "-overlay",
+        "<temporary overlay.json>",
+        "-p",
+        "2",
+        "./zstd",
+        "-run",
+        "^TestBoundedChecksumSelection$",
+        "-count=1",
+        "-v"
+      ],
+      "raw": "baseline-final-red.txt",
+      "exit": 1
+    }
+  ],
+  "harness_refinement": "normal.txt and normal-v2.txt are retained actual failures while the public Spans test first lacked tail admission, then the existing overlap-control budget. Production remained unchanged across those refinements. The final baseline replay uses the exact final test, proving all four CRC-off cases RED and all CRC-on controls GREEN."
+}

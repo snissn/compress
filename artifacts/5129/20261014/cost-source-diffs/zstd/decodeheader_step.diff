@@ -1,0 +1,18 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/zstd/decodeheader_step.go	2026-10-13 19:23:52.356750955 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/zstd/decodeheader_step.go	2026-10-13 19:33:21.882527437 -1000
+@@ -60,7 +60,7 @@
+ 			h.SingleSegment = p.descriptor&32 != 0
+ 			h.HasCheckSum = p.descriptor&4 != 0
+ 			if p.descriptor&8 != 0 {
+-				return false, nil, errStep2868197759
++				return false, nil, errStepReservedFrameBit
+ 			}
+ 			p.phase = 2
+ 		case 2:
+@@ -184,5 +184,5 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStep2868197759 = errors.New("reserved bit set on frame header")
++	errStepReservedFrameBit = errors.New("reserved bit set on frame header")
+ )

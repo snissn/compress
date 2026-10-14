@@ -1,0 +1,168 @@
+{
+  "pinned_base": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "cost_manifest_sha256": "814aabe54a1eacdf10a0f440ea75c897178bd137c8bff9413f694860ea13fb33",
+  "comparison": [
+    {
+      "source_path": "fse/bitreader.go",
+      "cost_sha256": "3622a3c43e774c37400960e8d6ca61ede114b89d5d03623a114d5fb8aa2c30bd",
+      "current_sha256": "7c67102d2443ff3b3e8fde2b5800be6ca496aa49b96bfd9b1a64d285e94ac66a",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/fse/bitreader.go.txt"
+    },
+    {
+      "source_path": "fse/decompress.go",
+      "cost_sha256": "dd5aa8c0a15afa4454dafe13b287fba845f3b7b381e35152a9f08079084d75dc",
+      "current_sha256": "dd5aa8c0a15afa4454dafe13b287fba845f3b7b381e35152a9f08079084d75dc",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/fse/decompress.go.txt"
+    },
+    {
+      "source_path": "fse/decompress_step.go",
+      "cost_sha256": "56c725171541600110c300ed4cb2817dd1a34bf13cb3eea63e1d0a9751ec7231",
+      "current_sha256": "0a8a39228617f38947bebb2623a0a9be54276cd29d612acd2f6d6c700f519c71",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/fse/decompress_step.go.txt"
+    },
+    {
+      "source_path": "huff0/bitreader.go",
+      "cost_sha256": "1e861e8d3df51beb5277f5280187d25d75affb8f3ece3aefaccd139ddf4ad394",
+      "current_sha256": "81d415e169478e06c6e5509625573846254d10a04b69eff9c10e1d2ccb953e4c",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/huff0/bitreader.go.txt"
+    },
+    {
+      "source_path": "huff0/decompress.go",
+      "cost_sha256": "f99257f2c65ccc6a7f38c7b6638651c783de3db65537be305949f2e87b60852a",
+      "current_sha256": "f99257f2c65ccc6a7f38c7b6638651c783de3db65537be305949f2e87b60852a",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/huff0/decompress.go.txt"
+    },
+    {
+      "source_path": "huff0/decompress_step.go",
+      "cost_sha256": "93b628b2a36754d45f46ce25ccc38dda160bb465108593f4455146cd3d7584a1",
+      "current_sha256": "1a3edd5d4fa49e8b9f9ade2d57c3264b452ef68f5c5e862d291d2e0f0275e2af",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/huff0/decompress_step.go.txt"
+    },
+    {
+      "source_path": "internal/decoderwork/ncount.go",
+      "cost_sha256": "7ad7d1bde43e7884b44a9cbdb8e30f6ab214b7ee6d1595ffd8876673fca9b0ec",
+      "current_sha256": "b9859b95ed021286b9891008d96eef4f5a9800e82c586a3a0a0555ffe540b160",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/internal/decoderwork/ncount.go.txt"
+    },
+    {
+      "source_path": "internal/decoderwork/table.go",
+      "cost_sha256": "89bb696f2d3e45d4fd2f171284206a0c7187a29d4b47bd0715e54fe26af46e02",
+      "current_sha256": "7cfcdeed662c87701d5239c0198abed8e22b8bdf336f57e9856ee4f3c813b500",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/internal/decoderwork/table.go.txt"
+    },
+    {
+      "source_path": "internal/decoderwork/work.go",
+      "cost_sha256": "8712a38d751544633a01a4d63c71445bb5f61d6e4dd16eb741026ebcc77d1cf9",
+      "current_sha256": "8712a38d751544633a01a4d63c71445bb5f61d6e4dd16eb741026ebcc77d1cf9",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/internal/decoderwork/work.go.txt"
+    },
+    {
+      "source_path": "zstd/bitreader.go",
+      "cost_sha256": "4d81fd832ed3993e7e3dc3afe4eccda7d8dcac56396b97f61797c9f08f5ddeeb",
+      "current_sha256": "396d6d2d2c3f9eb19f653f9318108805176a59ff2f9d2327c67c0fe89b6f9b82",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/zstd/bitreader.go.txt"
+    },
+    {
+      "source_path": "zstd/blockdec.go",
+      "cost_sha256": "3ced6987946c0acc8cf996a855ef8d4eefcba00ed77a1f181a83808d11bb50c3",
+      "current_sha256": "3ced6987946c0acc8cf996a855ef8d4eefcba00ed77a1f181a83808d11bb50c3",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/blockdec.go.txt"
+    },
+    {
+      "source_path": "zstd/decodeheader.go",
+      "cost_sha256": "e460f7dacec413c5c0e4d1bb633c893e060ee4b818d3ec7b9ae3f2dbf9e6faf7",
+      "current_sha256": "e460f7dacec413c5c0e4d1bb633c893e060ee4b818d3ec7b9ae3f2dbf9e6faf7",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/decodeheader.go.txt"
+    },
+    {
+      "source_path": "zstd/decodeheader_step.go",
+      "cost_sha256": "85d1e4e71f8b2f8eb1a3fb430496a7343e75bc43c0ae6cd63014ed0b469b9238",
+      "current_sha256": "c2cd94cd354b42e3a3502462578098438fe04a280109acba15de390ff0dd138a",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/zstd/decodeheader_step.go.txt"
+    },
+    {
+      "source_path": "zstd/decoder.go",
+      "cost_sha256": "65694fad47c3fbafef6b6a2132edd19c2a3c1a101e7e8362fb44a52f34cb594a",
+      "current_sha256": "65694fad47c3fbafef6b6a2132edd19c2a3c1a101e7e8362fb44a52f34cb594a",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/decoder.go.txt"
+    },
+    {
+      "source_path": "zstd/decoder_bounded.go",
+      "cost_sha256": "50ecfcf3f0c64c6203087ca58eb445d5bdd806bea2cf7660a851aadff863cf96",
+      "current_sha256": "e7a881bfd60b7d96920f0dcd882e985b9352b81d82023b46420aacef9d27e041",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/zstd/decoder_bounded.go.txt"
+    },
+    {
+      "source_path": "zstd/dict.go",
+      "cost_sha256": "6be800112308dd54cdaf4284a769c4d6808d2b840dffd1099e5943b81abe280d",
+      "current_sha256": "6be800112308dd54cdaf4284a769c4d6808d2b840dffd1099e5943b81abe280d",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/dict.go.txt"
+    },
+    {
+      "source_path": "zstd/fse_decoder.go",
+      "cost_sha256": "f2364013852497041e36e163fb47d435545f15145a0d99e822cc61c89a54f39d",
+      "current_sha256": "f2364013852497041e36e163fb47d435545f15145a0d99e822cc61c89a54f39d",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/fse_decoder.go.txt"
+    },
+    {
+      "source_path": "zstd/fse_decoder_generic.go",
+      "cost_sha256": "e55c4e5ca302cbb22ab224ceec5c76e033d01e3d55be079f9b1c4c32cc895ab7",
+      "current_sha256": "e55c4e5ca302cbb22ab224ceec5c76e033d01e3d55be079f9b1c4c32cc895ab7",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/fse_decoder_generic.go.txt"
+    },
+    {
+      "source_path": "zstd/fse_predefined.go",
+      "cost_sha256": "2491897cd7da79f2bc0229463a761e0ba5f0a3ac6ea14b6a59ca4e1e32f1c370",
+      "current_sha256": "2491897cd7da79f2bc0229463a761e0ba5f0a3ac6ea14b6a59ca4e1e32f1c370",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/fse_predefined.go.txt"
+    },
+    {
+      "source_path": "zstd/history.go",
+      "cost_sha256": "3c383c877ac47212fd42f12c8f08915d68765570578278fb0645c8676343854c",
+      "current_sha256": "3c383c877ac47212fd42f12c8f08915d68765570578278fb0645c8676343854c",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/history.go.txt"
+    },
+    {
+      "source_path": "zstd/history_step.go",
+      "cost_sha256": "65eb0ac8698f0990c71043b9445556f22503028b99e124fa660905a9a673dc67",
+      "current_sha256": "1a680e8c204334970ccf27e98b6449a0f394f945d9abf7db8ac6609f70e5b11f",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/zstd/history_step.go.txt"
+    },
+    {
+      "source_path": "zstd/seqdec.go",
+      "cost_sha256": "10973a6ec51804e043209c7aa21a245573b1f62225399f18ebd82a1196ddca0d",
+      "current_sha256": "10973a6ec51804e043209c7aa21a245573b1f62225399f18ebd82a1196ddca0d",
+      "unchanged": true,
+      "retained_cost_source": "cost-source/zstd/seqdec.go.txt"
+    },
+    {
+      "source_path": "zstd/seqdec_step.go",
+      "cost_sha256": "2b0cc1378faa2e3829b7e3da0ca85d341bba45823ef129b01d6d0d8c711b1014",
+      "current_sha256": "5c308512ae974a432eccf70ca6ad40d1f61ac319f0dea57f44f8de8992fb8946",
+      "unchanged": false,
+      "retained_cost_source": "cost-source/zstd/seqdec_step.go.txt"
+    }
+  ],
+  "scope": "Exact tested cost source preserved, not asserted byte-identical to current whole bounded engine. Post-cost differences are retained individually. Unchanged ordinary caller/assembly source hashes remain exact; changed shared helpers retain nil-work ordinary grammar/errors and bypass bounded reservations. Accounting, static bounded errors and names are not a new throughput claim."
+}

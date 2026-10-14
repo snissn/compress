@@ -1,0 +1,38 @@
+--- /home/mikers/benchmarks/mvcc-4871-repair-20261013/scratch/compress-5129/pre-cost-source-snapshot/internal/decoderwork/table.go	2026-10-13 19:23:52.356567904 -1000
++++ /home/mikers/benchmarks/mvcc-4871-repair-20261013/compress-5129/internal/decoderwork/table.go	2026-10-13 19:34:02.240099667 -1000
+@@ -55,7 +55,7 @@
+ 					return false, nil
+ 				}
+ 				if t.pos != 0 {
+-					return false, errStep029fe282a1
++					return false, errStepTablePosition
+ 				}
+ 				t.i = 0
+ 				t.phase = 4
+@@ -104,13 +104,13 @@
+ 				if w == nil {
+ 					return false, fmt.Errorf("newState (%d) outside table size (%d)", ns, t.size)
+ 				}
+-				return false, errStepfd1bd01888
++				return false, errStepTableStateRange
+ 			}
+ 			if ns == uint16(t.i) && n == 0 {
+ 				if w == nil {
+ 					return false, fmt.Errorf("newState (%d) == oldState (%d) and no bits", ns, t.i)
+ 				}
+-				return false, errStep2b1eca9a6f
++				return false, errStepTableZeroBitCycle
+ 			}
+ 			setEntry(t.i, n, ns)
+ 			t.i++
+@@ -123,7 +123,7 @@
+ 
+ // Static bounded failures do not allocate or retain per-request diagnostics.
+ var (
+-	errStep029fe282a1 = errors.New("corrupted input (position != 0)")
+-	errStepfd1bd01888 = errors.New("newState (invalid) outside table size (invalid)")
+-	errStep2b1eca9a6f = errors.New("newState (invalid) == oldState (invalid) and no bits")
++	errStepTablePosition     = errors.New("corrupted input (position != 0)")
++	errStepTableStateRange   = errors.New("new state outside table size")
++	errStepTableZeroBitCycle = errors.New("state cycle without bits")
+ )

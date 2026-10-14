@@ -1,0 +1,28 @@
+{
+  "prior_head": "c6f462ee50e90beb212068d752538daf1da267a7",
+  "base": "87fb149e472104f0c2fa7a961b2493c4372603dc",
+  "branch": "codex/5129-bounded-zstd-continuation",
+  "go_version": "go version go1.26.4 linux/amd64",
+  "policy_files": [],
+  "source_members": [
+    {
+      "path": "zstd/decoder_bounded.go",
+      "bytes": 40806,
+      "sha256": "4a895a7ae0767f57184de173af8dcdacd64dded23297bd2e5adf944eae2b371e"
+    },
+    {
+      "path": "zstd/decoder_bounded_dictionary_selection_test.go",
+      "bytes": 6636,
+      "sha256": "13e555f76dc53ac6025af1fe088576a51f9454076fc71ad248c7bf6fa3ee0bba"
+    },
+    {
+      "path": "zstd/BOUNDED_DECODER.md",
+      "bytes": 9795,
+      "sha256": "3f475c558fe66c4d0cb67fd7be4821ed45c7d2c0246e7d54ede96c9f4f9adbff"
+    }
+  ],
+  "repair_diff_sha256": "ebdaa8f5ff25362916b9edc37a1f179d5b54d3469c917289bdc5f4212df42fd2",
+  "before_witness_sha256": "5f0f14d550710f03e2f8af132a91fcc5c5cbd9bd79fb1365540471d8c0807b25",
+  "baseline_production_identity": "git show c6f462ee50e90beb212068d752538daf1da267a7:zstd/decoder_bounded.go",
+  "production_before_sha256": "c47ecd554af5741df795ac7726bd3cf2b3f0c53a04886a6787af66b25085d6d9"
+}

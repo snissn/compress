@@ -1,0 +1,13 @@
+?   	github.com/snissn/compress/internal/decoderwork	[no test files]
+--- FAIL: TestDecompress (0.00s)
+    --- FAIL: TestDecompress/symlen1 (0.00s)
+        fse_test.go:117: want error "symbolLen (257) too big", got "corruption detected (remaining 2 != 1)" (*errors.errorString)
+    --- FAIL: TestDecompress/crash4 (0.00s)
+        fse_test.go:117: want error "symbolLen (1) too small", got "symbolLen (1) outside valid range" (*errors.errorString)
+    --- FAIL: TestDecompress/crash5 (0.00s)
+        fse_test.go:117: want error "symbolLen (1) too small", got "symbolLen (1) outside valid range" (*errors.errorString)
+FAIL
+FAIL	github.com/snissn/compress/fse	0.001s
+ok  	github.com/snissn/compress/huff0	0.024s
+ok  	github.com/snissn/compress/zstd	0.166s
+FAIL

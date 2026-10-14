@@ -1,0 +1,18 @@
+Compressing sfx-exe/darwin-amd64 -> sfx-exe/darwin-amd64.s2 2489536 -> 1348884 [54.18%]; 25.8MB/s
+Removing sfx-exe/darwin-amd64
+Compressing sfx-exe/darwin-arm64 -> sfx-exe/darwin-arm64.s2 2372786 -> 1246863 [52.55%]; 27.1MB/s
+Removing sfx-exe/darwin-arm64
+Compressing sfx-exe/linux-amd64 -> sfx-exe/linux-amd64.s2 2519305 -> 1352613 [53.69%]; 26.5MB/s
+Removing sfx-exe/linux-amd64
+Compressing sfx-exe/linux-arm -> sfx-exe/linux-arm.s2 2490530 -> 1280870 [51.43%]; 27.4MB/s
+Removing sfx-exe/linux-arm
+Compressing sfx-exe/linux-arm64 -> sfx-exe/linux-arm64.s2 2424994 -> 1225634 [50.54%]; 28.1MB/s
+Removing sfx-exe/linux-arm64
+Compressing sfx-exe/linux-mips64 -> sfx-exe/linux-mips64.s2 2883746 -> 1188256 [41.21%]; 33.6MB/s
+Removing sfx-exe/linux-mips64
+Compressing sfx-exe/linux-ppc64le -> sfx-exe/linux-ppc64le.s2 2556066 -> 1251243 [48.95%]; 28.8MB/s
+Removing sfx-exe/linux-ppc64le
+Compressing sfx-exe/windows-386 -> sfx-exe/windows-386.s2 2396160 -> 1315321 [54.89%]; 26.1MB/s
+Removing sfx-exe/windows-386
+Compressing sfx-exe/windows-amd64 -> sfx-exe/windows-amd64.s2 2565632 -> 1371730 [53.47%]; 26.7MB/s
+Removing sfx-exe/windows-amd64

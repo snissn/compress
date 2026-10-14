@@ -1,0 +1,460 @@
+// Copyright 2018-2026 Klaus Post and contributors. All rights reserved.
+// License information can be found in the LICENSE file.
+package huff0
+
+import (
+	"errors"
+	"fmt"
+	"github.com/snissn/compress/fse"
+	"github.com/snissn/compress/internal/decoderwork"
+	"math/bits"
+	"unsafe"
+)
+
+// TableState suspends the original ReadTable parser and builder. The caller
+// must admit its containing object and Scratch before construction.
+type TableState struct {
+	s                          *Scratch
+	in, remain                 []byte
+	weights                    fse.DecompressState
+	ranks                      [16]uint32
+	total                      uint32
+	phase, i, j, size          int
+	closePhase                 int
+	n                          byte
+	entry                      dEntrySingle
+	ownedFSE, ownedDT, ownedCT uint64
+}
+
+func (p *TableState) Begin(in []byte, s *Scratch) {
+	p.s = s
+	p.in = in
+	p.remain = nil
+	p.ranks = [16]uint32{}
+	p.total = 0
+	p.phase = 0
+	p.closePhase = 0
+	p.i = 0
+	p.j = 0
+}
+func (p *TableState) Step(w decoderwork.Work) (done bool, remain []byte, err error) {
+	for {
+		s := p.s
+		switch p.phase {
+		case 0:
+			if !decoderwork.Charge(w, 1, 1) {
+				return false, nil, nil
+			}
+			if len(p.in) <= 1 {
+				return false, nil, errStepTableInputTooSmall
+			}
+			p.n = p.in[0]
+			p.in = p.in[1:]
+			if p.n >= 128 {
+				s.symbolLen = uint16(p.n - 127)
+				p.size = (int(s.symbolLen) + 1) / 2
+				if p.size > len(p.in) {
+					return false, nil, errStepTableInputTooSmall
+				}
+				p.phase = 1
+			} else {
+				p.size = int(p.n)
+				if p.size > len(p.in) {
+					if w == nil {
+						return false, nil, fmt.Errorf("input too small for table, want %d bytes, have %d", p.size, len(p.in))
+					}
+					return false, nil, errStepTruncatedTableInput
+				}
+				p.phase = 2
+			}
+		case 1:
+			if p.i < int(s.symbolLen) {
+				if !decoderwork.Charge(w, 1, 3) {
+					return false, nil, nil
+				}
+				v := p.in[p.i/2]
+				s.huffWeight[p.i] = v >> 4
+				s.huffWeight[p.i+1] = v & 15
+				p.i += 2
+				continue
+			}
+			p.in = p.in[p.size:]
+			p.i = 0
+			p.phase = 4
+		case 2:
+			if s.fse == nil {
+				size := uint64(unsafe.Sizeof(fse.Scratch{}))
+				if w != nil {
+					size = decoderwork.AllocationCharge(size)
+				}
+				if !decoderwork.Charge(w, 1, size) {
+					return false, nil, nil
+				}
+				if w != nil && !w.Retain(size) {
+					return false, nil, errStepFSERetention
+				}
+				s.fse = &fse.Scratch{}
+				p.ownedFSE = size
+			}
+			if !decoderwork.Charge(w, 1, uint64(unsafe.Sizeof(fse.DecompressState{}))+256) {
+				return false, nil, nil
+			}
+			p.weights.Begin(s.fse, p.in[:p.size], s.huffWeight[:0:255])
+			p.phase = 3
+		case 3:
+			ok, b, e := p.weights.Step(w)
+			if e != nil {
+				if w == nil {
+					return false, nil, fmt.Errorf("fse decompress returned: %w", e)
+				}
+				return false, nil, errStepFSEDefinition
+			}
+			if !ok {
+				return false, nil, nil
+			}
+			if len(b) > 255 {
+				return false, nil, errStepOutputTableTooLarge
+			}
+			s.symbolLen = uint16(len(b))
+			p.in = p.in[p.size:]
+			p.i = 0
+			p.phase = 4
+		case 4:
+			if p.i < int(s.symbolLen) {
+				if !decoderwork.Charge(w, 2, 5) {
+					return false, nil, nil
+				}
+				v := s.huffWeight[p.i]
+				p.i++
+				if v > tableLogMax {
+					return false, nil, errStepWeightTooLarge
+				}
+				p.ranks[v]++
+				p.total += (1 << v) >> 1
+				continue
+			}
+			p.phase = 5
+		case 5:
+			if !decoderwork.Charge(w, 1, 5) {
+				return false, nil, nil
+			}
+			if p.total == 0 {
+				return false, nil, errStepZeroWeights
+			}
+			log := bits.Len32(p.total)
+			if log > tableLogMax {
+				return false, nil, errStepTableLogRange
+			}
+			s.actualTableLog = uint8(log)
+			rest := uint32(1<<log) - p.total
+			last := bits.Len32(rest)
+			if rest == 0 || uint32(1<<(last-1)) != rest {
+				return false, nil, errStepLastWeightPower
+			}
+			s.huffWeight[s.symbolLen] = uint8(last)
+			s.symbolLen++
+			p.ranks[last]++
+			if p.ranks[1] < 2 || p.ranks[1]&1 != 0 {
+				return false, nil, errStepRankOneParity
+			}
+			p.i = 1
+			p.total = 0
+			p.phase = 6
+		case 6:
+			if p.i <= int(s.actualTableLog) {
+				if !decoderwork.Charge(w, 1, 8) {
+					return false, nil, nil
+				}
+				current := p.total
+				p.total += p.ranks[p.i] << uint(p.i-1)
+				p.ranks[p.i] = current
+				p.i++
+				continue
+			}
+			p.phase = 7
+		case 7:
+			if len(s.dt.single) != 1<<tableLogMax {
+				size := uint64((1 << tableLogMax) * 2)
+				if w != nil {
+					size = decoderwork.AllocationCharge(size)
+				}
+				if !decoderwork.Charge(w, 1, size) {
+					return false, nil, nil
+				}
+				if w != nil && !w.Retain(size) {
+					return false, nil, errStepDecodeTableRetention
+				}
+				s.dt.single = make([]dEntrySingle, 1<<tableLogMax)
+				p.ownedDT = size
+			}
+			p.phase = 8
+		case 8:
+			if cap(s.prevTable) < 256 {
+				size := uint64(256) * uint64(unsafe.Sizeof(cTableEntry{}))
+				if w != nil {
+					size = decoderwork.AllocationCharge(size)
+				}
+				if !decoderwork.Charge(w, 1, size) {
+					return false, nil, nil
+				}
+				if w != nil && !w.Retain(size) {
+					return false, nil, errStepEncodeTableRetention
+				}
+				s.prevTable = make(cTable, 256)
+				p.ownedCT = size
+			}
+			s.prevTable = s.prevTable[:s.symbolLen]
+			s.prevTableLog = s.actualTableLog
+			p.i = 0
+			p.phase = 9
+		case 9:
+			if p.i == int(s.symbolLen) {
+				p.remain = p.in
+				p.phase = 11
+				continue
+			}
+			if !decoderwork.Charge(w, 2, 7) {
+				return false, nil, nil
+			}
+			weight := s.huffWeight[p.i]
+			if weight == 0 {
+				s.prevTable[p.i] = cTableEntry{}
+				p.i++
+				continue
+			}
+			p.entry = dEntrySingle{entry: uint16(s.actualTableLog+1-weight) | (uint16(p.i) << 8)}
+			p.j = int(p.ranks[weight])
+			p.size = int((uint32(1) << weight) >> 1)
+			s.prevTable[p.i] = cTableEntry{val: uint16(p.ranks[weight] >> uint(weight-1)), nBits: uint8(p.entry.entry)}
+			p.ranks[weight] += uint32(p.size)
+			p.phase = 10
+		case 10:
+			if p.size > 0 {
+				if !decoderwork.Charge(w, 1, 2) {
+					return false, nil, nil
+				}
+				s.dt.single[p.j] = p.entry
+				p.j++
+				p.size--
+				continue
+			}
+			p.i++
+			p.phase = 9
+		case 11:
+			return true, p.remain, nil
+		}
+	}
+}
+
+// DetachInput removes completed block aliases without retiring reusable
+// decoder tables. Its fixed bookkeeping must be admitted by the enclosing phase.
+func (p *TableState) DetachInput() { p.in = nil; p.remain = nil; p.weights.DetachInput() }
+
+// LiteralState pauses between the original generic single-symbol lookups.
+// Four-stream input retains the original jump table and bit readers.
+type LiteralState struct {
+	s                                   *Scratch
+	src, dst                            []byte
+	br                                  [4]bitReaderShifted
+	phase, stream, start, offset, limit int
+	four                                bool
+}
+
+func (p *LiteralState) Begin(s *Scratch, src, dst []byte, four bool) {
+	*p = LiteralState{s: s, src: src, dst: dst, four: four}
+}
+func (p *LiteralState) Step(w decoderwork.Work) (done bool, err error) {
+	for {
+		switch p.phase {
+		case 0:
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, nil
+			}
+			if p.s == nil || len(p.s.dt.single) == 0 {
+				return false, errStepNoTable
+			}
+			if p.four {
+				if len(p.src) < 10 {
+					return false, errStepInputTooSmall
+				}
+				p.start = 6
+				p.phase = 7
+			} else {
+				p.start = 0
+				p.phase = 2
+			}
+		case 7:
+			// Validate every destination partition before initializing readers or
+			// interpreting symbols. An empty final partition is valid, but a
+			// partition starting beyond dst is corruption, not an empty stream.
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, nil
+			}
+			each := len(p.dst)/4 + (len(p.dst)%4+3)/4
+			if each*p.stream > len(p.dst) {
+				return false, errStepLiteralOutputSize
+			}
+			p.stream++
+			if p.stream == 4 {
+				p.stream = 0
+				p.phase = 1
+			}
+		case 1:
+			if !decoderwork.Charge(w, 1, 11) {
+				return false, nil
+			}
+			length := len(p.src) - p.start
+			if p.stream < 3 {
+				i := p.stream * 2
+				length = int(p.src[i]) | int(p.src[i+1])<<8
+				if p.start+length >= len(p.src) {
+					return false, errStepLiteralTruncation
+				}
+			}
+			if e := p.br[p.stream].init(p.src[p.start : p.start+length]); e != nil {
+				return false, e
+			}
+			p.start += length
+			p.stream++
+			if p.stream == 4 {
+				p.stream = 0
+				p.phase = 3
+			}
+		case 2:
+			if !decoderwork.Charge(w, 1, 9) {
+				return false, nil
+			}
+			if e := p.br[0].init(p.src); e != nil {
+				return false, e
+			}
+			p.phase = 3
+		case 3:
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, nil
+			}
+			p.offset = 0
+			p.limit = len(p.dst)
+			if p.four {
+				each := len(p.dst)/4 + (len(p.dst)%4+3)/4
+				p.offset = each * p.stream
+				p.limit = p.offset + min(each, len(p.dst)-p.offset)
+			}
+			p.phase = 4
+		case 4:
+			if p.offset == p.limit {
+				p.phase = 5
+				continue
+			}
+			if !decoderwork.Charge(w, 1, 7) {
+				return false, nil
+			}
+			if p.offset < 0 || p.offset > p.limit {
+				return false, errStepLiteralOutputSize
+			}
+			br := &p.br[p.stream]
+			if br.off == 0 && br.bitsRead >= 64 {
+				return false, errStepLiteralOutputSize
+			}
+			br.fill()
+			v := p.s.dt.single[br.peekBitsFast(p.s.actualTableLog)&((1<<tableLogMax)-1)]
+			n := uint8(v.entry)
+			if n == 0 || uint(br.bitsRead)+uint(n) > 64 && br.off == 0 {
+				return false, errStepLiteralStream
+			}
+			br.advance(n)
+			p.dst[p.offset] = uint8(v.entry >> 8)
+			p.offset++
+		case 5:
+			if !decoderwork.Charge(w, 1, 0) {
+				return false, nil
+			}
+			if e := p.br[p.stream].closeWithWork(w); e != nil {
+				return false, e
+			}
+			p.stream++
+			if !p.four || p.stream == 4 {
+				p.phase = 6
+			} else {
+				p.phase = 3
+			}
+		case 6:
+			return true, nil
+		}
+	}
+}
+func (p *LiteralState) Clear() { *p = LiteralState{} }
+
+// ClearStep drops actual borrowed aliases and admitted backing in charged phases.
+// The containing TableState and Scratch remain owned by the enclosing decoder.
+func (p *TableState) ClearStep(w decoderwork.Work) (bool, error) {
+	switch p.closePhase {
+	case 0:
+		if !decoderwork.Charge(w, 1, 64) {
+			return false, nil
+		}
+		p.in = nil
+		p.remain = nil
+		p.closePhase = 1
+	case 1:
+		if p.s != nil && p.s.fse != nil {
+			ok, e := p.weights.Clear(w)
+			if e != nil || !ok {
+				return false, e
+			}
+		}
+		p.closePhase = 2
+	case 2:
+		if !decoderwork.Charge(w, 1, 64) {
+			return false, nil
+		}
+		if p.s != nil {
+			p.s.fse = nil
+		}
+		if w != nil && p.ownedFSE != 0 {
+			w.Release(p.ownedFSE)
+		}
+		p.ownedFSE = 0
+		p.closePhase = 3
+	case 3:
+		if !decoderwork.Charge(w, 1, 128) {
+			return false, nil
+		}
+		if p.s != nil {
+			p.s.dt.single = nil
+			p.s.cTable = nil
+			p.s.prevTable = nil
+		}
+		if w != nil && p.ownedDT != 0 {
+			w.Release(p.ownedDT)
+		}
+		if w != nil && p.ownedCT != 0 {
+			w.Release(p.ownedCT)
+		}
+		p.ownedDT = 0
+		p.ownedCT = 0
+		p.s = nil
+		p.closePhase = 4
+	}
+	return p.closePhase == 4, nil
+}
+
+// Static bounded failures do not allocate or retain per-request diagnostics.
+var (
+	errStepTableInputTooSmall   = errors.New("input too small for table")
+	errStepTruncatedTableInput  = errors.New("truncated table input")
+	errStepFSERetention         = errors.New("huff0: FSE retention refused")
+	errStepFSEDefinition        = errors.New("fse decompress returned: invalid definition")
+	errStepOutputTableTooLarge  = errors.New("corrupt input: output table too large")
+	errStepWeightTooLarge       = errors.New("corrupt input: weight too large")
+	errStepZeroWeights          = errors.New("corrupt input: weights zero")
+	errStepTableLogRange        = errors.New("corrupt input: tableLog too big")
+	errStepLastWeightPower      = errors.New("corrupt input: last value not power of two")
+	errStepRankOneParity        = errors.New("corrupt input: min elt size, even check failed ")
+	errStepDecodeTableRetention = errors.New("huff0: table retention refused")
+	errStepEncodeTableRetention = errors.New("huff0: encoder table retention refused")
+	errStepNoTable              = errors.New("no table loaded")
+	errStepInputTooSmall        = errors.New("input too small")
+	errStepLiteralTruncation    = errors.New("truncated input (or invalid offset)")
+	errStepLiteralOutputSize    = errors.New("literal output size mismatch")
+	errStepLiteralStream        = errors.New("corrupt literal stream")
+)

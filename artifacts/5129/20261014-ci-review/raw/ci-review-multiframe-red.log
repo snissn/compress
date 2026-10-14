@@ -1,0 +1,12 @@
+=== RUN   TestBoundedConcatenatedCompressedHistory
+=== RUN   TestBoundedConcatenatedCompressedHistory/raw
+=== RUN   TestBoundedConcatenatedCompressedHistory/spans
+    decoder_bounded_multiframe_test.go:16: call 378 phase 18: zstd: match outside retained history
+=== NAME  TestBoundedConcatenatedCompressedHistory
+    decoder_bounded_multiframe_test.go:19: fed concatenated history zstd: match outside retained history 185043 400000
+--- FAIL: TestBoundedConcatenatedCompressedHistory (0.00s)
+    --- PASS: TestBoundedConcatenatedCompressedHistory/raw (0.00s)
+    --- FAIL: TestBoundedConcatenatedCompressedHistory/spans (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.002s
+FAIL

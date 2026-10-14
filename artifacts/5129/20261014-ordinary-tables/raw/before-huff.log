@@ -1,0 +1,27 @@
+goos: linux
+goarch: amd64
+pkg: github.com/snissn/compress/huff0
+cpu: AMD Ryzen 7 9700X 8-Core Processor             
+BenchmarkDecompress1XTable/crash2-2         	   10000	       571.1 ns/op	  26.27 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       574.3 ns/op	  26.12 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       573.0 ns/op	  26.18 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       574.7 ns/op	  26.10 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       619.3 ns/op	  24.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       636.3 ns/op	  23.58 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/crash2-2         	   10000	       605.4 ns/op	  24.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       412.4 ns/op	  16.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       453.9 ns/op	  15.42 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       415.1 ns/op	  16.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       406.9 ns/op	  17.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       406.5 ns/op	  17.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       407.7 ns/op	  17.17 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/endnonzero-2     	   10000	       452.0 ns/op	  15.49 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1538 ns/op	  35.77 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1527 ns/op	  36.02 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1548 ns/op	  35.53 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1547 ns/op	  35.56 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1565 ns/op	  35.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1562 ns/op	  35.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress1XTable/case1-2          	   10000	      1530 ns/op	  35.94 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/snissn/compress/huff0	0.189s

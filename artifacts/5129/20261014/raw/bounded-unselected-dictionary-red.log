@@ -1,0 +1,6 @@
+=== RUN   TestBoundedRawDictionaryMustMatchFrameID
+    decoder_bounded_dictionary_zero_test.go:75: bounded decoder used an unselected dictionary
+--- FAIL: TestBoundedRawDictionaryMustMatchFrameID (0.00s)
+FAIL
+FAIL	github.com/snissn/compress/zstd	0.002s
+FAIL

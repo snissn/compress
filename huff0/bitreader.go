@@ -8,6 +8,7 @@ package huff0
 import (
 	"errors"
 	"fmt"
+	"github.com/snissn/compress/internal/decoderwork"
 	"io"
 
 	"github.com/snissn/compress/internal/le"
@@ -26,14 +27,14 @@ type bitReaderBytes struct {
 // init initializes and resets the bit reader.
 func (b *bitReaderBytes) init(in []byte) error {
 	if len(in) < 1 {
-		return errors.New("corrupt stream: too short")
+		return errBitStreamTooShort
 	}
 	b.in = in
 	b.off = uint(len(in))
 	// The highest bit of the last byte indicates where to start
 	v := in[len(in)-1]
 	if v == 0 {
-		return errors.New("corrupt stream, did not find end of stream")
+		return errBitEndMarkerMissing
 	}
 	b.bitsRead = 64
 	b.value = 0
@@ -110,11 +111,16 @@ func (b *bitReaderBytes) remaining() uint {
 }
 
 // close the bitstream and returns an error if out-of-buffer reads occurred.
-func (b *bitReaderBytes) close() error {
+func (b *bitReaderBytes) close() error { return b.closeWithWork(nil) }
+
+func (b *bitReaderBytes) closeWithWork(w decoderwork.Work) error {
 	// Release reference.
 	b.in = nil
 	if b.remaining() > 0 {
-		return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+		if w == nil {
+			return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+		}
+		return errBitExtraStreamBits
 	}
 	if b.bitsRead > 64 {
 		return io.ErrUnexpectedEOF
@@ -135,14 +141,14 @@ type bitReaderShifted struct {
 // init initializes and resets the bit reader.
 func (b *bitReaderShifted) init(in []byte) error {
 	if len(in) < 1 {
-		return errors.New("corrupt stream: too short")
+		return errBitStreamTooShort
 	}
 	b.in = in
 	b.off = uint(len(in))
 	// The highest bit of the last byte indicates where to start
 	v := in[len(in)-1]
 	if v == 0 {
-		return errors.New("corrupt stream, did not find end of stream")
+		return errBitEndMarkerMissing
 	}
 	b.bitsRead = 64
 	b.value = 0
@@ -211,14 +217,25 @@ func (b *bitReaderShifted) remaining() uint {
 }
 
 // close the bitstream and returns an error if out-of-buffer reads occurred.
-func (b *bitReaderShifted) close() error {
+func (b *bitReaderShifted) close() error { return b.closeWithWork(nil) }
+
+func (b *bitReaderShifted) closeWithWork(w decoderwork.Work) error {
 	// Release reference.
 	b.in = nil
 	if b.remaining() > 0 {
-		return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+		if w == nil {
+			return fmt.Errorf("corrupt input: %d bits remain on stream", b.remaining())
+		}
+		return errBitExtraStreamBits
 	}
 	if b.bitsRead > 64 {
 		return io.ErrUnexpectedEOF
 	}
 	return nil
 }
+
+var (
+	errBitStreamTooShort   = errors.New("corrupt stream: too short")
+	errBitEndMarkerMissing = errors.New("corrupt stream, did not find end of stream")
+	errBitExtraStreamBits  = errors.New("corrupt input: unexpected bits remain on stream")
+)

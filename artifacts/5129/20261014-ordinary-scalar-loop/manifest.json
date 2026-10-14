@@ -1,0 +1,144 @@
+{
+  "members": [
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/386.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/386.txt",
+      "sha256": "a72e8a63904e7bc0a2b108557d1049442cee030ea72581c165a21365540aaa6b",
+      "bytes": 91238
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/README.md",
+      "sha256": "17d0b39e15d5d3483f9093bba89d3454fda599f298b309537776c085be2992fd",
+      "bytes": 1829
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/affected-commands.json",
+      "sha256": "8078bf83ebdfd46ba83a0dece5f4bad713b971e5a03250583b1b79e1b8cbd6c0",
+      "bytes": 4253
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/after-command.json",
+      "sha256": "d56653574f76bf84bcd93bf1f49eaa099654beb325299e3d0d47b1cbf2a4eca0",
+      "bytes": 1263
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/after-noasm.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/after-noasm.txt",
+      "sha256": "d3bd99cfcc657e378e36cde2cce07fd20cfefd018bfe437aef821ea811ad7386",
+      "bytes": 1054
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/before-command.json",
+      "sha256": "06ceaa95a263e707099c3527306eb93a042ecc5840d9d03a0a499b57cbdd1191",
+      "bytes": 1336
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/before-noasm.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/before-noasm.txt",
+      "sha256": "98ab40e1b86de9854cfce30b5c53cf7e71d9a33a3d549bb21ad15eed27d28ae6",
+      "bytes": 1054
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/cost-summary.json",
+      "sha256": "120151555d9f895c63abe2ee0b5ba47bf008b1b76dfd3be0331a2d874eccad1c",
+      "bytes": 761
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/f550-seqdec.go.txt",
+      "sha256": "10973a6ec51804e043209c7aa21a245573b1f62225399f18ebd82a1196ddca0d",
+      "bytes": 10827
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/final-after-command.json",
+      "sha256": "fe043f7bef457ff067e3458780e4faddee97b7ac1e01f75dae3fabdbdf7de747",
+      "bytes": 1333
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/final-after-noasm.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/final-after-noasm.txt",
+      "sha256": "bc0ae487ab45560e5040b392bf238cece6e769c7587362e5e30b5afc1ec75797",
+      "bytes": 1054
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/final-noasm.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/final-noasm.txt",
+      "sha256": "b5ea204ee4135079ce51a73840729027bb95e520d5cf2699c6a9d828f9cd2bcd",
+      "bytes": 131987
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/noasm.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/noasm.txt",
+      "sha256": "2b0081118af00036dd77bf396575d0575d1100d52edb4c6712badb8caf5eae80",
+      "bytes": 131987
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/normal.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/normal.txt",
+      "sha256": "a4acaa246aa3fd85c26a8fb511074139d51a0ac57ef82d658e3dd7c96995b74c",
+      "bytes": 131987
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/race.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/race.txt",
+      "sha256": "946fea30cbd57331efd410969e3c8ffd045730f0a6430d27450483deeb3d404b",
+      "bytes": 91245
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/repair.diff",
+      "sha256": "c6ee9ae1b8eaa16bfb34591399bc9009deeabb32df9b0e42ea18d1baaba353b7",
+      "bytes": 4930
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/restored-seqdec.go.txt",
+      "sha256": "b2ea74a7161842bb0084474025f26b5375d2acbba2e5b7b25234bcfaf7efc4d7",
+      "bytes": 13468
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/source.json",
+      "sha256": "a68a4e60e4943ada874a706db9c2e30232efbb681556c641787d236b2ddfc180",
+      "bytes": 95196
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/vet.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "artifacts/5129/20261014-ordinary-scalar-loop/vet.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

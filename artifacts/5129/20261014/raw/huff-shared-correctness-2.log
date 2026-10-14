@@ -1,0 +1,4 @@
+?   	github.com/snissn/compress/internal/decoderwork	[no test files]
+ok  	github.com/snissn/compress/fse	0.001s
+ok  	github.com/snissn/compress/huff0	0.024s
+ok  	github.com/snissn/compress/zstd	0.163s

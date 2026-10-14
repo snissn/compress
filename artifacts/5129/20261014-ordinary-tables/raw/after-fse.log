@@ -1,0 +1,27 @@
+goos: linux
+goarch: amd64
+pkg: github.com/snissn/compress/fse
+cpu: AMD Ryzen 7 9700X 8-Core Processor             
+BenchmarkDecompress/gettysburg-2         	   10000	      3351 ns/op	 461.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3341 ns/op	 463.40 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3345 ns/op	 462.72 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3345 ns/op	 462.77 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3341 ns/op	 463.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3340 ns/op	 463.43 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/gettysburg-2         	   10000	      3387 ns/op	 457.08 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	       118.2 ns/op	  42.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        86.49 ns/op	  57.81 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        86.50 ns/op	  57.80 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        87.48 ns/op	  57.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        86.58 ns/op	  57.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        86.72 ns/op	  57.65 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/endzerobits-2        	   10000	        86.40 ns/op	  57.87 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       591.8 ns/op	 147.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       586.9 ns/op	 148.24 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       589.1 ns/op	 147.68 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       588.9 ns/op	 147.73 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       586.7 ns/op	 148.30 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       626.6 ns/op	 138.84 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecompress/normcount2-2         	   10000	       591.8 ns/op	 147.01 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/snissn/compress/fse	0.288s

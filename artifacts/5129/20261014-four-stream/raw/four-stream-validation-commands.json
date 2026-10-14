@@ -1,0 +1,101 @@
+[
+  {
+    "log": "four-stream-focused-normal.log",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-p",
+      "2",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "TestLiteralStateFourStreamBeforeEffect|TestTableStateLastAliasBeforeRefund|TestBoundedFourStream|TestDecompress1X|TestDecompress4X|TestBoundedConcatenated|TestBoundedCancelSecondCompressedFrame|TestBoundedExistingDictionaryCorpus",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "exit_code": 0,
+    "seconds": 0.21482372283935547
+  },
+  {
+    "log": "four-stream-focused-race.log",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-race",
+      "-tags",
+      "nounsafe",
+      "-p",
+      "2",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "TestLiteralStateFourStreamBeforeEffect|TestTableStateLastAliasBeforeRefund|TestBoundedFourStream|TestDecompress1X|TestDecompress4X|TestBoundedConcatenated|TestBoundedCancelSecondCompressedFrame|TestBoundedExistingDictionaryCorpus",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "exit_code": 0,
+    "seconds": 3.318668842315674
+  },
+  {
+    "log": "four-stream-focused-386-safe.log",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "test",
+      "-tags",
+      "noasm,nounsafe",
+      "-p",
+      "2",
+      "./huff0",
+      "./zstd",
+      "-run",
+      "TestLiteralStateFourStreamBeforeEffect|TestTableStateLastAliasBeforeRefund|TestBoundedFourStream|TestDecompress1X|TestDecompress4X|TestBoundedConcatenated|TestBoundedCancelSecondCompressedFrame|TestBoundedExistingDictionaryCorpus",
+      "-count=1"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "0",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOARCH": "386"
+    },
+    "exit_code": 0,
+    "seconds": 1.0935897827148438
+  },
+  {
+    "log": "four-stream-focused-vet.log",
+    "argv": [
+      "/home/mikers/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.4.linux-amd64/bin/go",
+      "vet",
+      "-p",
+      "2",
+      "./huff0",
+      "./zstd"
+    ],
+    "environment": {
+      "GOWORK": "off",
+      "GOMAXPROCS": "2",
+      "CGO_ENABLED": "1",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local"
+    },
+    "exit_code": 0,
+    "seconds": 0.18319177627563477
+  }
+]
