@@ -106,6 +106,51 @@ an earlier emitted prefix. A downstream grammar may need to retain emitted bytes
 verification collectors in tests are oracle infrastructure, excluded from the
 bounded operation, and do not qualify native integrated resource limits.
 
+## Explicit output and window limits
+
+`NewBoundedReaderWithLimits(work, maxDecodedSize, maxWindowSize)` uses the same
+continuation with explicit `DecodeAll` limits. The decoded-size domain is
+1 through `1<<63`; the window domain is `MinWindowSize` through
+`(1<<41)+7*(1<<38)`, matching `WithDecoderMaxMemory` and
+`WithDecoderMaxWindow`. Invalid configuration returns the static
+`ErrDecoderSizeExceeded` or `ErrWindowSizeExceeded` before work or retention
+admission. Nil work returns `ErrBoundedMode`. Valid limits do not allocate a
+window eagerly or admit any caller-owned backing.
+
+Every non-skippable frame passes the original suspended header parser. As in
+`frameDec.reset` and `DecodeAll`, the advertised window must not exceed either
+limit; a single-segment frame then uses at least the 1KiB minimum window, which
+must fit the memory limit and the configured window. A known content size must
+fit the remaining decoded allowance. Output with unknown content size is also
+checked before each admitted copy. Total output includes all concatenated
+frames, while window and content-size integrity remain per-frame. Skippable
+frames consume work and input but no decoded allowance. CRC, dictionary,
+block/history, truncation, and output-capacity checks remain active.
+
+These rules apply equally to Raw, Spans, and caller-fed input. In particular,
+fed input still uses the aggregate `DecodeAll` output limit: it does not adopt
+the ordinary `io.Reader` streaming interpretation of the memory option.
+`ResetStep` and `ResetStreamStep` start a fresh decoded allowance but preserve
+the configured limits. All failure and cancellation paths use the existing
+`CloseStep` retirement contract. The two fixed limit fields are included in
+the continuation's existing `unsafe.Sizeof` admission and release; there is no
+new callback, owner, pool, ordinary decode fallback, or frame pre-parser.
+
+`NewBoundedReader(work)` keeps its original policy: the existing default
+advertised-window ceiling and per-frame 64GiB decoded ceiling, without imposing
+a new aggregate output limit. Its continuation admission includes the added
+fixed fields, just as it includes all other control fields. No existing caller
+silently receives the new policy. Explicit limit errors preserve the ordinary
+size/window error classes; invalid constructor arguments use the static errors
+above rather than the ordinary options' formatted configuration diagnostics.
+
+The limit tests compare actual bounded output/error classes against ordinary
+`DecodeAll`, including later concatenated frames, unknown content sizes,
+skippables, CRC failures, borrowed dictionaries, reset after success/failure,
+and both output/input modes. The new API cannot be called by the unmodified
+baseline; compilation against a missing constructor is not a behavioral RED.
+The ordinary public API supplies the candidate's behavioral oracle.
+
 ## Dictionary and lifetime
 
 `BorrowedDictionary` binds one complete immutable raw or binary definition to
