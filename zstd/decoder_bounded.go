@@ -73,6 +73,7 @@ type boundedDecoder struct {
 	output                                                                                      BoundedOutput
 	raw                                                                                         []byte
 	frameStart, position                                                                        uint64
+	maxDecodedSize, maxWindowSize                                                               uint64
 	blockStart, skipRemaining                                                                   uint64
 	blockType                                                                                   blockType
 	blockSize, rawRemaining, litSize, mode, matchRemaining, matchOffset                         int
@@ -80,7 +81,7 @@ type boundedDecoder struct {
 	rle                                                                                         byte
 	allocatedLiteral                                                                            uint64
 	err                                                                                         error
-	resetReady, coldReady                                                                       bool
+	resetReady, coldReady, frameReset                                                           bool
 	streaming, inputEnded                                                                       bool
 	inputNeed                                                                                   int
 	inputBuffer                                                                                 []byte
@@ -93,6 +94,35 @@ type boundedDecoder struct {
 // with the next quantum; no work is performed without an admitted containing
 // Decoder and continuation. This does not initialize global tables or pools.
 func NewBoundedReader(w DecoderWork) (d *Decoder, ready bool, err error) {
+	return newBoundedReader(w, 0, 0)
+}
+
+// NewBoundedReaderWithLimits creates the same admitted continuation with explicit
+// limits matching DecodeAll with WithDecoderMaxMemory and WithDecoderMaxWindow.
+// maxDecodedSize limits total output across all concatenated frames in one
+// Begin/Reset operation. maxWindowSize limits each frame's window; memory also
+// limits its advertised window. Single-segment frames use at least MinWindowSize,
+// as in the ordinary decoder. These limits apply to both raw and span output,
+// including fed input, and survive Reset. They do not admit caller-owned buffers.
+//
+// Valid sizes are 1 <= maxDecodedSize <= 1<<63 and
+// MinWindowSize <= maxWindowSize <= (1<<41)+7*(1<<38). Invalid configuration
+// returns ErrDecoderSizeExceeded or ErrWindowSizeExceeded before admission.
+// This does not change NewBoundedReader's existing default policy.
+func NewBoundedReaderWithLimits(w DecoderWork, maxDecodedSize, maxWindowSize uint64) (d *Decoder, ready bool, err error) {
+	if w == nil {
+		return nil, false, ErrBoundedMode
+	}
+	if maxDecodedSize == 0 || maxDecodedSize > 1<<63 {
+		return nil, false, ErrDecoderSizeExceeded
+	}
+	if maxWindowSize < MinWindowSize || maxWindowSize > (1<<41)+7*(1<<38) {
+		return nil, false, ErrWindowSizeExceeded
+	}
+	return newBoundedReader(w, maxDecodedSize, maxWindowSize)
+}
+
+func newBoundedReader(w DecoderWork, maxDecodedSize, maxWindowSize uint64) (d *Decoder, ready bool, err error) {
 	if w == nil {
 		return nil, false, ErrBoundedMode
 	}
@@ -103,7 +133,7 @@ func NewBoundedReader(w DecoderWork) (d *Decoder, ready bool, err error) {
 	if !w.Retain(size) {
 		return nil, false, ErrWorkRefused
 	}
-	d = &Decoder{bounded: &boundedDecoder{work: w}}
+	d = &Decoder{bounded: &boundedDecoder{work: w, maxDecodedSize: maxDecodedSize, maxWindowSize: maxWindowSize}}
 	return d, true, nil
 }
 
@@ -553,16 +583,42 @@ func (b *boundedDecoder) step(output []byte) (written int, done bool, err error)
 			b.phase = 6
 		case 6:
 			window := b.header.WindowSize
-			if window > MaxWindowSize {
-				return written, false, ErrWindowSizeExceeded
-			}
-			if b.header.SingleSegment {
-				window = max(b.header.FrameContentSize, MinWindowSize)
+			if b.maxDecodedSize == 0 {
+				// Preserve the original bounded API policy, independently of
+				// the explicitly configured DecodeAll-compatible limits.
+				if window > MaxWindowSize {
+					return written, false, ErrWindowSizeExceeded
+				}
+				if b.header.SingleSegment {
+					window = max(b.header.FrameContentSize, MinWindowSize)
+				}
+			} else {
+				// Match newFrameDec/frameDec.reset before DecodeAll's
+				// effective-window and remaining-output checks. In particular,
+				// a single segment below 1KiB still needs a 1KiB window.
+				if window > min(b.maxWindowSize, b.maxDecodedSize) {
+					return written, false, ErrWindowSizeExceeded
+				}
+				if window == 0 && b.header.SingleSegment {
+					window = max(b.header.FrameContentSize, MinWindowSize)
+					if window > b.maxDecodedSize {
+						return written, false, ErrDecoderSizeExceeded
+					}
+				}
+				if window < MinWindowSize {
+					return written, false, ErrWindowSizeTooSmall
+				}
+				if window > b.maxWindowSize {
+					return written, false, ErrWindowSizeExceeded
+				}
+				if b.position > b.maxDecodedSize || (b.header.HasFCS && b.header.FrameContentSize > b.maxDecodedSize-b.position) {
+					return written, false, ErrDecoderSizeExceeded
+				}
 			}
 			if window == 0 || window > uint64(^uint(0)>>1) {
 				return written, false, ErrWindowSizeExceeded
 			}
-			if b.header.HasFCS && b.header.FrameContentSize > 64<<30 {
+			if b.maxDecodedSize == 0 && b.header.HasFCS && b.header.FrameContentSize > 64<<30 {
 				return written, false, ErrDecoderSizeExceeded
 			}
 			b.hist.windowSize = int(window)
@@ -1138,7 +1194,11 @@ func (b *boundedDecoder) emit(dst, src []byte) (int, error) {
 	if n == 0 {
 		return 0, nil
 	}
-	if b.position-b.frameStart+uint64(n) > 64<<30 {
+	if b.maxDecodedSize != 0 {
+		if b.position > b.maxDecodedSize || uint64(n) > b.maxDecodedSize-b.position {
+			return 0, ErrDecoderSizeExceeded
+		}
+	} else if b.position-b.frameStart+uint64(n) > 64<<30 {
 		return 0, ErrDecoderSizeExceeded
 	}
 	if b.header.HasFCS && b.position-b.frameStart+uint64(n) > b.header.FrameContentSize {
@@ -1220,7 +1280,7 @@ func (d *Decoder) ResetStep(input []byte, owner any, mode BoundedOutput, raw []b
 	if !b.canBind(owner, mode, dict) {
 		return false, ErrBoundedMode
 	}
-	if !b.resetReady {
+	if !b.resetReady || b.frameReset {
 		ok, e := d.clearBounded(false)
 		if e != nil || !ok {
 			return false, e
@@ -1236,13 +1296,40 @@ func (d *Decoder) ResetStreamStep(owner any, mode BoundedOutput, raw []byte, dic
 	if !b.canBind(owner, mode, dict) {
 		return false, ErrBoundedMode
 	}
-	if !b.resetReady {
+	if !b.resetReady || b.frameReset {
 		ok, e := d.clearBounded(false)
 		if e != nil || !ok {
 			return false, e
 		}
 	}
 	return d.BeginStream(owner, mode, raw, dict)
+}
+
+// ResetFrameStep retires the previous frame/input/output aliases while keeping
+// the SAME completely validated immutable dictionary context and admitted
+// reusable literal/Huffman backing. There is no dictionary argument or owner
+// handoff: the original definition and owner must remain admitted and immutable
+// until a full ResetStep/ResetStreamStep or CloseStep completes.
+//
+// Only BoundedRaw output is supported. Dictionary preparation must have finished;
+// incomplete/failed definitions and a started full reset or terminal close refuse
+// before effects. A failed frame may be reset if its dictionary was validated.
+// Keep the new operands stable across pauses. On true, previous borrowed frame
+// owners may retire. Full reset/Close can promote a paused frame reset; reuse
+// cannot downgrade their cleanup. Repeat warmed frames need no new retention
+// unless the new frame requires larger scratch. Limits survive unchanged.
+func (d *Decoder) ResetFrameStep(input []byte, owner any, mode BoundedOutput, raw []byte) (bool, error) {
+	b := d.bounded
+	if b == nil || b.closeRelease || owner == nil || mode != BoundedRaw || !b.coldReady || b.dictPhase != 8 || (b.closing && !b.frameReset) {
+		return false, ErrBoundedMode
+	}
+	if !b.resetReady {
+		ok, e := d.clearBoundedMode(false, true)
+		if e != nil || !ok {
+			return false, e
+		}
+	}
+	return d.Begin(input, owner, mode, raw, b.dictionary)
 }
 
 // One admission rule for every new input/dictionary binding. Closing is also
@@ -1252,12 +1339,24 @@ func (b *boundedDecoder) canBind(owner any, mode BoundedOutput, dict BorrowedDic
 }
 
 func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+	return d.clearBoundedMode(releaseCore, false)
+}
+
+func (d *Decoder) clearBoundedMode(releaseCore, keepFrame bool) (bool, error) {
 	b := d.bounded
 	if b == nil {
 		if d.current.err != ErrDecoderClosed {
 			return false, ErrBoundedMode
 		}
 		return true, nil
+	}
+	// A full reset/Close promotes frame-only cleanup before work admission.
+	// Restart the SAME phases so previously skipped retained cohorts also retire.
+	if !b.closing {
+		b.frameReset = keepFrame
+	} else if b.frameReset && !keepFrame {
+		b.frameReset = false
+		b.closePhase = 0
 	}
 	// Close may promote a paused reset, but no later reset may downgrade it.
 	// Latch intent before an admission refusal and consume it at completion.
@@ -1294,12 +1393,28 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			}
 			b.closePhase = 2
 		case 2:
+			if b.frameReset {
+				if !b.charge(1, uint64(unsafe.Sizeof(huff0.TableState{}))+uint64(unsafe.Sizeof(huff0.Scratch{}))) {
+					return false, nil
+				}
+				b.huffTable.DetachInput()
+				b.closePhase = 3
+				continue
+			}
 			ok, e := b.huffTable.ClearStep(b.work)
 			if e != nil || !ok {
 				return false, e
 			}
 			b.closePhase = 3
 		case 3:
+			if b.frameReset {
+				if !b.charge(1, uint64(unsafe.Sizeof(huff0.TableState{}))+uint64(unsafe.Sizeof(huff0.Scratch{}))) {
+					return false, nil
+				}
+				b.dictHuffTable.DetachInput()
+				b.closePhase = 4
+				continue
+			}
 			ok, e := b.dictHuffTable.ClearStep(b.work)
 			if e != nil || !ok {
 				return false, e
@@ -1309,10 +1424,12 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			if !b.charge(1, 1024) {
 				return false, nil
 			}
-			b.block.literalBuf = nil
-			if b.allocatedLiteral != 0 {
-				b.work.Release(b.allocatedLiteral)
-				b.allocatedLiteral = 0
+			if !b.frameReset {
+				b.block.literalBuf = nil
+				if b.allocatedLiteral != 0 {
+					b.work.Release(b.allocatedLiteral)
+					b.allocatedLiteral = 0
+				}
 			}
 			b.closePhase = 5
 		case 5:
@@ -1323,9 +1440,11 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			b.boundInput = nil
 			b.frameInput = nil
 			b.raw = nil
-			b.dictContent = nil
 			b.dictInput = nil
-			b.dictionary = BorrowedDictionary{}
+			if !b.frameReset {
+				b.dictContent = nil
+				b.dictionary = BorrowedDictionary{}
+			}
 			b.inputOwner = nil
 			b.inputBuffer = nil
 			if b.allocatedInput != 0 {
@@ -1346,7 +1465,9 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 				b.position = 0
 				b.frameStart = 0
 				b.blockStart = 0
-				b.dictPhase = 0
+				if !b.frameReset {
+					b.dictPhase = 0
+				}
 				b.dictTable = 0
 				b.tablePhase = 0
 				b.closePhase = 0
