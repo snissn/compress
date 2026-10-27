@@ -81,7 +81,7 @@ type boundedDecoder struct {
 	rle                                                                                         byte
 	allocatedLiteral                                                                            uint64
 	err                                                                                         error
-	resetReady, coldReady                                                                       bool
+	resetReady, coldReady, frameReset                                                           bool
 	streaming, inputEnded                                                                       bool
 	inputNeed                                                                                   int
 	inputBuffer                                                                                 []byte
@@ -1280,7 +1280,7 @@ func (d *Decoder) ResetStep(input []byte, owner any, mode BoundedOutput, raw []b
 	if !b.canBind(owner, mode, dict) {
 		return false, ErrBoundedMode
 	}
-	if !b.resetReady {
+	if !b.resetReady || b.frameReset {
 		ok, e := d.clearBounded(false)
 		if e != nil || !ok {
 			return false, e
@@ -1296,13 +1296,40 @@ func (d *Decoder) ResetStreamStep(owner any, mode BoundedOutput, raw []byte, dic
 	if !b.canBind(owner, mode, dict) {
 		return false, ErrBoundedMode
 	}
-	if !b.resetReady {
+	if !b.resetReady || b.frameReset {
 		ok, e := d.clearBounded(false)
 		if e != nil || !ok {
 			return false, e
 		}
 	}
 	return d.BeginStream(owner, mode, raw, dict)
+}
+
+// ResetFrameStep retires the previous frame/input/output aliases while keeping
+// the SAME completely validated immutable dictionary context and admitted
+// reusable literal/Huffman backing. There is no dictionary argument or owner
+// handoff: the original definition and owner must remain admitted and immutable
+// until a full ResetStep/ResetStreamStep or CloseStep completes.
+//
+// Only BoundedRaw output is supported. Dictionary preparation must have finished;
+// incomplete/failed definitions and a started full reset or terminal close refuse
+// before effects. A failed frame may be reset if its dictionary was validated.
+// Keep the new operands stable across pauses. On true, previous borrowed frame
+// owners may retire. Full reset/Close can promote a paused frame reset; reuse
+// cannot downgrade their cleanup. Repeat warmed frames need no new retention
+// unless the new frame requires larger scratch. Limits survive unchanged.
+func (d *Decoder) ResetFrameStep(input []byte, owner any, mode BoundedOutput, raw []byte) (bool, error) {
+	b := d.bounded
+	if b == nil || b.closeRelease || owner == nil || mode != BoundedRaw || !b.coldReady || b.dictPhase != 8 || (b.closing && !b.frameReset) {
+		return false, ErrBoundedMode
+	}
+	if !b.resetReady {
+		ok, e := d.clearBoundedMode(false, true)
+		if e != nil || !ok {
+			return false, e
+		}
+	}
+	return d.Begin(input, owner, mode, raw, b.dictionary)
 }
 
 // One admission rule for every new input/dictionary binding. Closing is also
@@ -1312,12 +1339,24 @@ func (b *boundedDecoder) canBind(owner any, mode BoundedOutput, dict BorrowedDic
 }
 
 func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
+	return d.clearBoundedMode(releaseCore, false)
+}
+
+func (d *Decoder) clearBoundedMode(releaseCore, keepFrame bool) (bool, error) {
 	b := d.bounded
 	if b == nil {
 		if d.current.err != ErrDecoderClosed {
 			return false, ErrBoundedMode
 		}
 		return true, nil
+	}
+	// A full reset/Close promotes frame-only cleanup before work admission.
+	// Restart the SAME phases so previously skipped retained cohorts also retire.
+	if !b.closing {
+		b.frameReset = keepFrame
+	} else if b.frameReset && !keepFrame {
+		b.frameReset = false
+		b.closePhase = 0
 	}
 	// Close may promote a paused reset, but no later reset may downgrade it.
 	// Latch intent before an admission refusal and consume it at completion.
@@ -1354,12 +1393,28 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			}
 			b.closePhase = 2
 		case 2:
+			if b.frameReset {
+				if !b.charge(1, uint64(unsafe.Sizeof(huff0.TableState{}))+uint64(unsafe.Sizeof(huff0.Scratch{}))) {
+					return false, nil
+				}
+				b.huffTable.DetachInput()
+				b.closePhase = 3
+				continue
+			}
 			ok, e := b.huffTable.ClearStep(b.work)
 			if e != nil || !ok {
 				return false, e
 			}
 			b.closePhase = 3
 		case 3:
+			if b.frameReset {
+				if !b.charge(1, uint64(unsafe.Sizeof(huff0.TableState{}))+uint64(unsafe.Sizeof(huff0.Scratch{}))) {
+					return false, nil
+				}
+				b.dictHuffTable.DetachInput()
+				b.closePhase = 4
+				continue
+			}
 			ok, e := b.dictHuffTable.ClearStep(b.work)
 			if e != nil || !ok {
 				return false, e
@@ -1369,10 +1424,12 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			if !b.charge(1, 1024) {
 				return false, nil
 			}
-			b.block.literalBuf = nil
-			if b.allocatedLiteral != 0 {
-				b.work.Release(b.allocatedLiteral)
-				b.allocatedLiteral = 0
+			if !b.frameReset {
+				b.block.literalBuf = nil
+				if b.allocatedLiteral != 0 {
+					b.work.Release(b.allocatedLiteral)
+					b.allocatedLiteral = 0
+				}
 			}
 			b.closePhase = 5
 		case 5:
@@ -1383,9 +1440,11 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 			b.boundInput = nil
 			b.frameInput = nil
 			b.raw = nil
-			b.dictContent = nil
 			b.dictInput = nil
-			b.dictionary = BorrowedDictionary{}
+			if !b.frameReset {
+				b.dictContent = nil
+				b.dictionary = BorrowedDictionary{}
+			}
 			b.inputOwner = nil
 			b.inputBuffer = nil
 			if b.allocatedInput != 0 {
@@ -1406,7 +1465,9 @@ func (d *Decoder) clearBounded(releaseCore bool) (bool, error) {
 				b.position = 0
 				b.frameStart = 0
 				b.blockStart = 0
-				b.dictPhase = 0
+				if !b.frameReset {
+					b.dictPhase = 0
+				}
 				b.dictTable = 0
 				b.tablePhase = 0
 				b.closePhase = 0

@@ -189,6 +189,45 @@ logical Close never proves physical file/definition death, nor releases another
 owner's Raw output or resource callbacks. Native root/workspace retirement
 remains the existing enclosing authority.
 
+## Frame reuse with an unchanged validated dictionary
+
+`ResetFrameStep(input, owner, BoundedRaw, raw)` explicitly detaches the prior
+frame's input, output, parser and history aliases while retaining the SAME
+validated dictionary definition, owner, tables and admitted reusable literal and
+Huffman backing. It takes no dictionary argument, compares no identity cache,
+and transfers no dictionary owner. That original definition and owner must remain
+immutable and admitted until full reset or terminal Close completes. Its exact
+embedded dictionary ID remains checked by every decoded frame.
+
+Cold/incomplete or failed dictionary preparation, nil new owner, unsupported
+output mode, terminal Close and an in-progress full reset reject before effects.
+A failed frame can be reused after its dictionary context was validated; its
+frame error and output allowance are reset. The method is resumable with stable
+new operands, like full reset. A successful call binds the new frame and proves
+all prior borrowed frame aliases are detached. Empty input/Raw can deliberately
+leave no frame-byte aliases between operations; its new owner still applies.
+
+This uses the original cleanup phases and existing Huffman/FSE `DetachInput`
+helpers. It keeps dictionary semantics but clears frame entropy/history
+permission, so a previous frame cannot authorize treeless literals or repeat
+sequences. Existing limits and all block/dictionary/checksum checks remain.
+Repeated identical warmed Raw frames require no new `Retain`; a different frame
+can require larger scratch and must admit it normally. This promises neither
+zero work nor zero allocation for arbitrary future frames. Owned caller input,
+Raw and dictionary capacities remain independently admitted.
+
+Only Raw target output is supported initially. Prior segmented history still
+retires through its existing cleanup; there is no segmented-history retention
+project or zero-allocation Spans promise. Caller-fed wire backing also retires;
+this method binds complete input, not a new streaming operation.
+
+Original `ResetStep` / `ResetStreamStep` continue to detach the definition and
+retire all scratch. Either full reset or Close promotes a paused frame reset by
+restarting the SAME cleanup phases, including cohorts previously preserved by
+frame reuse. Reuse cannot downgrade that intent. The new fixed latch is charged
+through the existing continuation `unsafe.Sizeof` admission and release. No pool,
+additional owner, generic fallback, frame pre-parser or admission discount exists.
+
 ## Scope of evidence
 
 Tests include immutable frames from actual gomap `Writer.AppendFrameWithStats`
